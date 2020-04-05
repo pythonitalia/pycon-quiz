@@ -78,11 +78,69 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 category = "main"
+description = "django-admin-interface is a modern responsive flat admin interface customizable by the admin itself."
+name = "django-admin-interface"
+optional = false
+python-versions = "*"
+version = "0.12.1"
+
+[package.dependencies]
+django-colorfield = ">=0.2,<1.0"
+django-flat-responsive = ">=1.0,<3.0"
+django-flat-theme = ">=1.0,<2.0"
+six = ">=1.9.0,<2.0.0"
+
+[[package]]
+category = "main"
+description = "Sanity for the django choices functionality."
+name = "django-choices"
+optional = false
+python-versions = "*"
+version = "1.7.1"
+
+[package.dependencies]
+Django = ">=1.11"
+six = ">=1.13.0"
+
+[[package]]
+category = "main"
+description = "simple color field for your models with a nice color-picker in the admin-interface."
+name = "django-colorfield"
+optional = false
+python-versions = "*"
+version = "0.2.2"
+
+[[package]]
+category = "main"
 description = "Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application."
 name = "django-environ"
 optional = false
 python-versions = "*"
 version = "0.4.5"
+
+[[package]]
+category = "main"
+description = "An extension for Django admin that makes interface mobile friendly."
+name = "django-flat-responsive"
+optional = false
+python-versions = "*"
+version = "2.0"
+
+[[package]]
+category = "main"
+description = "A flat theme for Django admin interface. Modern, fresh, simple."
+name = "django-flat-theme"
+optional = false
+python-versions = "*"
+version = "1.1.4"
+
+[[package]]
+category = "main"
+description = "Django friendly finite state machine support."
+name = "django-fsm"
+optional = false
+python-versions = "*"
+version = "2.7.0"
 
 [[package]]
 category = "main"
@@ -94,6 +152,26 @@ version = "4.0.0"
 
 [package.dependencies]
 Django = ">=2.0.1"
+
+[[package]]
+category = "main"
+description = "Django admin classes that allow for nested inlines"
+name = "django-nested-admin"
+optional = false
+python-versions = "*"
+version = "3.2.4"
+
+[package.dependencies]
+python-monkey-business = ">=1.0.0"
+six = "*"
+
+[[package]]
+category = "main"
+description = "A Django app for adding object tools for models in the admin"
+name = "django-object-actions"
+optional = false
+python-versions = "*"
+version = "2.0.0"
 
 [[package]]
 category = "main"
@@ -150,6 +228,17 @@ version = "2.6.1"
 
 [[package]]
 category = "main"
+description = "Utility functions for monkey-patching python code"
+name = "python-monkey-business"
+optional = false
+python-versions = "*"
+version = "1.0.0"
+
+[package.dependencies]
+six = ">=1.7.0"
+
+[[package]]
+category = "main"
 description = "World timezone definitions, modern and historical"
 name = "pytz"
 optional = false
@@ -163,6 +252,14 @@ name = "regex"
 optional = false
 python-versions = "*"
 version = "2020.2.20"
+
+[[package]]
+category = "main"
+description = "Python 2 and 3 compatibility utilities"
+name = "six"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "1.14.0"
 
 [[package]]
 category = "main"
@@ -253,7 +350,7 @@ python-versions = ">=3.6.1"
 version = "8.1"
 
 [metadata]
-content-hash = "e6864b2a3e067194d3602df97a16b0bcf6665cce70999b6148db359bbf2441d4"
+content-hash = "1d465d1199841b824e95b2671d56bb94810bab83a4ebafe1b5dbda6234fc008c"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -281,13 +378,43 @@ django = [
     {file = "Django-3.0.4-py3-none-any.whl", hash = "sha256:89e451bfbb815280b137e33e454ddd56481fdaa6334054e6e031041ee1eda360"},
     {file = "Django-3.0.4.tar.gz", hash = "sha256:50b781f6cbeb98f673aa76ed8e572a019a45e52bdd4ad09001072dfd91ab07c8"},
 ]
+django-admin-interface = [
+    {file = "django-admin-interface-0.12.1.tar.gz", hash = "sha256:7e7d703554a937ac3f700a4ac2733e4100405433bc6899467f3fc6c24bd60221"},
+    {file = "django_admin_interface-0.12.1-py2-none-any.whl", hash = "sha256:8540b802d6cd60e4e94662256b6951e484c5432f776eaa8ebc7a135cf37b2924"},
+]
+django-choices = [
+    {file = "django-choices-1.7.1.tar.gz", hash = "sha256:5fa69f54c57ea4b99c55f261e0862a7c59d2950363cf1f80a7b2c7393fd5c6e3"},
+    {file = "django_choices-1.7.1-py2.py3-none-any.whl", hash = "sha256:010b773c2ffc58e616701ba417bafdbf5ae23b5bcd18d6101d2c9755e0c2b4de"},
+]
+django-colorfield = [
+    {file = "django-colorfield-0.2.2.tar.gz", hash = "sha256:49cfce71365de88130e65ced8f2c5c4826b31e9ab0c5f0e721ff13a830b5be76"},
+    {file = "django_colorfield-0.2.2-py2-none-any.whl", hash = "sha256:ecb8af68f35028e35f973ddb687c2dcae86d028c6da1b72580c0d3fae915d3b7"},
+]
 django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
     {file = "django_environ-0.4.5-py2.py3-none-any.whl", hash = "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"},
 ]
+django-flat-responsive = [
+    {file = "django-flat-responsive-2.0.tar.gz", hash = "sha256:451caa2700c541b52fb7ce2d34d3d8dee9e980cf29f5463bc8a8c6256a1a6474"},
+]
+django-flat-theme = [
+    {file = "django-flat-theme-1.1.4.tar.gz", hash = "sha256:6b522d8c2b5a8228b30947fb002eff2868da076e9beacf3e798410e5c1a2d849"},
+]
+django-fsm = [
+    {file = "django-fsm-2.7.0.tar.gz", hash = "sha256:9f42111814a273cdfd79cdf839f3596bc48b9cfe5fe5102293f07ade5b0048d5"},
+    {file = "django_fsm-2.7.0-py2.py3-none-any.whl", hash = "sha256:d5b0ca13965261f4fffad350fadd388dcfd9b6712399a84021073a40b161fbd7"},
+]
 django-model-utils = [
     {file = "django-model-utils-4.0.0.tar.gz", hash = "sha256:adf09e5be15122a7f4e372cb5a6dd512bbf8d78a23a90770ad0983ee9d909061"},
     {file = "django_model_utils-4.0.0-py2.py3-none-any.whl", hash = "sha256:9cf882e5b604421b62dbe57ad2b18464dc9c8f963fc3f9831badccae66c1139c"},
+]
+django-nested-admin = [
+    {file = "django-nested-admin-3.2.4.tar.gz", hash = "sha256:4a1189b57a85496fb319045e5b6db71a1242bc539721179aa3e4f54aae56fe0f"},
+    {file = "django_nested_admin-3.2.4-py2.py3-none-any.whl", hash = "sha256:f6175d2fec1c883e9335695119b020267c69796cc95f5f2c9b7a315ad522b2c1"},
+]
+django-object-actions = [
+    {file = "django-object-actions-2.0.0.tar.gz", hash = "sha256:bbf027873c2c5a7b976133630cd8976007b94ef609c09af124683e12f94ad01d"},
+    {file = "django_object_actions-2.0.0-py2.py3-none-any.whl", hash = "sha256:69b8c2e4ec57f10fe8f1457e0694b7f81abe486bdb31bd21d7bc39e4c4128538"},
 ]
 graphql-core = [
     {file = "graphql-core-3.1.0b2.tar.gz", hash = "sha256:732f046d911901b5f626079cdd7a71b4cacfb31db689025f3cc94db67247de9f"},
@@ -311,6 +438,10 @@ pathspec = [
 pygments = [
     {file = "Pygments-2.6.1-py3-none-any.whl", hash = "sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324"},
     {file = "Pygments-2.6.1.tar.gz", hash = "sha256:647344a061c249a3b74e230c739f434d7ea4d8b1d5f3721bc0f3558049b38f44"},
+]
+python-monkey-business = [
+    {file = "python-monkey-business-1.0.0.tar.gz", hash = "sha256:9976522989766f00b2aaa24ec96eacb91a6de7b7001d1452079323b071988e0e"},
+    {file = "python_monkey_business-1.0.0-py2.py3-none-any.whl", hash = "sha256:6d4cf47f011945db838ccf04643acd49b82f7ad6ab7ecba4c8165385687a828a"},
 ]
 pytz = [
     {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
@@ -338,6 +469,10 @@ regex = [
     {file = "regex-2020.2.20-cp38-cp38-win32.whl", hash = "sha256:200539b5124bc4721247a823a47d116a7a23e62cc6695744e3eb5454a8888e6d"},
     {file = "regex-2020.2.20-cp38-cp38-win_amd64.whl", hash = "sha256:7f78f963e62a61e294adb6ff5db901b629ef78cb2a1cfce3cf4eeba80c1c67aa"},
     {file = "regex-2020.2.20.tar.gz", hash = "sha256:9e9624440d754733eddbcd4614378c18713d2d9d0dc647cf9c72f64e39671be5"},
+]
+six = [
+    {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
+    {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
 ]
 sqlparse = [
     {file = "sqlparse-0.3.1-py2.py3-none-any.whl", hash = "sha256:022fb9c87b524d1f7862b3037e541f68597a730a8843245c349fc93e1643dc4e"},

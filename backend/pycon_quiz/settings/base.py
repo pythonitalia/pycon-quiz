@@ -24,13 +24,18 @@ if os.path.exists(env_file):
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    "admin_interface",
+    "colorfield",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_object_actions",
+    "nested_admin",
     "users.apps.UsersConfig",
+    "quizzes.apps.QuizzesConfig",
 ]
 
 MIDDLEWARE = [
@@ -101,3 +106,5 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
