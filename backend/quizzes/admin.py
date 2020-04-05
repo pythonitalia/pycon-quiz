@@ -6,11 +6,9 @@ from quizzes.models import Quiz, QuizSession, Question, Answer
 from django.urls import path, reverse
 from django.shortcuts import redirect
 
-
 from django_object_actions import DjangoObjectActions
 
-# from quizzes.game_manager.statuses import is_live
-from quizzes.game_manager.actions import go_live, end, go_to_next_question
+from game_manager.actions import go_live, end, go_to_next_question
 
 
 class AnswerInline(nested_admin.NestedStackedInline):

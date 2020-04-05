@@ -15,6 +15,8 @@ django-choices = "^1.7.1"
 django-object-actions = "^2.0.0"
 django-nested-admin = "^3.2.4"
 django-admin-interface = "^0.12.1"
+uvicorn = "0.11.2"
+django-cors-headers = "^3.2.1"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"

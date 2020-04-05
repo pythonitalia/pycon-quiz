@@ -112,6 +112,17 @@ version = "0.2.2"
 
 [[package]]
 category = "main"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+name = "django-cors-headers"
+optional = false
+python-versions = ">=3.5"
+version = "3.2.1"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[[package]]
+category = "main"
 description = "Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application."
 name = "django-environ"
 optional = false
@@ -350,7 +361,7 @@ python-versions = ">=3.6.1"
 version = "8.1"
 
 [metadata]
-content-hash = "1d465d1199841b824e95b2671d56bb94810bab83a4ebafe1b5dbda6234fc008c"
+content-hash = "67629c85b695c9b39a9e52695adc92e408033227c6ac54a4920f6f95ae82e49e"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -389,6 +400,10 @@ django-choices = [
 django-colorfield = [
     {file = "django-colorfield-0.2.2.tar.gz", hash = "sha256:49cfce71365de88130e65ced8f2c5c4826b31e9ab0c5f0e721ff13a830b5be76"},
     {file = "django_colorfield-0.2.2-py2-none-any.whl", hash = "sha256:ecb8af68f35028e35f973ddb687c2dcae86d028c6da1b72580c0d3fae915d3b7"},
+]
+django-cors-headers = [
+    {file = "django-cors-headers-3.2.1.tar.gz", hash = "sha256:a5960addecc04527ab26617e51b8ed42f0adab4594b24bb0f3c33e2bd3857c3f"},
+    {file = "django_cors_headers-3.2.1-py3-none-any.whl", hash = "sha256:a785b5f446f6635810776d9f5f5d23e6a2a2f728ea982648370afaf0dfdf2627"},
 ]
 django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
