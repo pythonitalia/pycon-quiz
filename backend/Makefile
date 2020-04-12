@@ -1,2 +1,2 @@
 run-server:
-	poetry run uvicorn pycon_quiz.asgi:application
+	poetry run uvicorn pycon_quiz.asgi:application --reload

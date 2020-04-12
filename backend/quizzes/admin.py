@@ -33,7 +33,11 @@ class QuizAdmin(DjangoObjectActions, nested_admin.NestedModelAdmin):
     ]
 
     def create_session(self, request, obj):
-        obj.create_session()
+        session = obj.create_session()
+        new_session_url_admin_url = reverse(
+            "admin:quizzes_quizsession_change", args=[session.id]
+        )
+        return redirect(new_session_url_admin_url)
 
     create_session.label = _("Create session")
     create_session.short_description = _("Create session")
