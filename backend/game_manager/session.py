@@ -10,3 +10,7 @@ def get_session(id: int):
         .select_related("quiz", "current_question")
         .get(id=id)
     )
+
+
+def get_redis_channel_name_for_session_id(id: int):
+    return f"gamesession:{id}"

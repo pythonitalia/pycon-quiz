@@ -12,8 +12,8 @@ class Answer:
     text: str
 
     @classmethod
-    def create_answers_from_question(cls, question: "QuestionModel") -> List["Answer"]:
-        return [cls(text=answer.text) for answer in question.answers.all()]
+    def from_data(cls, data):
+        return cls(text=data["text"])
 
 
 @strawberry.type
@@ -22,12 +22,15 @@ class Question:
     answers: List[Answer]
 
     @classmethod
-    def from_question(cls, question: Optional["QuestionModel"]):
-        if not question:
+    def from_data(cls, data):
+        if not data:
             return None
 
         return cls(
-            text=question.text, answers=Answer.create_answers_from_question(question)
+            **{
+                **data,
+                "answers": [Answer.from_data(answer) for answer in data["answers"]],
+            }
         )
 
 
@@ -37,8 +40,26 @@ class GameState:
     current_question: Optional[Question]
 
     @classmethod
-    def from_session(cls, session: "QuizSession"):
+    def from_data(cls, data):
         return cls(
-            status=session.status,
-            current_question=Question.from_question(session.current_question),
+            **{**data, "current_question": Question.from_data(data["current_question"])}
         )
+
+    @classmethod
+    def from_session(cls, session: "QuizSession"):
+        return cls.from_data(_map_session_to_data_dict(session))
+
+
+def _map_session_to_data_dict(session: "QuizSession"):
+    return {
+        "status": session.status,
+        "current_question": {
+            "text": session.current_question.text,
+            "answers": [
+                {"text": answer.text}
+                for answer in session.current_question.answers.all()
+            ],
+        }
+        if session.current_question
+        else None,
+    }
