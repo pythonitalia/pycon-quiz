@@ -1,8 +1,12 @@
+from typing import TYPE_CHECKING
 from asgiref.sync import sync_to_async
 
+if TYPE_CHECKING:
+    from users.models import User
+    from quizzes.models import QuizSession, Question
 
-@sync_to_async
-def get_session(id: int):
+
+def get_session(id: int) -> "QuizSession":
     from quizzes.models import QuizSession
 
     return (
@@ -12,5 +16,30 @@ def get_session(id: int):
     )
 
 
+@sync_to_async
+def get_session_async(id: int) -> "QuizSession":
+    return get_session(id)
+
+
 def get_redis_channel_name_for_session_id(id: int):
     return f"gamesession:{id}"
+
+
+def answer_question(
+    *, session: "QuizSession", question_id: int, answer_id: int, user: "User"
+):
+    from quizzes.models import UserAnswer
+
+    if not session.is_live:
+        raise ValueError("Session is not live")
+
+    if session.current_question_id != question_id:
+        raise ValueError("You cannot answer this question")
+
+    if not session.current_question.answers.filter(id=answer_id).exists():
+        raise ValueError("Invalid answer ID")
+
+    UserAnswer.objects.update_or_create(
+        user=user, answer_id=answer_id, session=session, defaults={}
+    )
+    return True

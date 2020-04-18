@@ -205,6 +205,18 @@ python-versions = "*"
 version = "2.0.0"
 
 [[package]]
+category = "dev"
+description = "colorful TAB completion for Python prompt"
+name = "fancycompleter"
+optional = false
+python-versions = "*"
+version = "0.9.1"
+
+[package.dependencies]
+pyreadline = "*"
+pyrepl = ">=0.8.2"
+
+[[package]]
 category = "main"
 description = "GraphQL implementation for Python, a port of GraphQL.js, the JavaScript reference implementation for GraphQL."
 name = "graphql-core"
@@ -258,12 +270,46 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.7.0"
 
 [[package]]
+category = "dev"
+description = "pdb++, a drop-in replacement for pdb"
+name = "pdbpp"
+optional = false
+python-versions = "*"
+version = "0.10.2"
+
+[package.dependencies]
+fancycompleter = ">=0.8"
+pygments = "*"
+wmctrl = "*"
+
+[package.extras]
+funcsigs = ["funcsigs"]
+testing = ["funcsigs", "pytest"]
+
+[[package]]
 category = "main"
 description = "Pygments is a syntax highlighting package written in Python."
 name = "pygments"
 optional = false
 python-versions = ">=3.5"
 version = "2.6.1"
+
+[[package]]
+category = "dev"
+description = "A python implmementation of GNU readline."
+marker = "platform_system == \"Windows\""
+name = "pyreadline"
+optional = false
+python-versions = "*"
+version = "2.1"
+
+[[package]]
+category = "dev"
+description = "A library for building flexible command line interfaces"
+name = "pyrepl"
+optional = false
+python-versions = "*"
+version = "0.9.0"
 
 [[package]]
 category = "main"
@@ -388,8 +434,16 @@ optional = false
 python-versions = ">=3.6.1"
 version = "8.1"
 
+[[package]]
+category = "dev"
+description = "A tool to programmatically control windows inside X"
+name = "wmctrl"
+optional = false
+python-versions = "*"
+version = "0.3"
+
 [metadata]
-content-hash = "fa89cfd3a1c50e9bc24f4f1a1dead61004c3d6bf75178f9174b48282fafae411"
+content-hash = "a251b78416f7dec9f087657b6c90ccfb29fcada15fc4f92eb8b68f7b67095bef"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -467,6 +521,10 @@ django-object-actions = [
     {file = "django-object-actions-2.0.0.tar.gz", hash = "sha256:bbf027873c2c5a7b976133630cd8976007b94ef609c09af124683e12f94ad01d"},
     {file = "django_object_actions-2.0.0-py2.py3-none-any.whl", hash = "sha256:69b8c2e4ec57f10fe8f1457e0694b7f81abe486bdb31bd21d7bc39e4c4128538"},
 ]
+fancycompleter = [
+    {file = "fancycompleter-0.9.1-py3-none-any.whl", hash = "sha256:dd076bca7d9d524cc7f25ec8f35ef95388ffef9ef46def4d3d25e9b044ad7080"},
+    {file = "fancycompleter-0.9.1.tar.gz", hash = "sha256:09e0feb8ae242abdfd7ef2ba55069a46f011814a80fe5476be48f51b00247272"},
+]
 graphql-core = [
     {file = "graphql-core-3.1.0b2.tar.gz", hash = "sha256:732f046d911901b5f626079cdd7a71b4cacfb31db689025f3cc94db67247de9f"},
     {file = "graphql_core-3.1.0b2-py3-none-any.whl", hash = "sha256:f185a10ba1712cf4d8cb69de58a1b4494c1fb9701a15564bcdf0cc6aa264dbc6"},
@@ -528,9 +586,20 @@ pathspec = [
     {file = "pathspec-0.7.0-py2.py3-none-any.whl", hash = "sha256:163b0632d4e31cef212976cf57b43d9fd6b0bac6e67c26015d611a647d5e7424"},
     {file = "pathspec-0.7.0.tar.gz", hash = "sha256:562aa70af2e0d434367d9790ad37aed893de47f1693e4201fd1d3dca15d19b96"},
 ]
+pdbpp = [
+    {file = "pdbpp-0.10.2.tar.gz", hash = "sha256:73ff220d5006e0ecdc3e2705d8328d8aa5ac27fef95cc06f6e42cd7d22d55eb8"},
+]
 pygments = [
     {file = "Pygments-2.6.1-py3-none-any.whl", hash = "sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324"},
     {file = "Pygments-2.6.1.tar.gz", hash = "sha256:647344a061c249a3b74e230c739f434d7ea4d8b1d5f3721bc0f3558049b38f44"},
+]
+pyreadline = [
+    {file = "pyreadline-2.1.win-amd64.exe", hash = "sha256:9ce5fa65b8992dfa373bddc5b6e0864ead8f291c94fbfec05fbd5c836162e67b"},
+    {file = "pyreadline-2.1.win32.exe", hash = "sha256:65540c21bfe14405a3a77e4c085ecfce88724743a4ead47c66b84defcf82c32e"},
+    {file = "pyreadline-2.1.zip", hash = "sha256:4530592fc2e85b25b1a9f79664433da09237c1a270e4d78ea5aa3a2c7229e2d1"},
+]
+pyrepl = [
+    {file = "pyrepl-0.9.0.tar.gz", hash = "sha256:292570f34b5502e871bbb966d639474f2b57fbfcd3373c2d6a2f3d56e681a775"},
 ]
 python-monkey-business = [
     {file = "python-monkey-business-1.0.0.tar.gz", hash = "sha256:9976522989766f00b2aaa24ec96eacb91a6de7b7001d1452079323b071988e0e"},
@@ -644,4 +713,7 @@ websockets = [
     {file = "websockets-8.1-cp38-cp38-win32.whl", hash = "sha256:e898a0863421650f0bebac8ba40840fc02258ef4714cb7e1fd76b6a6354bda36"},
     {file = "websockets-8.1-cp38-cp38-win_amd64.whl", hash = "sha256:f8a7bff6e8664afc4e6c28b983845c5bc14965030e3fb98789734d416af77c4b"},
     {file = "websockets-8.1.tar.gz", hash = "sha256:5c65d2da8c6bce0fca2528f69f44b2f977e06954c8512a952222cea50dad430f"},
+]
+wmctrl = [
+    {file = "wmctrl-0.3.tar.gz", hash = "sha256:d806f65ac1554366b6e31d29d7be2e8893996c0acbb2824bbf2b1f49cf628a13"},
 ]

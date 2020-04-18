@@ -9,15 +9,17 @@ if TYPE_CHECKING:
 
 @strawberry.type
 class Answer:
+    id: strawberry.ID
     text: str
 
     @classmethod
     def from_data(cls, data):
-        return cls(text=data["text"])
+        return cls(id=data["id"], text=data["text"])
 
 
 @strawberry.type
 class Question:
+    id: strawberry.ID
     text: str
     answers: List[Answer]
 
@@ -54,9 +56,10 @@ def _map_session_to_data_dict(session: "QuizSession"):
     return {
         "status": session.status,
         "current_question": {
+            "id": session.current_question.id,
             "text": session.current_question.text,
             "answers": [
-                {"text": answer.text}
+                {"text": answer.text, "id": answer.id}
                 for answer in session.current_question.answers.all()
             ],
         }

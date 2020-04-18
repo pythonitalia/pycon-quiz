@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.get_full_name()} {self.email}"
+        return f"{self.get_full_name()} - {self.username}"
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}".strip()

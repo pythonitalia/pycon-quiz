@@ -2,7 +2,7 @@ import asyncio
 from quizzes.models import QuizSession
 
 from game_manager.signals import update_game
-from game_manager.session import get_session
+from game_manager.session import get_session_async
 
 
 def go_live(session: QuizSession):
@@ -24,5 +24,5 @@ def end(session: QuizSession):
 
 
 async def _send_update(session_id: int):
-    session = await get_session(session_id)
+    session = await get_session_async(session_id)
     await update_game(session)

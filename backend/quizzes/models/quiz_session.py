@@ -30,6 +30,10 @@ class QuizSession(TimeStampedModel):
         verbose_name=_("current question"),
     )
 
+    @property
+    def is_live(self):
+        return self.status == Status.live
+
     @transition(status, source=Status.draft, target=Status.live)
     def go_live(self):
         self.current_question = None
