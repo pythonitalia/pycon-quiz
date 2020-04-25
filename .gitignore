@@ -106,4 +106,5 @@ backend/media/
 node_modules/
 .next/
 .vscode/
+types.tsx
 

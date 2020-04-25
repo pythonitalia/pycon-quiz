@@ -6,14 +6,23 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
+    "@xstate/react": "^0.8.1",
+    "graphql": "^15.0.0",
     "next": "^9.3.5",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "subscriptions-transport-ws": "^0.9.16",
+    "urql": "^1.9.7",
+    "xstate": "^4.9.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.13.3",
+    "@graphql-codegen/typescript-operations": "^1.13.3",
+    "@graphql-codegen/typescript-urql": "^1.13.3",
     "@types/node": "^13.13.0",
     "@types/react": "^16.9.34",
     "typescript": "^3.8.3"

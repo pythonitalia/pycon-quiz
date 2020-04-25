@@ -1,0 +1,13 @@
+subscription GameState($sessionId: Int!) {
+  playGame(sessionId: $sessionId) {
+    status
+    currentQuestion {
+      id
+      text
+      answers {
+        id
+        text
+      }
+    }
+  }
+}
