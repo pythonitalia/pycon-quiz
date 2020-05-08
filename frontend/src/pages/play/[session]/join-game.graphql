@@ -1,0 +1,13 @@
+mutation RegisterForGame($sessionId: ID!, $name: String!) {
+  registerForGame(sessionId: $sessionId, name: $name) {
+    __typename
+
+    ... on Token {
+      token
+    }
+
+    ... on Error {
+      message
+    }
+  }
+}

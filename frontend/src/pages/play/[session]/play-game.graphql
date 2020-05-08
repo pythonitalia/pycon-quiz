@@ -1,4 +1,4 @@
-subscription GameState($sessionId: Int!) {
+subscription GameState($sessionId: ID!) {
   playGame(sessionId: $sessionId) {
     status
     currentQuestion {

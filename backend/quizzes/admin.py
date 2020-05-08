@@ -2,7 +2,7 @@ import nested_admin
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe
-from quizzes.models import Quiz, QuizSession, Question, Answer, UserAnswer
+from quizzes.models import Quiz, QuizSession, Question, Answer, UserAnswer, Partecipant
 from django.urls import path, reverse
 from django.shortcuts import redirect
 
@@ -148,4 +148,9 @@ def _render_button(label, url="#"):
 
 @admin.register(UserAnswer)
 class UserAnswerAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Partecipant)
+class PartecipantAdmin(admin.ModelAdmin):
     pass

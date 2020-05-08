@@ -3,11 +3,12 @@ import strawberry
 
 from api.game_manager.subscription import GameManagerSubscription
 from api.quizzes.mutations import QuizzesMutation
+from api.quizzes.queries import QuizzesQuery
 
 
 @strawberry.type
-class Query:
-    x: int = 5
+class Query(QuizzesQuery):
+    pass
 
 
 @strawberry.type

@@ -1,14 +1,82 @@
-import React from "react";
-import Link from "next/link";
+import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect } from "react";
+import { useFormState } from "react-use-form-state";
+import { Flex, Heading } from "theme-ui";
 
-export const Session = () => (
-  <div>
-    <h1>Welcome to the quiz!</h1>
-    <input type="text" />
-    <Link href="/play/[session]/game" as={`/play/5/game`}>
-      <a>Join</a>
-    </Link>
-  </div>
-);
+import { JoinButton } from "../../../components/join-button";
+import { NameInput } from "../../../components/name-input";
+import { usePlayerData } from "../../../hooks/auth";
+import { useRegisterForGameMutation } from "../../../types";
 
-export default Session;
+export type NameForm = {
+  name: string;
+};
+
+export const JoinGameScreen = () => {
+  const router = useRouter();
+  const { session } = router.query as { session: string };
+  const [formState, { text }] = useFormState<NameForm>();
+  const { playerData, setLocalData } = usePlayerData(session);
+  const [registerForGameResult, registerForGame] = useRegisterForGameMutation();
+  const canJoinGame =
+    !registerForGameResult.fetching && formState.validity.name;
+
+  useEffect(() => {
+    if (playerData && playerData.token) {
+      router.push("/play/[session]/game", `/play/${session}/game`);
+    }
+  }, [playerData, session]);
+
+  const onEnter = useCallback(async () => {
+    if (!canJoinGame) {
+      return;
+    }
+
+    const { name } = formState.values;
+
+    const response = await registerForGame({
+      sessionId: session as string,
+      name,
+    });
+
+    if (response.data.registerForGame.__typename === "Error") {
+      formState.setFieldError("name", response.data.registerForGame.message);
+      return;
+    }
+
+    const { token } = response.data.registerForGame;
+    setLocalData(name, token);
+  }, [formState.values, canJoinGame]);
+
+  return (
+    <Flex
+      sx={{
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <Heading
+        sx={{
+          letterSpacing: "intro",
+          lineHeight: "intro",
+          mb: "intro",
+        }}
+      >
+        Pycon Italia
+        <br />
+        Quiz Ufficiale
+      </Heading>
+      <NameInput {...text("name")} error={formState.errors.name} />
+      <JoinButton onClick={onEnter} disableJoin={!canJoinGame} />
+    </Flex>
+  );
+};
+
+export default JoinGameScreen;
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});

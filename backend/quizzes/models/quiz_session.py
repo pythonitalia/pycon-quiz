@@ -32,7 +32,7 @@ class QuizSession(TimeStampedModel):
 
     @property
     def is_live(self):
-        return self.status == Status.live
+        return self.status == QuizSession.Status.live
 
     @transition(status, source=Status.draft, target=Status.live)
     def go_live(self):

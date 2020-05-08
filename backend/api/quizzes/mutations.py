@@ -1,21 +1,25 @@
 from typing import Union
 import strawberry
+from django.utils.translation import ugettext_lazy as _
 
-from game_manager.session import get_session, answer_question
+from game_manager.session import get_session, answer_question, register_for_game
+from game_manager.exceptions import UsernameAlreadyUsedError
 
-
-@strawberry.type
-class Error:
-    message: str
-
-
-@strawberry.type
-class OperationResult:
-    ok: bool
+from api.quizzes.types import Error, OperationResult, Token, Partecipant
 
 
 @strawberry.type
 class QuizzesMutation:
+    @strawberry.mutation
+    def register_for_game(
+        self, info, session_id: strawberry.ID, name: str
+    ) -> Union[Error, Token]:
+        try:
+            token = register_for_game(name=name, session_id=int(session_id))
+            return Token(token=token)
+        except UsernameAlreadyUsedError as exc:
+            return Error(message=str(exc))
+
     @strawberry.mutation
     def answer_question(
         self,
@@ -23,22 +27,16 @@ class QuizzesMutation:
         session_id: strawberry.ID,
         question_id: strawberry.ID,
         answer_id: strawberry.ID,
-    ) -> Union[Error, OperationResult]:
-        from users.models import User
-        from quizzes.models import QuizSession
-
-        session: QuizSession = get_session(session_id)
-        # todo implement authentication
-        user = User.objects.get(username="admin")
-
+        token: str,
+    ) -> Union[Error, Partecipant]:
         try:
-            answer_question(
-                session=session,
+            answer = answer_question(
+                session_id=int(session_id),
                 question_id=int(question_id),
                 answer_id=int(answer_id),
-                user=user,
+                partecipant_token=token,
             )
         except ValueError as exc:
             return Error(message=str(exc))
 
-        return OperationResult(ok=True)
+        return Partecipant.from_model(answer.partecipant)

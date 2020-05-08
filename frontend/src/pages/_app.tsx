@@ -1,16 +1,27 @@
+import { Global } from "@emotion/core";
+import { devtoolsExchange } from "@urql/devtools";
+import { cacheExchange } from "@urql/exchange-graphcache";
+import { AppProps } from "next/app";
 import React, { useRef } from "react";
 import { SubscriptionClient } from "subscriptions-transport-ws";
+import { ThemeProvider } from "theme-ui";
 import {
   createClient,
-  Provider,
   defaultExchanges,
+  Provider,
   subscriptionExchange,
 } from "urql";
-import { AppProps } from "next/app";
+
+import { Layout } from "../components/layout";
+import { theme } from "../theme";
 
 const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
   const client = useRef(() => {
-    const exchanges = [...defaultExchanges];
+    const exchanges = [
+      devtoolsExchange,
+      cacheExchange({}),
+      ...defaultExchanges,
+    ];
 
     if (typeof window !== "undefined") {
       const subscriptionClient = new SubscriptionClient(
@@ -29,18 +40,30 @@ const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
       );
     }
 
-    const client = createClient({
+    const urqlClient = createClient({
       url: "http://localhost:8000/graphql",
+      // @ts-ignore
       exchanges,
     });
 
-    return client;
+    return urqlClient;
   });
 
   return (
-    <Provider value={client.current()}>
-      <Component {...pageProps} />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider value={client.current()}>
+        <Layout>
+          <Global
+            styles={() => ({
+              html: {
+                fontSize: "62.5%",
+              },
+            })}
+          />
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
+    </ThemeProvider>
   );
 };
 

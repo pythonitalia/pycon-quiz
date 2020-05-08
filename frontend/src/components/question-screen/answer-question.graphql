@@ -1,0 +1,29 @@
+mutation AnswerQuestion(
+  $sessionId: ID!
+  $questionId: ID!
+  $answerId: ID!
+  $token: String!
+) {
+  answerQuestion(
+    sessionId: $sessionId
+    questionId: $questionId
+    answerId: $answerId
+    token: $token
+  ) {
+    __typename
+
+    ... on Error {
+      message
+    }
+
+    ... on Partecipant {
+      id
+      name
+      answers {
+        id
+        questionId
+        answerId
+      }
+    }
+  }
+}

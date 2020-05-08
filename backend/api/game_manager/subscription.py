@@ -12,7 +12,7 @@ from game_manager.session import get_session_async
 class GameManagerSubscription:
     @strawberry.subscription
     async def play_game(
-        self, info, session_id: int
+        self, info, session_id: strawberry.ID
     ) -> typing.AsyncGenerator[GameState, None]:
         client = await get_client()
 

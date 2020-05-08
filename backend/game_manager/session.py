@@ -1,9 +1,18 @@
+from django.db import IntegrityError
 from typing import TYPE_CHECKING
 from asgiref.sync import sync_to_async
 
 if TYPE_CHECKING:
     from users.models import User
     from quizzes.models import QuizSession, Question
+
+from game_manager.exceptions import (
+    UsernameAlreadyUsedError,
+    PartecipantNotFoundError,
+    SessionNotLiveError,
+    UnableToAnswerQuestionError,
+    AnswerNotFoundError,
+)
 
 
 def get_session(id: int) -> "QuizSession":
@@ -26,20 +35,53 @@ def get_redis_channel_name_for_session_id(id: int):
 
 
 def answer_question(
-    *, session: "QuizSession", question_id: int, answer_id: int, user: "User"
+    *, session_id: int, question_id: int, answer_id: int, partecipant_token: str
 ):
-    from quizzes.models import UserAnswer
+    """
+    Records the partecipant answer in the session
+    """
+    from quizzes.models import UserAnswer, QuizSession, Partecipant
+
+    session = QuizSession.objects.get(id=session_id)
+
+    try:
+        partecipant = Partecipant.objects.get(
+            token=partecipant_token, session_id=session_id
+        )
+    except Partecipant.DoesNotExist:
+        raise PartecipantNotFoundError("Token not valid")
 
     if not session.is_live:
-        raise ValueError("Session is not live")
+        raise SessionNotLiveError("Session is not live")
 
     if session.current_question_id != question_id:
-        raise ValueError("You cannot answer this question")
+        raise UnableToAnswerQuestionError("Unable to answer this question")
 
     if not session.current_question.answers.filter(id=answer_id).exists():
-        raise ValueError("Invalid answer ID")
+        raise AnswerNotFoundError("Invalid Answer ID")
 
-    UserAnswer.objects.update_or_create(
-        user=user, answer_id=answer_id, session=session, defaults={}
+    obj, created = UserAnswer.objects.prefetch_related(
+        "partecipant__answers"
+    ).update_or_create(
+        partecipant=partecipant,
+        question_id=question_id,
+        session=session,
+        defaults={"answer_id": answer_id},
     )
-    return True
+    return obj
+
+
+def register_for_game(*, name: str, session_id: int) -> str:
+    """
+    Registers the username in the session_id game and returns the unique token
+    associated to him.
+
+    Raises UsernameAlreadyUsedError if the username is already used
+    """
+    from quizzes.models import Partecipant
+
+    try:
+        partecipant = Partecipant.objects.create(name=name, session_id=session_id)
+        return partecipant.token
+    except IntegrityError:
+        raise UsernameAlreadyUsedError("This username is already used by someone else")

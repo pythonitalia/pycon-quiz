@@ -1,21 +1,48 @@
-import React from "react";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { useGameMachine } from "./hooks";
+import React, { useEffect } from "react";
+import { Box } from "theme-ui";
+
+import { LoadingUser } from "../../../components/loading-user";
+import { QuestionScreen } from "../../../components/question-screen";
+import { WaitingForTheGameScreen } from "../../../components/waiting-for-the-game-screen";
+import { usePlayerData } from "../../../hooks/auth";
+import { useGameMachine } from "../../../hooks/game-machine";
 
 export const Game = () => {
   const router = useRouter();
-  const { session } = router.query;
-  const sessionId = parseInt(session as string, 10);
+  const { session } = router.query as { session: string };
+  const { playerData } = usePlayerData(session);
 
-  const hello = useGameMachine(sessionId);
+  const gameState = useGameMachine(session);
 
-  console.log("data", hello);
+  useEffect(() => {
+    if (!playerData || !playerData.token) {
+      router.push("/play/[session]", `/play/${session}`);
+    }
+  }, [playerData, session]);
+  console.log("playerData", playerData);
+
+  if (!playerData.loaded) {
+    return <LoadingUser />;
+  }
 
   return (
-    <div>
-      <h1>Wait</h1>
-    </div>
+    <Box>
+      {gameState.value === "before_start" && <WaitingForTheGameScreen />}
+      {gameState.value === "live" && (
+        <QuestionScreen
+          question={gameState.event.question}
+          sessionId={session}
+          playerData={playerData}
+        />
+      )}
+    </Box>
   );
 };
 
 export default Game;
+
+export const getServerSideProps: GetServerSideProps = async (context) => ({
+  props: {},
+});

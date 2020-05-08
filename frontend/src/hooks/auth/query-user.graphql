@@ -1,0 +1,11 @@
+query GetUser($token: String!) {
+  me(token: $token) {
+    id
+    name
+    answers {
+      id
+      answerId
+      questionId
+    }
+  }
+}

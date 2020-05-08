@@ -9,12 +9,13 @@ class UserAnswer(TimeStampedModel):
     session = ForeignKey(
         "quizzes.QuizSession", on_delete=CASCADE, related_name="users_answers"
     )
-    user = ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name="answers"
+    partecipant = ForeignKey(
+        "quizzes.Partecipant", on_delete=CASCADE, related_name="answers"
     )
+    question = ForeignKey("quizzes.Question", on_delete=CASCADE)
     answer = ForeignKey("quizzes.Answer", on_delete=CASCADE)
 
     class Meta:
         verbose_name = _("user answer")
         verbose_name_plural = _("user answers")
-        unique_together = ("session", "user")
+        unique_together = ("session", "partecipant", "question")
