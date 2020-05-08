@@ -7,20 +7,48 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 import { ThemeProvider } from "theme-ui";
 import {
   createClient,
-  defaultExchanges,
+  dedupExchange,
+  fetchExchange,
   Provider,
   subscriptionExchange,
 } from "urql";
 
 import { Layout } from "../components/layout";
 import { theme } from "../theme";
+import { GetUserDocument } from "../types";
 
 const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
   const client = useRef(() => {
     const exchanges = [
       devtoolsExchange,
-      cacheExchange({}),
-      ...defaultExchanges,
+      dedupExchange,
+      cacheExchange({
+        updates: {
+          Mutation: {
+            answerQuestion: (result, args, cache, info) => {
+              cache.updateQuery(
+                {
+                  query: GetUserDocument,
+                  variables: {
+                    token: args.token,
+                  },
+                },
+                (data) => {
+                  return {
+                    ...data,
+                    me: {
+                      // @ts-ignore
+                      ...data.me,
+                      ...result.answerQuestion,
+                    },
+                  };
+                }
+              );
+            },
+          },
+        },
+      }),
+      fetchExchange,
     ];
 
     if (typeof window !== "undefined") {
@@ -44,6 +72,7 @@ const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
       url: "http://localhost:8000/graphql",
       // @ts-ignore
       exchanges,
+      requestPolicy: "cache-first",
     });
 
     return urqlClient;

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "quizzes.apps.QuizzesConfig",
     "strawberry.django",
     "corsheaders",
+    "api",
 ]
 
 MIDDLEWARE = [

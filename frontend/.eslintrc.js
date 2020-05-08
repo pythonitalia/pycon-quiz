@@ -28,6 +28,8 @@ module.exports = {
     "react/prop-types": "off",
     "import/prefer-default-export": "off",
     "operator-linebreak": "off",
+    "no-underscore-dangle": "off",
+    "react/jsx-one-expression-per-line": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { useGetUserQuery, PartecipantAnswer } from "../../types";
+import { useEffect, useState } from "react";
+
+import { PartecipantAnswer, useGetUserQuery } from "../../types";
 
 export type LocalData = {
   name?: string;
@@ -12,6 +13,8 @@ export type PlayerData = LocalData & {
 };
 
 const getLocalStorageKey = (sessionId: string) => `gameState:${sessionId}`;
+export const getUserToken = (sessionId: string): string =>
+  JSON.parse(window.localStorage.getItem(getLocalStorageKey(sessionId))).token;
 
 export const usePlayerData = (
   sessionId: string
@@ -50,7 +53,6 @@ export const usePlayerData = (
       token: localData && localData.token,
     },
     pause: !hasLocalData,
-    requestPolicy: "cache-first",
   });
 
   let playerData: PlayerData = {

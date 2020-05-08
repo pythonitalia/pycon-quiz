@@ -17,11 +17,10 @@ export const Game = () => {
   const gameState = useGameMachine(session);
 
   useEffect(() => {
-    if (!playerData || !playerData.token) {
+    if (playerData.token === null) {
       router.push("/play/[session]", `/play/${session}`);
     }
   }, [playerData, session]);
-  console.log("playerData", playerData);
 
   if (!playerData.loaded) {
     return <LoadingUser />;

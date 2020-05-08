@@ -35,6 +35,7 @@ export const AnswerBox: React.SFC<Props> = ({
         opacity: !answerChoosen || selected ? 1 : 0.5,
         cursor: "pointer",
         "&:hover": {
+          opacity: 1,
           button: {
             backgroundColor: color,
           },
@@ -68,11 +69,7 @@ export const AnswerBox: React.SFC<Props> = ({
           },
         }}
       >
-        {answer.text}
-        {" "}
-        (
-        {answer.id}
-        )
+        {answer.text} ({answer.id})
       </Button>
     </Flex>
   );

@@ -60,9 +60,7 @@ def answer_question(
     if not session.current_question.answers.filter(id=answer_id).exists():
         raise AnswerNotFoundError("Invalid Answer ID")
 
-    obj, created = UserAnswer.objects.prefetch_related(
-        "partecipant__answers"
-    ).update_or_create(
+    obj, created = UserAnswer.objects.update_or_create(
         partecipant=partecipant,
         question_id=question_id,
         session=session,

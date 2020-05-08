@@ -1,4 +1,5 @@
 import { Machine } from "xstate";
+
 import { GameState } from "../../types";
 
 type Context = {

@@ -1,8 +1,8 @@
 import { useMachine } from "@xstate/react";
-
-import { gameMachine } from "./game-machine";
-import { useGameStateSubscription, GameStateSubscription } from "../../types";
 import { useEffect } from "react";
+
+import { GameStateSubscription, useGameStateSubscription } from "../../types";
+import { gameMachine } from "./game-machine";
 
 export const useGameMachine = (sessionId: string) => {
   const [{ data, fetching, error }] = useGameStateSubscription<

@@ -19,6 +19,7 @@ mutation AnswerQuestion(
     ... on Partecipant {
       id
       name
+      sessionId
       answers {
         id
         questionId

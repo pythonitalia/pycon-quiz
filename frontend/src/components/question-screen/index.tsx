@@ -16,13 +16,12 @@ export const QuestionScreen: React.SFC<Props> = ({
   sessionId,
   playerData,
 }) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>(
-    playerData.answers.find((a) => a.questionId === question.id)?.answerId,
-  );
+  const selectedAnswerId = playerData.answers?.find(
+    (a) => a.questionId === question.id
+  )?.answerId;
   const [_, answerQuestion] = useAnswerQuestionMutation();
   const onSelectAnswer = useCallback((answerIndex) => {
     const answerId = question.answers[answerIndex].id;
-    setSelectedAnswer(answerId);
     answerQuestion({
       answerId,
       questionId: question.id,
@@ -66,8 +65,8 @@ export const QuestionScreen: React.SFC<Props> = ({
             key={answer.id}
             position={index}
             answer={answer}
-            answerChoosen={typeof selectedAnswer !== "undefined"}
-            selected={answer.id === selectedAnswer}
+            answerChoosen={typeof selectedAnswerId !== "undefined"}
+            selected={answer.id === selectedAnswerId}
             onClick={onSelectAnswer}
           />
         ))}

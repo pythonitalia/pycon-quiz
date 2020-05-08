@@ -34,6 +34,7 @@ class Partecipant:
     id: strawberry.ID
     name: str
     answers: List[PartecipantAnswer]
+    session_id: strawberry.ID
 
     @classmethod
     def from_model(cls, data):
@@ -43,4 +44,5 @@ class Partecipant:
             answers=[
                 PartecipantAnswer.from_model(answer) for answer in data.answers.all()
             ],
+            session_id=data.session_id,
         )

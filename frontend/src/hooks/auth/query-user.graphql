@@ -2,6 +2,7 @@ query GetUser($token: String!) {
   me(token: $token) {
     id
     name
+    sessionId
     answers {
       id
       answerId

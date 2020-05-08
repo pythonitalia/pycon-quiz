@@ -23,7 +23,7 @@ export const JoinGameScreen = () => {
     !registerForGameResult.fetching && formState.validity.name;
 
   useEffect(() => {
-    if (playerData && playerData.token) {
+    if (playerData.token !== null) {
       router.push("/play/[session]/game", `/play/${session}/game`);
     }
   }, [playerData, session]);
@@ -36,7 +36,7 @@ export const JoinGameScreen = () => {
     const { name } = formState.values;
 
     const response = await registerForGame({
-      sessionId: session as string,
+      sessionId: session,
       name,
     });
 
