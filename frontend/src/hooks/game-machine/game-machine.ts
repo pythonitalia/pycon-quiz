@@ -3,7 +3,6 @@ import { assign, Machine } from "xstate";
 import { GameState, Question } from "../../types";
 
 type Context = {
-  // game: GameState | null;
   question: Question | null;
 };
 
