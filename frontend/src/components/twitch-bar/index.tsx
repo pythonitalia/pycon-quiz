@@ -2,13 +2,7 @@
 /** @jsx jsx */
 import { keyframes } from "@emotion/core";
 import { useRouter } from "next/router";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Flex, jsx, Text } from "theme-ui";
 
 import { TwitchLogo } from "../twitch-logo";

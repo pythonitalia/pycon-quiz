@@ -22,6 +22,7 @@ class Question:
     id: strawberry.ID
     text: str
     answers: List[Answer]
+    ui: str
 
     @classmethod
     def from_data(cls, data):
@@ -58,6 +59,7 @@ def _map_session_to_data_dict(session: "QuizSession"):
         "current_question": {
             "id": session.current_question.id,
             "text": session.current_question.text,
+            "ui": session.current_question.ui_view,
             "answers": [
                 {"text": answer.text, "id": answer.id}
                 for answer in session.current_question.answers.all()

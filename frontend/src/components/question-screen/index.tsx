@@ -55,7 +55,8 @@ export const QuestionScreen: React.SFC<Props> = ({
         sx={{
           maxWidth: "70rem",
           width: "100%",
-          gridTemplateColumns: ["1fr", "1fr", "1fr 1fr"],
+          gridTemplateColumns:
+            question.ui === "list" ? "1fr" : ["1fr", "1fr", "1fr 1fr"],
           gridGap: "secondary",
           alignItems: "flex-start",
         }}
