@@ -69,7 +69,7 @@ export const AnswerBox: React.SFC<Props> = ({
           },
         }}
       >
-        {answer.text} ({answer.id})
+        {answer.text}
       </Button>
     </Flex>
   );
