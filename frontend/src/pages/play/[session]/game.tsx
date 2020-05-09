@@ -31,7 +31,7 @@ export const Game = () => {
       {gameState.value === "before_start" && <WaitingForTheGameScreen />}
       {gameState.value === "live" && (
         <QuestionScreen
-          question={gameState.event.question}
+          question={gameState.context.question}
           sessionId={session}
           playerData={playerData}
         />

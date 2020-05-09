@@ -1,27 +1,53 @@
-import { Machine } from "xstate";
+import { assign, Machine } from "xstate";
 
-import { GameState } from "../../types";
+import { GameState, Question } from "../../types";
 
 type Context = {
-  game: GameState | null;
+  // game: GameState | null;
+  question: Question | null;
 };
 
 export const gameMachine = Machine<Context>({
   id: "game",
   initial: "unknown",
+  context: {
+    question: null,
+  },
   states: {
     unknown: {
       on: {
         BEFORE_START: "before_start",
-        LIVE: "live",
+        LIVE: {
+          target: "live",
+          actions: assign({
+            question: (_, event) => event.question,
+          }),
+        },
         COMPLETE: "complete",
       },
     },
     before_start: {
-      on: { LIVE: "live" },
+      on: {
+        LIVE: {
+          target: "live",
+          actions: assign({
+            question: (_, event) => event.question,
+          }),
+        },
+      },
     },
     live: {
-      on: { NEW_QUESTION: "live", END: "complete" },
+      on: {
+        LIVE: {
+          target: "live",
+          actions: assign({
+            question: (_, event) => event.question,
+          }),
+        },
+        COMPLETE: {
+          target: "complete",
+        },
+      },
     },
     complete: {
       type: "final",

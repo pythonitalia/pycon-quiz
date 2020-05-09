@@ -1,17 +1,22 @@
 import { useMachine } from "@xstate/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { GameStateSubscription, useGameStateSubscription } from "../../types";
 import { gameMachine } from "./game-machine";
 
+const newGameMessageHandler = (prev, response) => response;
+
 export const useGameMachine = (sessionId: string) => {
   const [{ data, fetching, error }] = useGameStateSubscription<
     GameStateSubscription
-  >({
-    variables: {
-      sessionId,
+  >(
+    {
+      variables: {
+        sessionId,
+      },
     },
-  });
+    newGameMessageHandler
+  );
 
   const [current, send] = useMachine(gameMachine);
 
@@ -22,16 +27,15 @@ export const useGameMachine = (sessionId: string) => {
 
     switch (data.playGame.status) {
       case "draft": {
-        console.log("send befor estart");
-        send("BEFORE_START", { a: 1 });
+        send("BEFORE_START");
         break;
       }
       case "live": {
-        // if (current current.event.question)
-        console.log("send live");
         send("LIVE", { question: data.playGame.currentQuestion });
         break;
       }
+      default:
+        break;
     }
   }, [data]);
 
