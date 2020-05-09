@@ -22,32 +22,7 @@ const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
     const exchanges = [
       devtoolsExchange,
       dedupExchange,
-      cacheExchange({
-        updates: {
-          Mutation: {
-            answerQuestion: (result, args, cache, info) => {
-              cache.updateQuery(
-                {
-                  query: GetUserDocument,
-                  variables: {
-                    token: args.token,
-                  },
-                },
-                (data) => {
-                  return {
-                    ...data,
-                    me: {
-                      // @ts-ignore
-                      ...data.me,
-                      ...result.answerQuestion,
-                    },
-                  };
-                }
-              );
-            },
-          },
-        },
-      }),
+      cacheExchange({}),
       fetchExchange,
     ];
 
