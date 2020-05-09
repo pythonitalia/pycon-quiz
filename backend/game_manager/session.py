@@ -1,4 +1,3 @@
-from django.db import IntegrityError
 from typing import TYPE_CHECKING
 from asgiref.sync import sync_to_async
 
@@ -7,7 +6,6 @@ if TYPE_CHECKING:
     from quizzes.models import QuizSession, Question
 
 from game_manager.exceptions import (
-    UsernameAlreadyUsedError,
     PartecipantNotFoundError,
     SessionNotLiveError,
     UnableToAnswerQuestionError,
@@ -67,19 +65,3 @@ def answer_question(
         defaults={"answer_id": answer_id},
     )
     return obj
-
-
-def register_for_game(*, name: str, session_id: int) -> str:
-    """
-    Registers the username in the session_id game and returns the unique token
-    associated to him.
-
-    Raises UsernameAlreadyUsedError if the username is already used
-    """
-    from quizzes.models import Partecipant
-
-    try:
-        partecipant = Partecipant.objects.create(name=name, session_id=session_id)
-        return partecipant.token
-    except IntegrityError:
-        raise UsernameAlreadyUsedError("This username is already used by someone else")

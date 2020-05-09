@@ -23,6 +23,10 @@ def end(session: QuizSession):
     asyncio.run(_send_update(session.id))
 
 
+def send_generic_update(session: QuizSession):
+    asyncio.run(_send_update(session.id))
+
+
 async def _send_update(session_id: int):
     session = await get_session_async(session_id)
     await update_game(session)

@@ -2,7 +2,8 @@ from typing import Union
 import strawberry
 from django.utils.translation import ugettext_lazy as _
 
-from game_manager.session import get_session, answer_question, register_for_game
+from game_manager.session import get_session, answer_question
+from game_manager.partecipants import register_for_game
 from game_manager.exceptions import UsernameAlreadyUsedError
 
 from api.quizzes.types import Error, OperationResult, Token, Partecipant

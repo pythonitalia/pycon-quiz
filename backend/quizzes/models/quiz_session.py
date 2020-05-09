@@ -36,7 +36,7 @@ class QuizSession(TimeStampedModel):
 
     @transition(status, source=Status.draft, target=Status.live)
     def go_live(self):
-        self.current_question = None
+        self.current_question = self.quiz.questions.first()
 
     @transition(status, source=Status.live, target=Status.complete)
     def end(self):

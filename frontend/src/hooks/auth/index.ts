@@ -16,6 +16,8 @@ const getLocalStorageKey = (sessionId: string) => `gameState:${sessionId}`;
 export const getUserToken = (sessionId: string): string =>
   JSON.parse(window.localStorage.getItem(getLocalStorageKey(sessionId))).token;
 
+const EMPTY_PLAYER = { token: null, loaded: false };
+
 export const usePlayerData = (
   sessionId: string
 ): {
@@ -37,6 +39,10 @@ export const usePlayerData = (
     };
 
     setData(newPlayerData);
+  };
+
+  const clearLocalData = () => {
+    setData(null);
   };
 
   useEffect(() => {
@@ -63,11 +69,17 @@ export const usePlayerData = (
   if (userDataFromBackend.data) {
     const { me } = userDataFromBackend.data;
 
-    playerData = {
-      ...playerData,
-      loaded: true,
-      ...me,
-    };
+    if (me === null) {
+      // TODO: Improve this flow, it's very mixed up right now
+      window.localStorage.removeItem(localStorageKey);
+      playerData = EMPTY_PLAYER;
+    } else {
+      playerData = {
+        ...playerData,
+        loaded: true,
+        ...me,
+      };
+    }
   }
 
   return {

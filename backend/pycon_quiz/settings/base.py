@@ -20,6 +20,7 @@ env_file = root(".env")
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
 
+env = environ.Env()
 
 ALLOWED_HOSTS = []
 
@@ -72,9 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "pycon_quiz.wsgi.application"
 
-DATABASES = {
-    "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": root("db.sqlite3")}
-}
+DATABASES = {"default": env.db()}
 
 
 # Password validation

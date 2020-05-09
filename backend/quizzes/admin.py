@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 
 from django_object_actions import DjangoObjectActions
 
-from game_manager.actions import go_live, end, go_to_next_question
+from game_manager.actions import go_live, end, go_to_next_question, send_generic_update
 
 
 class AnswerInline(nested_admin.NestedStackedInline):
@@ -72,6 +72,10 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "end_quiz",
     )
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        send_generic_update(obj)
+
     def current_question_answer(self, obj: QuizSession):
         current_question = obj.current_question
 
@@ -86,6 +90,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
         )
 
     def go_to_next_question(self, obj):
+        if not obj.next_question:
+            return _render_message(_("No next question"))
+
         return _render_button(
             _("Go to next question"), url=_get_url_to_action("next_question", obj.id)
         )
@@ -144,6 +151,10 @@ def _render_button(label, url="#"):
     <a class="button" href="{url}">{label}</a>
     """
     )
+
+
+def _render_message(message):
+    return mark_safe(message)
 
 
 @admin.register(UserAnswer)
