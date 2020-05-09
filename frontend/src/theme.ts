@@ -24,6 +24,7 @@ export const theme = {
   space: {
     primary: "2rem",
     secondary: "4rem",
+    small: "1.4rem",
     primaryHorizontal: "2.4rem",
     primaryVertical: "1.6rem",
     intro: "12rem",

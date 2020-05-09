@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import {
-  Box, Flex, Input, Text,
-} from "theme-ui";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Box, Flex, Input, Text } from "theme-ui";
 
 type Props = {
   id: string;
@@ -24,12 +22,15 @@ export const NameInput: React.SFC<Props> = ({
   error,
   id,
 }) => {
-  const placeholder = useMemo(
-    () => PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
-    [],
-  );
+  const [placeholder, setPlaceholder] = useState<string>();
   const textClone = useRef<HTMLSpanElement>();
   const inputBox = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    setPlaceholder(
+      PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)]
+    );
+  }, []);
 
   useEffect(() => {
     if (!textClone.current) {

@@ -30,6 +30,7 @@ module.exports = {
     "operator-linebreak": "off",
     "no-underscore-dangle": "off",
     "react/jsx-one-expression-per-line": "off",
+    "consistent-return": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
