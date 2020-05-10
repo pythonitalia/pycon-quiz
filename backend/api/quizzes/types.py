@@ -1,6 +1,6 @@
-import strawberry
-
 from typing import List
+
+import strawberry
 
 
 @strawberry.type

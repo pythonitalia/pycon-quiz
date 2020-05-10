@@ -20,15 +20,17 @@ export const QuestionScreen: React.SFC<Props> = ({
     (a) => a.questionId === question.id
   )?.answerId;
   const [_, answerQuestion] = useAnswerQuestionMutation();
-  const onSelectAnswer = useCallback((answerIndex) => {
-    const answerId = question.answers[answerIndex].id;
-    answerQuestion({
-      answerId,
-      questionId: question.id,
-      token: playerData.token,
-      sessionId,
-    });
-  }, []);
+  const onSelectAnswer = useCallback(
+    (answerId) => {
+      answerQuestion({
+        answerId,
+        questionId: question.id,
+        token: playerData.token,
+        sessionId,
+      });
+    },
+    [question, playerData, sessionId]
+  );
 
   return (
     <Flex

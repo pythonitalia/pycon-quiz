@@ -8,7 +8,7 @@ type Props = {
   position: number;
   selected: boolean;
   answerChoosen: boolean;
-  onClick: (position: number) => void;
+  onClick: (answerId: string) => void;
 };
 
 const LETTTERS = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -24,8 +24,8 @@ export const AnswerBox: React.SFC<Props> = ({
   const color = COLORS[position % COLORS.length];
 
   const onClickWrapper = useCallback(() => {
-    onClick(position);
-  }, [onClick, position]);
+    onClick(answer.id);
+  }, [onClick, answer]);
 
   return (
     <Flex

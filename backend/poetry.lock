@@ -142,6 +142,18 @@ version = "3.2.1"
 Django = ">=1.11"
 
 [[package]]
+category = "dev"
+description = "A configurable set of panels that display various debug information about the current request/response."
+name = "django-debug-toolbar"
+optional = false
+python-versions = ">=3.5"
+version = "2.2"
+
+[package.dependencies]
+Django = ">=1.11"
+sqlparse = ">=0.2.0"
+
+[[package]]
 category = "main"
 description = "Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application."
 name = "django-environ"
@@ -205,6 +217,17 @@ python-versions = "*"
 version = "2.0.0"
 
 [[package]]
+category = "main"
+description = "Allows ORM constructs to be sealed to prevent them from executing queries on attribute accesses."
+name = "django-seal"
+optional = false
+python-versions = "*"
+version = "1.2.3"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[[package]]
 category = "dev"
 description = "colorful TAB completion for Python prompt"
 name = "fancycompleter"
@@ -263,6 +286,20 @@ version = "1.10.2"
 [package.extras]
 docs = ["watchdog", "sphinx", "pylons-sphinx-themes"]
 testing = ["watchdog", "pytest", "pytest-cov", "mock"]
+
+[[package]]
+category = "main"
+description = "A Python utility / library to sort Python imports."
+name = "isort"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "4.3.21"
+
+[package.extras]
+pipfile = ["pipreqs", "requirementslib"]
+pyproject = ["toml"]
+requirements = ["pipreqs", "pip-api"]
+xdg_home = ["appdirs (>=1.4.0)"]
 
 [[package]]
 category = "dev"
@@ -457,7 +494,7 @@ python-versions = "*"
 version = "0.3"
 
 [metadata]
-content-hash = "10a053a59ad097339a832339688fb891f79dab20323694d09212d7698c45acc2"
+content-hash = "82a891bf40424a8940e784df8b3b5d27b24d2c9e64e8b70e4c13fa6afb0de654"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -509,6 +546,10 @@ django-cors-headers = [
     {file = "django-cors-headers-3.2.1.tar.gz", hash = "sha256:a5960addecc04527ab26617e51b8ed42f0adab4594b24bb0f3c33e2bd3857c3f"},
     {file = "django_cors_headers-3.2.1-py3-none-any.whl", hash = "sha256:a785b5f446f6635810776d9f5f5d23e6a2a2f728ea982648370afaf0dfdf2627"},
 ]
+django-debug-toolbar = [
+    {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
+    {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
+]
 django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
     {file = "django_environ-0.4.5-py2.py3-none-any.whl", hash = "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"},
@@ -534,6 +575,10 @@ django-nested-admin = [
 django-object-actions = [
     {file = "django-object-actions-2.0.0.tar.gz", hash = "sha256:bbf027873c2c5a7b976133630cd8976007b94ef609c09af124683e12f94ad01d"},
     {file = "django_object_actions-2.0.0-py2.py3-none-any.whl", hash = "sha256:69b8c2e4ec57f10fe8f1457e0694b7f81abe486bdb31bd21d7bc39e4c4128538"},
+]
+django-seal = [
+    {file = "django-seal-1.2.3.tar.gz", hash = "sha256:5ac75d16de805d3b04d8bf3b4960eb516f6380058688993e545b60f1d594ca4f"},
+    {file = "django_seal-1.2.3-py2.py3-none-any.whl", hash = "sha256:cfda32f1c684cfe38b703ccd5a71cc9887150192c3fe6ae3e271bdaac3a50574"},
 ]
 fancycompleter = [
     {file = "fancycompleter-0.9.1-py3-none-any.whl", hash = "sha256:dd076bca7d9d524cc7f25ec8f35ef95388ffef9ef46def4d3d25e9b044ad7080"},
@@ -606,6 +651,10 @@ httptools = [
 hupper = [
     {file = "hupper-1.10.2-py2.py3-none-any.whl", hash = "sha256:5de835f3b58324af2a8a16f52270c4d1a3d1734c45eed94b77fd622aea737f29"},
     {file = "hupper-1.10.2.tar.gz", hash = "sha256:3818f53dabc24da66f65cf4878c1c7a9b5df0c46b813e014abdd7c569eb9a02a"},
+]
+isort = [
+    {file = "isort-4.3.21-py2.py3-none-any.whl", hash = "sha256:6e811fcb295968434526407adb8796944f1988c5b65e8139058f2014cbe100fd"},
+    {file = "isort-4.3.21.tar.gz", hash = "sha256:54da7e92468955c4fceacd0c86bd0ec997b0e1ee80d97f67c35a78b719dccab1"},
 ]
 pathspec = [
     {file = "pathspec-0.7.0-py2.py3-none-any.whl", hash = "sha256:163b0632d4e31cef212976cf57b43d9fd6b0bac6e67c26015d611a647d5e7424"},

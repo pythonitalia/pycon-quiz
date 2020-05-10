@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+
 import environ
 
 root = environ.Path(__file__) - 3
@@ -40,9 +41,11 @@ INSTALLED_APPS = [
     "strawberry.django",
     "corsheaders",
     "api",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -115,3 +118,7 @@ AUTH_USER_MODEL = "users.User"
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

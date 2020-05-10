@@ -1,16 +1,18 @@
 from typing import TYPE_CHECKING
+
 from asgiref.sync import sync_to_async
+
+from game_manager.exceptions import (
+    AnswerNotFoundError,
+    PartecipantNotFoundError,
+    SessionNotLiveError,
+    UnableToAnswerQuestionError,
+)
 
 if TYPE_CHECKING:
     from users.models import User
     from quizzes.models import QuizSession, Question
 
-from game_manager.exceptions import (
-    PartecipantNotFoundError,
-    SessionNotLiveError,
-    UnableToAnswerQuestionError,
-    AnswerNotFoundError,
-)
 
 
 def get_session(id: int) -> "QuizSession":

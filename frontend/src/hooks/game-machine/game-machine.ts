@@ -33,6 +33,7 @@ export const gameMachine = Machine<Context>({
             question: (_, event) => event.question,
           }),
         },
+        COMPLETE: "complete",
       },
     },
     live: {

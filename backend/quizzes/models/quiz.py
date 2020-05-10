@@ -1,13 +1,12 @@
+from django.db.models import CharField, SlugField
 from django.utils.translation import ugettext_lazy as _
-
 from model_utils.models import TimeStampedModel
+from seal.models import SealableModel
 
 from quizzes.models.quiz_session import QuizSession
 
-from django.db.models import CharField, SlugField
 
-
-class Quiz(TimeStampedModel):
+class Quiz(TimeStampedModel, SealableModel):
     name = CharField(_("name"), max_length=300)
     slug = SlugField(_("slug"))
 

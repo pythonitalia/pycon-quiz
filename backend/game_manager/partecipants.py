@@ -1,6 +1,6 @@
-from django.db import IntegrityError
-
 from typing import TYPE_CHECKING
+
+from django.db import IntegrityError
 
 from game_manager.exceptions import PartecipantNotFoundError, UsernameAlreadyUsedError
 

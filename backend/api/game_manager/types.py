@@ -1,7 +1,6 @@
-from typing import TYPE_CHECKING, Optional, List
+from typing import TYPE_CHECKING, List, Optional
 
 import strawberry
-
 
 if TYPE_CHECKING:
     from quizzes.models import QuizSession, Question as QuestionModel
@@ -38,14 +37,34 @@ class Question:
 
 
 @strawberry.type
+class LeaderboardPartecipant:
+    name: str
+    score: int
+
+    @classmethod
+    def from_data(cls, data):
+        return cls(name=data["name"], score=data["score"])
+
+
+@strawberry.type
 class GameState:
     status: str
     current_question: Optional[Question]
+    leaderboard: Optional[List[LeaderboardPartecipant]]
 
     @classmethod
     def from_data(cls, data):
         return cls(
-            **{**data, "current_question": Question.from_data(data["current_question"])}
+            **{
+                **data,
+                "current_question": Question.from_data(data["current_question"]),
+                "leaderboard": [
+                    LeaderboardPartecipant.from_data(partecipant)
+                    for partecipant in data["leaderboard"]
+                ]
+                if data["leaderboard"]
+                else None,
+            }
         )
 
     @classmethod
@@ -66,5 +85,11 @@ def _map_session_to_data_dict(session: "QuizSession"):
             ],
         }
         if session.current_question
+        else None,
+        "leaderboard": [
+            {"name": partecipant.name, "score": partecipant.score}
+            for partecipant in session.leaderboard
+        ]
+        if session.is_finished
         else None,
     }

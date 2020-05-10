@@ -1,11 +1,11 @@
 from django.conf import settings
-from django.db.models import CharField, SlugField, ForeignKey, CASCADE, SET_NULL
+from django.db.models import CASCADE, SET_NULL, CharField, ForeignKey, SlugField
 from django.utils.translation import ugettext_lazy as _
-
 from model_utils.models import TimeStampedModel
+from seal.models import SealableModel
 
 
-class UserAnswer(TimeStampedModel):
+class UserAnswer(TimeStampedModel, SealableModel):
     session = ForeignKey(
         "quizzes.QuizSession", on_delete=CASCADE, related_name="users_answers"
     )

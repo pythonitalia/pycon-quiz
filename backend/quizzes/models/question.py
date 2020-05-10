@@ -1,11 +1,11 @@
-from django.db.models import CharField, ForeignKey, CASCADE, PositiveIntegerField
-
-from model_utils.models import TimeStampedModel
+from django.db.models import CASCADE, CharField, ForeignKey, PositiveIntegerField
 from django.utils.translation import ugettext_lazy as _
-from djchoices import DjangoChoices, ChoiceItem
+from djchoices import ChoiceItem, DjangoChoices
+from model_utils.models import TimeStampedModel
+from seal.models import SealableModel
 
 
-class Question(TimeStampedModel):
+class Question(TimeStampedModel, SealableModel):
     class UIView(DjangoChoices):
         grid = ChoiceItem("grid")
         list = ChoiceItem("list")

@@ -1,4 +1,5 @@
 import typing
+
 import strawberry
 
 from api.game_manager.subscription import GameManagerSubscription

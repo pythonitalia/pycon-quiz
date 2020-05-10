@@ -3,3 +3,7 @@ run-server:
 
 load-demodata:
 	poetry run python manage.py loaddata demodata.json
+
+generate-demodata:
+	poetry run python manage.py dumpdata quizzes.Quiz quizzes.Question quizzes.Answer > demodata.json
+

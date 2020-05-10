@@ -1,8 +1,8 @@
 import asyncio
-from quizzes.models import QuizSession
 
-from game_manager.signals import update_game
+from game_manager.publisher import update_game
 from game_manager.session import get_session_async
+from quizzes.models import QuizSession
 
 
 def go_live(session: QuizSession):

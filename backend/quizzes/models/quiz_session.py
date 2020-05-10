@@ -1,13 +1,21 @@
-from django.db.models import CharField, SlugField, ForeignKey, CASCADE, SET_NULL
-
-from model_utils.models import TimeStampedModel
+from django.db.models import (
+    CASCADE,
+    SET_NULL,
+    CharField,
+    Count,
+    ForeignKey,
+    Q,
+    SlugField,
+    Sum,
+)
 from django.utils.translation import ugettext_lazy as _
-
 from django_fsm import FSMField, transition
-from djchoices import DjangoChoices, ChoiceItem
+from djchoices import ChoiceItem, DjangoChoices
+from model_utils.models import TimeStampedModel
+from seal.models import SealableModel
 
 
-class QuizSession(TimeStampedModel):
+class QuizSession(TimeStampedModel, SealableModel):
     class Status(DjangoChoices):
         draft = ChoiceItem("draft")
         live = ChoiceItem("live")
@@ -34,6 +42,10 @@ class QuizSession(TimeStampedModel):
     def is_live(self):
         return self.status == QuizSession.Status.live
 
+    @property
+    def is_finished(self):
+        return self.status == QuizSession.Status.complete
+
     @transition(status, source=Status.draft, target=Status.live)
     def go_live(self):
         self.current_question = self.quiz.questions.first()
@@ -41,6 +53,13 @@ class QuizSession(TimeStampedModel):
     @transition(status, source=Status.live, target=Status.complete)
     def end(self):
         pass
+
+    @property
+    def leaderboard(self):
+        return self.partecipants.annotate(
+            tot_answers=Count("answers"),
+            score=Count("answers", filter=Q(answers__answer__is_correct=True)),
+        ).order_by("score")
 
     @property
     def next_question(self):

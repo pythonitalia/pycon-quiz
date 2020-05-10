@@ -1,8 +1,9 @@
 import json
 
-from api.schema import schema
 from django.core.management.base import BaseCommand
 from graphql import get_introspection_query, graphql_sync
+
+from api.schema import schema
 
 
 class Command(BaseCommand):

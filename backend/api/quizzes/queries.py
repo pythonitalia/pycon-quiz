@@ -1,11 +1,10 @@
 from typing import Optional
-from api.quizzes.types import Partecipant
-
-from game_manager.partecipants import get_partecipant_by_token
-from game_manager.exceptions import PartecipantNotFoundError
-
 
 import strawberry
+
+from api.quizzes.types import Partecipant
+from game_manager.exceptions import PartecipantNotFoundError
+from game_manager.partecipants import get_partecipant_by_token
 
 
 @strawberry.type

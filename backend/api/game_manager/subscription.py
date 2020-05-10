@@ -1,11 +1,13 @@
 import typing
+
 import strawberry
 
-from game_manager.session import get_redis_channel_name_for_session_id
 from api.game_manager.types import GameState
-
+from game_manager.session import (
+    get_redis_channel_name_for_session_id,
+    get_session_async,
+)
 from pycon_quiz.redis import get_client
-from game_manager.session import get_session_async
 
 
 @strawberry.type

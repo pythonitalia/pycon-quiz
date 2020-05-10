@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Box } from "theme-ui";
 
+import { Leaderboard } from "../../../components/leaderboard";
 import { LoadingUser } from "../../../components/loading-user";
 import { QuestionScreen } from "../../../components/question-screen";
 import { WaitingForTheGameScreen } from "../../../components/waiting-for-the-game-screen";
@@ -36,6 +37,7 @@ export const Game = () => {
           playerData={playerData}
         />
       )}
+      {gameState.value === "complete" && <Leaderboard />}
     </Box>
   );
 };

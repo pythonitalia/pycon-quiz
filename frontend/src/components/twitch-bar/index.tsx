@@ -10,8 +10,8 @@ import { TwitchLogo } from "../twitch-logo";
 type Props = {};
 
 const TEXT_TO_DISPLAY = "Watch live on Twitch /";
-
-const animation = keyframes`
+// TODO Finish this
+const animation1 = keyframes`
   0% {
     transform: translate(0, 0);
   }
@@ -20,13 +20,37 @@ const animation = keyframes`
   }
 `;
 
+const animation2 = keyframes`
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+`;
+
+const MarqueeContainer: React.FC<{ position: number }> = ({
+  children,
+  position,
+}) => (
+  <Flex
+    sx={{
+      flexShrink: 0,
+      willChange: "transform",
+      animation: `${
+        position === 1 ? animation1 : animation2
+      } 20s linear infinite`,
+    }}
+  >
+    {children}
+  </Flex>
+);
+
 const MarqueeText = React.forwardRef((props, ref) => (
   <Text
     sx={{
       mr: ".5rem",
       flexShrink: 0,
-      willChange: "transform",
-      animation: `${animation} 10s linear infinite`,
     }}
     ref={ref}
     as="span"
@@ -112,9 +136,16 @@ export const TwitchBar: React.SFC<Props> = (props) => {
           key="main"
           ref={referenceText}
         />
-        {textsToRender.map((_, i) => (
-          <MarqueeText key={`rep-${textsToRender.length}-${i}`} />
-        ))}
+        <MarqueeContainer position={1}>
+          {textsToRender.map((_, i) => (
+            <MarqueeText key={`rep-${textsToRender.length}-${i}`} />
+          ))}
+        </MarqueeContainer>
+        <MarqueeContainer position={2}>
+          {textsToRender.map((_, i) => (
+            <MarqueeText key={`rep-${textsToRender.length}-${i}`} />
+          ))}
+        </MarqueeContainer>
       </Flex>
     </Flex>
   );

@@ -1,10 +1,8 @@
 import dataclasses
-import django.dispatch
 
-from pycon_quiz.redis import get_client
 from api.game_manager.types import GameState
-
 from game_manager.session import get_redis_channel_name_for_session_id
+from pycon_quiz.redis import get_client
 
 
 async def update_game(session):

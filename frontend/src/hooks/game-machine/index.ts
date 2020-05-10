@@ -34,6 +34,10 @@ export const useGameMachine = (sessionId: string) => {
         send("LIVE", { question: data.playGame.currentQuestion });
         break;
       }
+      case "complete": {
+        send("COMPLETE", {});
+        break;
+      }
       default:
         break;
     }

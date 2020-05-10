@@ -12,6 +12,7 @@ import os
 from django.core.asgi import get_asgi_application
 from starlette.applications import Starlette
 from strawberry.asgi import GraphQL
+
 from api.schema import schema
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pycon_quiz.settings.dev")

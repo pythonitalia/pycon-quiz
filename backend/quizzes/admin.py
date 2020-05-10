@@ -1,14 +1,13 @@
 import nested_admin
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
-from django.utils.html import mark_safe
-from quizzes.models import Quiz, QuizSession, Question, Answer, UserAnswer, Partecipant
-from django.urls import path, reverse
 from django.shortcuts import redirect
-
+from django.urls import path, reverse
+from django.utils.html import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from django_object_actions import DjangoObjectActions
 
-from game_manager.actions import go_live, end, go_to_next_question, send_generic_update
+from game_manager.actions import end, go_live, go_to_next_question, send_generic_update
+from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
 
 
 class AnswerInline(nested_admin.NestedStackedInline):
@@ -61,6 +60,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
             _("Game Manager"),
             {"fields": ("start_quiz", "go_to_next_question", "end_quiz")},
         ),
+        (_("Leaderboard"), {"fields": ("leaderboard",)}),
     )
     readonly_fields = (
         "status",
@@ -70,6 +70,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "start_quiz",
         "go_to_next_question",
         "end_quiz",
+        "leaderboard",
     )
 
     def save_model(self, request, obj, form, change):
@@ -83,6 +84,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
             return None
 
         return current_question.answers.filter(is_correct=True).first().text
+
+    def leaderboard(self, obj):
+        return _render_leaderboard(obj.leaderboard)
 
     def start_quiz(self, obj):
         return _render_button(
@@ -157,9 +161,30 @@ def _render_message(message):
     return mark_safe(message)
 
 
+def _render_leaderboard(leaderboard):
+    items = "".join(
+        [
+            f"<li>{partecipant.name}: {partecipant.score} (total answers: {partecipant.tot_answers})</li>"
+            for partecipant in leaderboard
+        ]
+    )
+
+    return mark_safe(
+        f"""
+    <ul style="margin-left: 0">
+        {items}
+    </ul>
+"""
+    )
+
+
 @admin.register(UserAnswer)
 class UserAnswerAdmin(admin.ModelAdmin):
-    pass
+    fields = ('session', 'partecipant', 'question', 'answer', 'is_correct')
+    readonly_fields = ('is_correct',)
+
+    def is_correct(self, obj):
+        return obj.answer.is_correct
 
 
 @admin.register(Partecipant)
