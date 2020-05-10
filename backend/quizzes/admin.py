@@ -73,6 +73,14 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "leaderboard",
     )
 
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset(request)
+            .prefetch_related("current_question__answers")
+            .select_related("quiz", "current_question")
+        )
+
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         send_generic_update(obj)
@@ -180,8 +188,8 @@ def _render_leaderboard(leaderboard):
 
 @admin.register(UserAnswer)
 class UserAnswerAdmin(admin.ModelAdmin):
-    fields = ('session', 'partecipant', 'question', 'answer', 'is_correct')
-    readonly_fields = ('is_correct',)
+    fields = ("session", "partecipant", "question", "answer", "is_correct")
+    readonly_fields = ("is_correct",)
 
     def is_correct(self, obj):
         return obj.answer.is_correct
