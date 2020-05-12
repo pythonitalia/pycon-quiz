@@ -35,7 +35,7 @@ export const useGameMachine = (sessionId: string) => {
         break;
       }
       case "complete": {
-        send("COMPLETE", {});
+        send("COMPLETE", { leaderboard: data.playGame.leaderboard });
         break;
       }
       default:

@@ -1,11 +1,14 @@
 import React from "react";
 import { Box, Grid, Heading } from "theme-ui";
 
+import { LeaderboardPartecipant } from "../../types";
 import { PartecipantScore } from "../partecipant-score";
 
-type Props = {};
+type Props = {
+  leaderboard: LeaderboardPartecipant[];
+};
 
-export const Leaderboard: React.SFC<Props> = (props) => {
+export const Leaderboard: React.SFC<Props> = ({ leaderboard }) => {
   return (
     <Box
       sx={{
@@ -30,79 +33,9 @@ export const Leaderboard: React.SFC<Props> = (props) => {
       </Heading>
 
       <Grid sx={{ gridTemplateColumn: "1fr", gridGap: "3rem" }}>
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
-        <PartecipantScore />
+        {leaderboard.map((partecipant) => (
+          <PartecipantScore partecipant={partecipant} />
+        ))}
       </Grid>
     </Box>
   );

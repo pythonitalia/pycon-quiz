@@ -1,9 +1,13 @@
 import React from "react";
 import { Box, Flex } from "theme-ui";
 
-type Props = {};
+import { LeaderboardPartecipant } from "../../types";
 
-export const PartecipantScore: React.SFC<Props> = (props) => {
+type Props = {
+  partecipant: LeaderboardPartecipant;
+};
+
+export const PartecipantScore: React.SFC<Props> = ({ partecipant }) => {
   return (
     <Flex
       sx={{
@@ -22,7 +26,7 @@ export const PartecipantScore: React.SFC<Props> = (props) => {
           alignItems: "center",
         }}
       >
-        Splact
+        {partecipant.name}
       </Box>
       <Box
         sx={{
@@ -34,7 +38,7 @@ export const PartecipantScore: React.SFC<Props> = (props) => {
           alignItems: "center",
         }}
       >
-        31
+        {partecipant.score}
       </Box>
     </Flex>
   );

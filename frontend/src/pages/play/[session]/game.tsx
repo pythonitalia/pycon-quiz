@@ -37,7 +37,9 @@ export const Game = () => {
           playerData={playerData}
         />
       )}
-      {gameState.value === "complete" && <Leaderboard />}
+      {gameState.value === "complete" && (
+        <Leaderboard leaderboard={gameState.context.leaderboard} />
+      )}
     </Box>
   );
 };

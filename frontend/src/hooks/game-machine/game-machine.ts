@@ -1,9 +1,10 @@
 import { assign, Machine } from "xstate";
 
-import { GameState, Question } from "../../types";
+import { GameState, LeaderboardPartecipant, Question } from "../../types";
 
 type Context = {
   question: Question | null;
+  leaderboard: LeaderboardPartecipant[] | null;
 };
 
 export const gameMachine = Machine<Context>({
@@ -11,6 +12,7 @@ export const gameMachine = Machine<Context>({
   initial: "unknown",
   context: {
     question: null,
+    leaderboard: null,
   },
   states: {
     unknown: {
@@ -22,7 +24,12 @@ export const gameMachine = Machine<Context>({
             question: (_, event) => event.question,
           }),
         },
-        COMPLETE: "complete",
+        COMPLETE: {
+          target: "complete",
+          actions: assign({
+            leaderboard: (_, event) => event.leaderboard,
+          }),
+        },
       },
     },
     before_start: {
@@ -33,7 +40,12 @@ export const gameMachine = Machine<Context>({
             question: (_, event) => event.question,
           }),
         },
-        COMPLETE: "complete",
+        COMPLETE: {
+          target: "complete",
+          actions: assign({
+            leaderboard: (_, event) => event.leaderboard,
+          }),
+        },
       },
     },
     live: {
@@ -46,6 +58,9 @@ export const gameMachine = Machine<Context>({
         },
         COMPLETE: {
           target: "complete",
+          actions: assign({
+            leaderboard: (_, event) => event.leaderboard,
+          }),
         },
       },
     },

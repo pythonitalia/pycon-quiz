@@ -59,7 +59,7 @@ class QuizSession(TimeStampedModel, SealableModel):
         return self.partecipants.annotate(
             tot_answers=Count("answers"),
             score=Count("answers", filter=Q(answers__answer__is_correct=True)),
-        ).order_by("score")
+        ).order_by("-score")
 
     @property
     def next_question(self):
