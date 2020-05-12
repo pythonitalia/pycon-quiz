@@ -20,3 +20,7 @@ class AnswerNotFoundError(Exception):
 
 class PartecipantNotFoundError(Exception):
     pass
+
+
+class SessionNotFoundError(Exception):
+    pass

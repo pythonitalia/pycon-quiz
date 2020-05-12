@@ -1,33 +1,17 @@
 from typing import TYPE_CHECKING
-
-from asgiref.sync import sync_to_async
-
-from game_manager.exceptions import (
-    AnswerNotFoundError,
-    PartecipantNotFoundError,
-    SessionNotLiveError,
-    UnableToAnswerQuestionError,
-)
+from game_manager.exceptions import (AnswerNotFoundError,
+                                     PartecipantNotFoundError,
+                                     SessionNotLiveError,
+                                     UnableToAnswerQuestionError)
 
 if TYPE_CHECKING:
     from users.models import User
     from quizzes.models import QuizSession, Question
 
 
-
 def get_session(id: int) -> "QuizSession":
     from quizzes.models import QuizSession
-
-    return (
-        QuizSession.objects.prefetch_related("current_question__answers")
-        .select_related("quiz", "current_question")
-        .get(id=id)
-    )
-
-
-@sync_to_async
-def get_session_async(id: int) -> "QuizSession":
-    return get_session(id)
+    return QuizSession.objects.get(id=id)
 
 
 def get_redis_channel_name_for_session_id(id: int):

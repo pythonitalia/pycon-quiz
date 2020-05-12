@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import strawberry
 
@@ -46,3 +46,13 @@ class Partecipant:
             ],
             session_id=data.session_id,
         )
+
+
+@strawberry.type
+class QuizSession:
+    id: strawberry.ID
+    name: Optional[str]
+
+    @classmethod
+    def from_model(cls, data):
+        return cls(id=data.id, name=data.name)

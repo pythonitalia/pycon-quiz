@@ -97,6 +97,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
         return _render_leaderboard(obj.leaderboard)
 
     def start_quiz(self, obj):
+        if obj.is_live:
+            return _render_message("The event is already live!")
+
         return _render_button(
             _("Start quiz"), url=_get_url_to_action("start_quiz", obj.id)
         )

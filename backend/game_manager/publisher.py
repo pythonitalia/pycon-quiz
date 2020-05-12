@@ -1,12 +1,14 @@
 import asyncio
 import dataclasses
 
+from asgiref.sync import sync_to_async
+
 from api.game_manager.types import GameState
-from game_manager.session import get_redis_channel_name_for_session_id
+from game_manager.session import get_redis_channel_name_for_session_id, get_session
 from pycon_quiz.redis import get_client
 
 
-def send_update(session: QuizSession):
+def send_update(session):
     game_state = GameState.from_session(session)
     asyncio.run(update_game(session.id, game_state))
 
@@ -20,3 +22,9 @@ async def update_game(session_id: int, game_state: GameState):
     )
 
     client.close()
+
+
+@sync_to_async
+def get_game_state_from_session_id(id: int) -> "QuizSession":
+    session = get_session(id)
+    return GameState.from_session(session)

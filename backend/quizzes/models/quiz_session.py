@@ -21,7 +21,7 @@ class QuizSession(TimeStampedModel, SealableModel):
         live = ChoiceItem("live")
         complete = ChoiceItem("complete")
 
-    name = CharField(_("name"), max_length=1000)
+    name = CharField(_("name"), max_length=100, blank=True, default="")
     quiz = ForeignKey(
         "quizzes.Quiz",
         on_delete=CASCADE,

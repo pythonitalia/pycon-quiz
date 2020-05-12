@@ -1,5 +1,4 @@
 from game_manager.publisher import send_update
-from game_manager.session import get_session_async
 from quizzes.models import QuizSession
 
 
