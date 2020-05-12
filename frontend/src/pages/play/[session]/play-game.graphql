@@ -10,5 +10,9 @@ subscription GameState($sessionId: ID!) {
         text
       }
     }
+    leaderboard {
+      name
+      score
+    }
   }
 }

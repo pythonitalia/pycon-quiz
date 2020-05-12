@@ -1,0 +1,5 @@
+query GetSessionInfo($sessionId: ID!) {
+  session(id: $sessionId) {
+    name
+  }
+}
