@@ -7,12 +7,7 @@ import { Flex, Heading } from "theme-ui";
 import { JoinButton } from "../../../components/join-button";
 import { NameInput } from "../../../components/name-input";
 import { usePlayerData } from "../../../hooks/auth";
-import {
-  GetSessionInfoDocument,
-  GetSessionInfoQuery,
-  QuizSession,
-  useRegisterForGameMutation,
-} from "../../../types";
+import { QuizSession, useRegisterForGameMutation } from "../../../types";
 
 const COLORS = [
   "#8E76AC",

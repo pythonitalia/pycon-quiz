@@ -24,12 +24,7 @@ type Props = {
   };
 };
 
-const App: React.FC<AppProps<Props>> = ({
-  Component,
-  pageProps,
-  appProps: { quizSession },
-  ...aa
-}) => {
+const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
   const client = useRef(() => {
     const exchanges = [
       devtoolsExchange,
