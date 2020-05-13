@@ -1,5 +1,5 @@
-mutation RegisterForGame($sessionId: ID!, $name: String!) {
-  registerForGame(sessionId: $sessionId, name: $name) {
+mutation RegisterForGame($sessionId: ID!, $name: String!, $color: String!) {
+  registerForGame(sessionId: $sessionId, name: $name, color: $color) {
     __typename
 
     ... on Token {

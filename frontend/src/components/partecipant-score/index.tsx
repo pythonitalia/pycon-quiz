@@ -21,7 +21,7 @@ export const PartecipantScore: React.SFC<Props> = ({ partecipant }) => {
           px: "primaryHorizontal",
           py: "primaryVertical",
           textTransform: "uppercase",
-          backgroundColor: "orange",
+          backgroundColor: partecipant.color,
           display: "flex",
           alignItems: "center",
         }}

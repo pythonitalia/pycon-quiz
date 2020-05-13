@@ -46,6 +46,7 @@ export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
     const response = await registerForGame({
       sessionId: session,
       name,
+      color: "#8E76AC",
     });
 
     if (response.data.registerForGame.__typename === "Error") {

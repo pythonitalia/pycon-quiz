@@ -23,7 +23,7 @@ def partecipant_with_name_exists(name: str) -> bool:
     return Partecipant.objects.filter(name__iexact=name).exists()
 
 
-def register_for_game(*, name: str, session_id: int) -> str:
+def register_for_game(*, name: str, color: str, session_id: int) -> str:
     """
     Registers the username in the session_id game and returns the unique token
     associated to him.
@@ -36,7 +36,9 @@ def register_for_game(*, name: str, session_id: int) -> str:
         raise UsernameAlreadyUsedError("This username is already used by someone else")
 
     try:
-        partecipant = Partecipant.objects.create(name=name, session_id=session_id)
+        partecipant = Partecipant.objects.create(
+            name=name, color=color, session_id=session_id
+        )
         return partecipant.token
     except IntegrityError:
         raise UsernameAlreadyUsedError("This username is already used by someone else")

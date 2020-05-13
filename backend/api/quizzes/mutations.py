@@ -13,10 +13,12 @@ from game_manager.session import answer_question, get_session
 class QuizzesMutation:
     @strawberry.mutation
     def register_for_game(
-        self, info, session_id: strawberry.ID, name: str
+        self, info, session_id: strawberry.ID, name: str, color: str
     ) -> Union[Error, Token]:
         try:
-            token = register_for_game(name=name, session_id=int(session_id))
+            token = register_for_game(
+                name=name, color=color, session_id=int(session_id)
+            )
             return Token(token=token)
         except UsernameAlreadyUsedError as exc:
             return Error(message=str(exc))

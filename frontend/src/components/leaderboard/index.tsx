@@ -34,7 +34,7 @@ export const Leaderboard: React.SFC<Props> = ({ leaderboard }) => {
 
       <Grid sx={{ gridTemplateColumn: "1fr", gridGap: "3rem" }}>
         {leaderboard.map((partecipant) => (
-          <PartecipantScore partecipant={partecipant} />
+          <PartecipantScore key={partecipant.name} partecipant={partecipant} />
         ))}
       </Grid>
     </Box>

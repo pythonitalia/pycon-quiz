@@ -17,6 +17,7 @@ class Partecipant(TimeStampedModel, SealableModel):
         "quizzes.QuizSession", on_delete=CASCADE, related_name="partecipants"
     )
     token = CharField(_("token"), max_length=50, default=generate_key)
+    color = CharField(_("color"), max_length=8)
 
     def __str__(self):
         return self.name

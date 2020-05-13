@@ -40,10 +40,11 @@ class Question:
 class LeaderboardPartecipant:
     name: str
     score: int
+    color: str
 
     @classmethod
     def from_data(cls, data):
-        return cls(name=data["name"], score=data["score"])
+        return cls(name=data["name"], score=data["score"], color=data["color"])
 
 
 @strawberry.type
@@ -87,7 +88,11 @@ def _map_session_to_data_dict(session: "QuizSession"):
         if session.current_question
         else None,
         "leaderboard": [
-            {"name": partecipant.name, "score": partecipant.score}
+            {
+                "name": partecipant.name,
+                "score": partecipant.score,
+                "color": partecipant.color,
+            }
             for partecipant in session.leaderboard
         ]
         if session.is_finished
