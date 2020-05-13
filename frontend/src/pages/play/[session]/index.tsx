@@ -10,6 +10,7 @@ import { usePlayerData } from "../../../hooks/auth";
 import {
   GetSessionInfoDocument,
   GetSessionInfoQuery,
+  QuizSession,
   useRegisterForGameMutation,
 } from "../../../types";
 
@@ -31,10 +32,10 @@ export type NameForm = {
 };
 
 type Props = {
-  sessionName: string;
+  quizSession: QuizSession;
 };
 
-export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
+export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
   const router = useRouter();
   const { session } = router.query as { session: string };
   const [formState, { text }] = useFormState<NameForm>({
@@ -73,6 +74,7 @@ export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
     setLocalData(name, token);
   }, [formState.values, canJoinGame]);
 
+  const quizName = quizSession.name;
   return (
     <Flex
       sx={{
@@ -91,7 +93,7 @@ export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
       >
         Pycon Italia
         <br />
-        {sessionName || "Quiz Ufficiale"}
+        {quizName || "Quiz Ufficiale"}
       </Heading>
       <NameInput
         {...text({
@@ -109,29 +111,5 @@ export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
 export default JoinGameScreen;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const request = await fetch("http://localhost:8000/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      variables: {
-        sessionId: params.session,
-      },
-      query: GetSessionInfoDocument.loc.source.body,
-    }),
-  });
-
-  if (request.status !== 200) {
-    return { props: {} };
-  }
-
-  const sessionInfoBody: GetSessionInfoQuery = (await request.json()).data;
-
-  return {
-    props: {
-      sessionName: sessionInfoBody.session?.name ?? null,
-    },
-  };
+  return { props: {} };
 };

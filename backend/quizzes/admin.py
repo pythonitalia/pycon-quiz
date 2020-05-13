@@ -45,7 +45,7 @@ class QuizAdmin(DjangoObjectActions, nested_admin.NestedModelAdmin):
 @admin.register(QuizSession)
 class QuizSessionAdmin(admin.ModelAdmin):
     fieldsets = (
-        (_("Generic"), {"fields": ("name", "quiz", "status",)}),
+        (_("Generic"), {"fields": ("name", "quiz", "status", "stream_link",)}),
         (
             _("Progress"),
             {

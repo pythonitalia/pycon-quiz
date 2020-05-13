@@ -7,7 +7,9 @@ import { Box, Flex, jsx, Text } from "theme-ui";
 
 import { TwitchLogo } from "../twitch-logo";
 
-type Props = {};
+type Props = {
+  url: string;
+};
 
 const TEXT_TO_DISPLAY = "Watch live on Twitch /";
 // TODO Finish this
@@ -60,7 +62,7 @@ const MarqueeText = React.forwardRef((props, ref) => (
   </Text>
 ));
 
-export const TwitchBar: React.SFC<Props> = (props) => {
+export const TwitchBar: React.SFC<Props> = ({ url }) => {
   const router = useRouter();
   const referenceText = useRef<HTMLSpanElement>(null);
   const [textsToRender, setTextsToRender] = useState<null[]>([]);
@@ -85,6 +87,10 @@ export const TwitchBar: React.SFC<Props> = (props) => {
 
   return (
     <Flex
+      as="a"
+      target="_blank"
+      href={url}
+      rel="noopener noreferrer"
       sx={{
         width: "100%",
         position: "absolute",
@@ -93,6 +99,7 @@ export const TwitchBar: React.SFC<Props> = (props) => {
         color: "white",
         textTransform: "uppercase",
         userSelect: "none",
+        textDecoration: "none",
       }}
     >
       <Box

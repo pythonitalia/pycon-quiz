@@ -1,5 +1,7 @@
 query GetSessionInfo($sessionId: ID!) {
   session(id: $sessionId) {
+    id
     name
+    streamLink
   }
 }

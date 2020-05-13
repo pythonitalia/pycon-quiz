@@ -52,7 +52,8 @@ class Partecipant:
 class QuizSession:
     id: strawberry.ID
     name: Optional[str]
+    stream_link: str
 
     @classmethod
     def from_model(cls, data):
-        return cls(id=data.id, name=data.name)
+        return cls(id=data.id, name=data.name, stream_link=data.stream_link)

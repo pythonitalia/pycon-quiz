@@ -1,7 +1,7 @@
 import { Global } from "@emotion/core";
 import { devtoolsExchange } from "@urql/devtools";
 import { cacheExchange } from "@urql/exchange-graphcache";
-import { AppProps } from "next/app";
+import { AppProps, default as BaseApp } from "next/app";
 import React, { useRef } from "react";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { ThemeProvider } from "theme-ui";
@@ -13,11 +13,23 @@ import {
   subscriptionExchange,
 } from "urql";
 
+import { getSessionInfo } from "../api/get-session-info";
 import { Layout } from "../components/layout";
 import { theme } from "../theme";
-import { GetUserDocument } from "../types";
+import { QuizSession } from "../types";
 
-const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
+type Props = {
+  appProps: {
+    quizSession: QuizSession;
+  };
+};
+
+const App: React.FC<AppProps<Props>> = ({
+  Component,
+  pageProps,
+  appProps: { quizSession },
+  ...aa
+}) => {
   const client = useRef(() => {
     const exchanges = [
       devtoolsExchange,
@@ -56,7 +68,7 @@ const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
       <Provider value={client.current()}>
-        <Layout>
+        <Layout quizSession={pageProps.quizSession}>
           <Global
             styles={() => ({
               html: {
@@ -72,3 +84,16 @@ const App: React.SFC<AppProps> = ({ Component, pageProps }) => {
 };
 
 export default App;
+
+App.getInitialProps = async (ctx) => {
+  const appProps = await BaseApp.getInitialProps(ctx);
+  const quizSession = await getSessionInfo(ctx.router.query.session as string);
+  return {
+    pageProps: {
+      quizSession,
+    },
+    appProps: {
+      ...appProps,
+    },
+  };
+};

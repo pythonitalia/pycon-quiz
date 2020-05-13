@@ -7,6 +7,7 @@ from django.db.models import (
     Q,
     SlugField,
     Sum,
+    URLField,
 )
 from django.utils.translation import ugettext_lazy as _
 from django_fsm import FSMField, transition
@@ -36,6 +37,10 @@ class QuizSession(TimeStampedModel, SealableModel):
         null=True,
         blank=True,
         verbose_name=_("current question"),
+    )
+
+    stream_link = URLField(
+        _("stream link"), help_text=_("Link used for the bottom bar in the quiz")
     )
 
     @property
