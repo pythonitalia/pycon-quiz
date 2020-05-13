@@ -13,8 +13,21 @@ import {
   useRegisterForGameMutation,
 } from "../../../types";
 
+const COLORS = [
+  "#8E76AC",
+  "#E38065",
+  "#EEB255",
+  "#F9E9DF",
+  "#6C81E8",
+  "#8CCBDE",
+  "#77DEBA",
+];
+
+const randomColor = () => COLORS[Math.floor(Math.random() * COLORS.length)];
+
 export type NameForm = {
   name: string;
+  color: string;
 };
 
 type Props = {
@@ -24,7 +37,9 @@ type Props = {
 export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
   const router = useRouter();
   const { session } = router.query as { session: string };
-  const [formState, { text }] = useFormState<NameForm>();
+  const [formState, { text }] = useFormState<NameForm>({
+    color: COLORS[0],
+  });
   const { playerData, setLocalData } = usePlayerData(session);
   const [registerForGameResult, registerForGame] = useRegisterForGameMutation();
   const canJoinGame =
@@ -41,12 +56,12 @@ export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
       return;
     }
 
-    const { name } = formState.values;
+    const { name, color } = formState.values;
 
     const response = await registerForGame({
       sessionId: session,
       name,
-      color: "#8E76AC",
+      color,
     });
 
     if (response.data.registerForGame.__typename === "Error") {
@@ -78,7 +93,14 @@ export const JoinGameScreen: React.FC<Props> = ({ sessionName }) => {
         <br />
         {sessionName || "Quiz Ufficiale"}
       </Heading>
-      <NameInput {...text("name")} error={formState.errors.name} />
+      <NameInput
+        {...text({
+          name: "name",
+          onChange: (e) => formState.setField("color", randomColor()),
+        })}
+        color={formState.values.color}
+        error={formState.errors.name}
+      />
       <JoinButton onClick={onEnter} disableJoin={!canJoinGame} />
     </Flex>
   );

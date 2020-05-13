@@ -7,6 +7,7 @@ type Props = {
   onChange: (event: any) => void;
   value: string;
   error: string;
+  color: string;
 };
 
 const PLACEHOLDERS = [
@@ -21,6 +22,7 @@ export const NameInput: React.SFC<Props> = ({
   value = "",
   error,
   id,
+  color,
 }) => {
   const [placeholder, setPlaceholder] = useState<string>();
   const textClone = useRef<HTMLSpanElement>();
@@ -70,7 +72,7 @@ export const NameInput: React.SFC<Props> = ({
       >
         <Box
           sx={{
-            backgroundColor: "purple",
+            backgroundColor: color,
             textTransform: "uppercase",
             fontWeight: "bold",
             flex: "1 0 auto",
