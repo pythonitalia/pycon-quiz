@@ -12,7 +12,7 @@ export const Leaderboard: React.SFC<Props> = ({ leaderboard }) => {
   return (
     <Box
       sx={{
-        maxWidth: "46rem",
+        maxWidth: "52rem",
         mx: "auto",
         px: "primary",
         flexDirection: "column",
@@ -32,9 +32,19 @@ export const Leaderboard: React.SFC<Props> = ({ leaderboard }) => {
         Leaderboard
       </Heading>
 
-      <Grid sx={{ gridTemplateColumn: "1fr", gridGap: "3rem" }}>
-        {leaderboard.map((partecipant) => (
-          <PartecipantScore key={partecipant.name} partecipant={partecipant} />
+      <Grid
+        sx={{
+          gridTemplateColumn: "1fr",
+          gridGap: "3rem",
+          justifyItems: ["center", "flex-end"],
+        }}
+      >
+        {leaderboard.map((partecipant, position) => (
+          <PartecipantScore
+            key={partecipant.name}
+            partecipant={partecipant}
+            position={position}
+          />
         ))}
       </Grid>
     </Box>

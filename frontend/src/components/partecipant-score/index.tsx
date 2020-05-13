@@ -5,14 +5,18 @@ import { LeaderboardPartecipant } from "../../types";
 
 type Props = {
   partecipant: LeaderboardPartecipant;
+  position: number;
 };
 
-export const PartecipantScore: React.SFC<Props> = ({ partecipant }) => {
+export const PartecipantScore: React.SFC<Props> = ({
+  partecipant,
+  position,
+}) => {
   return (
     <Flex
       sx={{
         border: "primary",
-        width: ["auto", "42rem"],
+        width: ["auto", position === 0 ? "46rem" : "42rem"],
       }}
     >
       <Box
