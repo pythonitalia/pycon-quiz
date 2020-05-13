@@ -80,6 +80,7 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
 
 export default App;
 
+// @ts-ignore
 App.getInitialProps = async (ctx) => {
   const appProps = await BaseApp.getInitialProps(ctx);
   const quizSession = await getSessionInfo(ctx.router.query.session as string);
