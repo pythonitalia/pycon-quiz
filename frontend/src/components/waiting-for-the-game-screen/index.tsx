@@ -5,6 +5,11 @@ type Props = {};
 
 export const WaitingForTheGameScreen: React.SFC<Props> = (props) => (
   <Box variant="layouts.center">
-    <Heading>The game will start soon! 🐍</Heading>
+    <Heading>
+      The game will start soon!{" "}
+      <span role="img" aria-label="Snake emoji">
+        🐍
+      </span>
+    </Heading>
   </Box>
 );

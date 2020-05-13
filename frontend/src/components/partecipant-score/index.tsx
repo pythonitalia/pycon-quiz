@@ -11,39 +11,37 @@ type Props = {
 export const PartecipantScore: React.SFC<Props> = ({
   partecipant,
   position,
-}) => {
-  return (
-    <Flex
+}) => (
+  <Flex
+    sx={{
+      border: "primary",
+      width: ["auto", position === 0 ? "46rem" : "42rem"],
+    }}
+  >
+    <Box
       sx={{
-        border: "primary",
-        width: ["auto", position === 0 ? "46rem" : "42rem"],
+        flexGrow: 1,
+        px: "primaryHorizontal",
+        py: "primaryVertical",
+        textTransform: "uppercase",
+        backgroundColor: partecipant.color,
+        display: "flex",
+        alignItems: "center",
       }}
     >
-      <Box
-        sx={{
-          flexGrow: 1,
-          px: "primaryHorizontal",
-          py: "primaryVertical",
-          textTransform: "uppercase",
-          backgroundColor: partecipant.color,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        {partecipant.name}
-      </Box>
-      <Box
-        sx={{
-          flexShrink: 0,
-          py: "1rem",
-          px: "3.6rem",
-          borderLeft: "primary",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        {partecipant.score}
-      </Box>
-    </Flex>
-  );
-};
+      {partecipant.name}
+    </Box>
+    <Box
+      sx={{
+        flexShrink: 0,
+        py: "1rem",
+        px: "3.6rem",
+        borderLeft: "primary",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      {partecipant.score}
+    </Box>
+  </Flex>
+);
