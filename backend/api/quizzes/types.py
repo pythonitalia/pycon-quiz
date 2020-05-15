@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 import strawberry
+from strawberry.types import DateTime
 
 
 @strawberry.type
@@ -23,10 +24,16 @@ class PartecipantAnswer:
     id: strawberry.ID
     question_id: strawberry.ID
     answer_id: strawberry.ID
+    created: DateTime
 
     @classmethod
     def from_model(cls, data):
-        return cls(question_id=data.question_id, id=data.id, answer_id=data.answer_id)
+        return cls(
+            question_id=data.question_id,
+            id=data.id,
+            answer_id=data.answer_id,
+            created=data.created,
+        )
 
 
 @strawberry.type

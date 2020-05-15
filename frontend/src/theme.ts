@@ -49,6 +49,7 @@ export const theme = {
     mint: "#38E4B8",
     red: "#E38065",
     azure: "#8CCBDE",
+    cornflowerBlue: "#6C81E8",
   },
   text: {
     heading: {

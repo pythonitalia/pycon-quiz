@@ -1,8 +1,16 @@
+from datetime import timedelta
 from typing import TYPE_CHECKING
-from game_manager.exceptions import (AnswerNotFoundError,
-                                     PartecipantNotFoundError,
-                                     SessionNotLiveError,
-                                     UnableToAnswerQuestionError)
+
+from django.utils import timezone
+
+from game_manager.constants import GRACE_PERIOD_FOR_ANSWER_CHANGE_IN_SECONDS
+from game_manager.exceptions import (
+    AnswerNotFoundError,
+    AnswerOutOfTimeError,
+    PartecipantNotFoundError,
+    SessionNotLiveError,
+    UnableToAnswerQuestionError,
+)
 
 if TYPE_CHECKING:
     from users.models import User
@@ -11,6 +19,7 @@ if TYPE_CHECKING:
 
 def get_session(id: int) -> "QuizSession":
     from quizzes.models import QuizSession
+
     return QuizSession.objects.get(id=id)
 
 
@@ -43,6 +52,25 @@ def answer_question(
 
     if not session.current_question.answers.filter(id=answer_id).exists():
         raise AnswerNotFoundError("Invalid Answer ID")
+
+    current_time = timezone.now()
+    already_existing_answer = (
+        UserAnswer.objects.filter(
+            partecipant=partecipant, question_id=question_id, session=session
+        )
+        .values("created")
+        .first()
+    )
+
+    if already_existing_answer:
+        created_at = already_existing_answer["created"]
+
+        if current_time - created_at > timedelta(
+            seconds=GRACE_PERIOD_FOR_ANSWER_CHANGE_IN_SECONDS
+        ):
+            raise AnswerOutOfTimeError(
+                f"Cannot change answers after {GRACE_PERIOD_FOR_ANSWER_CHANGE_IN_SECONDS} seconds"
+            )
 
     obj, created = UserAnswer.objects.update_or_create(
         partecipant=partecipant,

@@ -24,3 +24,7 @@ class PartecipantNotFoundError(Exception):
 
 class SessionNotFoundError(Exception):
     pass
+
+
+class AnswerOutOfTimeError(Exception):
+    pass
