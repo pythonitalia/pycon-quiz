@@ -28,3 +28,7 @@ class SessionNotFoundError(Exception):
 
 class AnswerOutOfTimeError(Exception):
     pass
+
+
+class SessionCompletedError(Exception):
+    pass

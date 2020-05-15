@@ -2,7 +2,11 @@ from typing import TYPE_CHECKING
 
 from django.db import IntegrityError
 
-from game_manager.exceptions import PartecipantNotFoundError, UsernameAlreadyUsedError
+from game_manager.exceptions import (
+    PartecipantNotFoundError,
+    SessionCompletedError,
+    UsernameAlreadyUsedError,
+)
 
 if TYPE_CHECKING:
     from quizzes.models import Partecipant
@@ -30,10 +34,15 @@ def register_for_game(*, name: str, color: str, session_id: int) -> str:
 
     Raises UsernameAlreadyUsedError if the username is already used
     """
-    from quizzes.models import Partecipant
+    from quizzes.models import Partecipant, QuizSession
 
     if partecipant_with_name_exists(name):
         raise UsernameAlreadyUsedError("This username is already used by someone else")
+
+    session = QuizSession.objects.get(id=session_id)
+
+    if session.is_finished:
+        raise SessionCompletedError("This game ended!")
 
     try:
         partecipant = Partecipant.objects.create(
