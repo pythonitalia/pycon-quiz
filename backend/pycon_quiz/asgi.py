@@ -11,6 +11,7 @@ import os
 
 from django.core.asgi import get_asgi_application
 from starlette.applications import Starlette
+from starlette.websockets import WebSocketDisconnect
 from strawberry.asgi import GraphQL
 
 from api.schema import schema
@@ -24,9 +25,12 @@ async def application(scope, receive, send):
     if scope["type"] == "http":
         await django_application(scope, receive, send)
     elif scope["type"] == "websocket":
-        graphql_app = GraphQL(schema, debug=True)
-        app = Starlette(debug=True)
-        app.add_websocket_route("/graphql", graphql_app)
-        await app(scope, receive, send)
+        try:
+            graphql_app = GraphQL(schema, debug=True)
+            app = Starlette(debug=True)
+            app.add_websocket_route("/graphql", graphql_app)
+            await app(scope, receive, send)
+        except WebSocketDisconnect:
+            pass
     else:
         raise NotImplementedError(f"Unknown scope type {scope['type']}")

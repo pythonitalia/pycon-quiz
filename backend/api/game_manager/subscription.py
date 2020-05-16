@@ -1,9 +1,10 @@
+import asyncio
 import typing
 
 import strawberry
 
 from api.game_manager.types import GameState
-from game_manager.publisher import get_game_state_from_session_id
+from game_manager.publisher import get_game_state_from_session_id, update_game
 from game_manager.session import get_redis_channel_name_for_session_id
 from pycon_quiz.redis import get_client
 
@@ -22,10 +23,8 @@ class GameManagerSubscription:
             )
             channel = connection[0]
 
-            # get the state from the DB the first time
-            # TODO: Update to store in redis the last published session?
-            # possible race condition?
-            yield get_game_state_from_session_id(session_id)
+            game_state = await get_game_state_from_session_id(session_id)
+            yield game_state
 
             while await channel.wait_message():
                 message = await channel.get_json()
