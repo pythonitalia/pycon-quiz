@@ -3,11 +3,12 @@ import {
   GetSessionInfoQuery,
   QuizSession,
 } from "../../types";
+import { getGraphQLUrl } from "../../utils/get-graphql-url";
 
 export const getSessionInfo = async (
   sessionId: string
 ): Promise<QuizSession> => {
-  const request = await fetch("http://localhost:8000/graphql", {
+  const request = await fetch(getGraphQLUrl(), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -17,6 +17,7 @@ import { getSessionInfo } from "../api/get-session-info";
 import { Layout } from "../components/layout";
 import { theme } from "../theme";
 import { QuizSession } from "../types";
+import { getGraphQLUrl } from "../utils/get-graphql-url";
 
 type Props = {
   appProps: {
@@ -51,7 +52,7 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
     }
 
     const urqlClient = createClient({
-      url: "http://localhost:8000/graphql",
+      url: getGraphQLUrl(),
       // @ts-ignore
       exchanges,
       requestPolicy: "cache-first",
