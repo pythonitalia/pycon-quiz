@@ -8,10 +8,13 @@ type Props = {
   quizSession: QuizSession;
 };
 
-export const Layout: React.FC<Props> = ({ children, quizSession }) => (
-  <>
-    <Background />
-    {children}
-    <TwitchBar url={quizSession.streamLink} />
-  </>
-);
+export const GameLayout: React.SFC<Props> = ({ children, quizSession }) => {
+  return (
+    <>
+      <Background />
+
+      {children}
+      <TwitchBar url={quizSession.streamLink} />
+    </>
+  );
+};

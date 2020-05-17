@@ -1,7 +1,7 @@
 import { Global } from "@emotion/core";
 import { devtoolsExchange } from "@urql/devtools";
 import { cacheExchange } from "@urql/exchange-graphcache";
-import { AppProps, default as BaseApp } from "next/app";
+import { AppProps } from "next/app";
 import React, { useRef } from "react";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { ThemeProvider } from "theme-ui";
@@ -13,8 +13,6 @@ import {
   subscriptionExchange,
 } from "urql";
 
-import { getSessionInfo } from "../api/get-session-info";
-import { Layout } from "../components/layout";
 import { theme } from "../theme";
 import { QuizSession } from "../types";
 import { getGraphQLUrl } from "../utils/get-graphql-url";
@@ -68,33 +66,17 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
       <Provider value={client.current()}>
-        <Layout quizSession={pageProps.quizSession}>
-          <Global
-            styles={() => ({
-              html: {
-                fontSize: "62.5%",
-              },
-            })}
-          />
-          <Component {...pageProps} />
-        </Layout>
+        <Global
+          styles={() => ({
+            html: {
+              fontSize: "62.5%",
+            },
+          })}
+        />
+        <Component {...pageProps} />
       </Provider>
     </ThemeProvider>
   );
 };
 
 export default App;
-
-// @ts-ignore
-App.getInitialProps = async (ctx) => {
-  const appProps = await BaseApp.getInitialProps(ctx);
-  const quizSession = await getSessionInfo(ctx.router.query.session as string);
-  return {
-    pageProps: {
-      quizSession,
-    },
-    appProps: {
-      ...appProps,
-    },
-  };
-};

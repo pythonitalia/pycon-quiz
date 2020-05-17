@@ -4,6 +4,8 @@ import React, { useCallback, useEffect } from "react";
 import { useFormState } from "react-use-form-state";
 import { Flex, Heading } from "theme-ui";
 
+import { getSessionInfo } from "../../../api/get-session-info";
+import { GameLayout } from "../../../components/game-layout";
 import { JoinButton } from "../../../components/join-button";
 import { NameInput } from "../../../components/name-input";
 import { usePlayerData } from "../../../hooks/auth";
@@ -71,40 +73,47 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
 
   const quizName = quizSession.name;
   return (
-    <Flex
-      sx={{
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
-      <Heading
+    <GameLayout quizSession={quizSession}>
+      <Flex
         sx={{
-          letterSpacing: "intro",
-          lineHeight: "intro",
-          mb: "intro",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          height: "100vh",
         }}
       >
-        Pycon Italia
-        <br />
-        {quizName || "Quiz Ufficiale"}
-      </Heading>
-      <NameInput
-        {...text({
-          name: "name",
-          onChange: (e) => formState.setField("color", randomColor()),
-        })}
-        color={formState.values.color}
-        error={formState.errors.name}
-      />
-      <JoinButton onClick={onEnter} disableJoin={!canJoinGame} />
-    </Flex>
+        <Heading
+          sx={{
+            letterSpacing: "intro",
+            lineHeight: "intro",
+            mb: "intro",
+          }}
+        >
+          Pycon Italia
+          <br />
+          {quizName || "Quiz Ufficiale"}
+        </Heading>
+        <NameInput
+          {...text({
+            name: "name",
+            onChange: (e) => formState.setField("color", randomColor()),
+          })}
+          color={formState.values.color}
+          error={formState.errors.name}
+        />
+        <JoinButton onClick={onEnter} disableJoin={!canJoinGame} />
+      </Flex>
+    </GameLayout>
   );
 };
 
 export default JoinGameScreen;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  return { props: {} };
+  const quizSession = await getSessionInfo(params.session as string);
+  return {
+    props: {
+      quizSession,
+    },
+  };
 };

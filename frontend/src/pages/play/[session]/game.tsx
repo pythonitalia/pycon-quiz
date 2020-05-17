@@ -3,14 +3,21 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Box } from "theme-ui";
 
+import { getSessionInfo } from "../../../api/get-session-info";
+import { GameLayout } from "../../../components/game-layout";
 import { Leaderboard } from "../../../components/leaderboard";
 import { LoadingUser } from "../../../components/loading-user";
 import { QuestionScreen } from "../../../components/question-screen";
 import { WaitingForTheGameScreen } from "../../../components/waiting-for-the-game-screen";
 import { usePlayerData } from "../../../hooks/auth";
 import { useGameMachine } from "../../../hooks/game-machine";
+import { QuizSession } from "../../../types";
 
-export const Game = () => {
+type Props = {
+  quizSession: QuizSession;
+};
+
+export const Game: React.FC<Props> = ({ quizSession }) => {
   const router = useRouter();
   const { session } = router.query as { session: string };
   const { playerData } = usePlayerData(session);
@@ -28,7 +35,7 @@ export const Game = () => {
   }
 
   return (
-    <Box>
+    <GameLayout quizSession={quizSession}>
       {gameState.value === "before_start" && <WaitingForTheGameScreen />}
       {gameState.value === "live" && (
         <QuestionScreen
@@ -40,12 +47,17 @@ export const Game = () => {
       {gameState.value === "complete" && (
         <Leaderboard leaderboard={gameState.context.leaderboard} />
       )}
-    </Box>
+    </GameLayout>
   );
 };
 
 export default Game;
 
-export const getServerSideProps: GetServerSideProps = async (context) => ({
-  props: {},
-});
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const quizSession = await getSessionInfo(params.session as string);
+  return {
+    props: {
+      quizSession,
+    },
+  };
+};
