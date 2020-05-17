@@ -1,3 +1,5 @@
+import { getBackendDomain } from "./get-backend-domain";
+
 export const getApiUrl = () => {
-  return `http://${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/`;
+  return `http://${getBackendDomain()}/`;
 };

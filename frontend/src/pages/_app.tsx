@@ -17,6 +17,7 @@ import { getSessionInfo } from "../api/get-session-info";
 import { Layout } from "../components/layout";
 import { theme } from "../theme";
 import { QuizSession } from "../types";
+import { getBackendDomain } from "../utils/get-backend-domain";
 import { getGraphQLUrl } from "../utils/get-graphql-url";
 
 type Props = {
@@ -34,9 +35,12 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
       fetchExchange,
     ];
 
+    const graphQLUrl = getGraphQLUrl();
+    const backendDomain = getBackendDomain();
+
     if (typeof window !== "undefined") {
       const subscriptionClient = new SubscriptionClient(
-        "ws://localhost:8000/graphql",
+        `ws://${backendDomain}/graphql`,
         {
           reconnect: true,
         }
@@ -52,7 +56,7 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
     }
 
     const urqlClient = createClient({
-      url: getGraphQLUrl(),
+      url: graphQLUrl,
       // @ts-ignore
       exchanges,
       requestPolicy: "cache-first",
