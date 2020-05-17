@@ -1,0 +1,17 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "backend",
+      "image": "193264398822.dkr.ecr.eu-west-1.amazonaws.com/pyconquiz:latest",
+      "essential": true,
+      "memoryReservation": 900,
+      "portMappings": [
+        {
+          "hostPort": "80",
+          "containerPort": "8000"
+        }
+      ]
+    }
+  ]
+}

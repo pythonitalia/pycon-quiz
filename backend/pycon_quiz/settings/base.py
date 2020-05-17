@@ -21,7 +21,9 @@ env_file = root(".env")
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
 
-env = environ.Env()
+env = environ.Env(
+    REDIS_URL=(str, 'redis://localhost')
+)
 
 ALLOWED_HOSTS = []
 
@@ -78,10 +80,6 @@ WSGI_APPLICATION = "pycon_quiz.wsgi.application"
 
 DATABASES = {"default": env.db()}
 
-
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -90,10 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
@@ -104,10 +98,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = "/static/"
 
@@ -122,3 +112,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com'
+]
+
+REDIS_URL = env('REDIS_URL')

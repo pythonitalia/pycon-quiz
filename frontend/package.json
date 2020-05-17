@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "npm run codegen && next build",
     "start": "next start",
     "codegen": "graphql-codegen"
   },

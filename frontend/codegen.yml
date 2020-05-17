@@ -1,4 +1,4 @@
-schema: http://localhost:8000/graphql
+schema: http://backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com/graphql
 documents: ./src/**/*.graphql
 generates:
   ./src/types.tsx:
