@@ -17,8 +17,8 @@ import { getSessionInfo } from "../api/get-session-info";
 import { Layout } from "../components/layout";
 import { theme } from "../theme";
 import { QuizSession } from "../types";
-import { getBackendDomain } from "../utils/get-backend-domain";
 import { getGraphQLUrl } from "../utils/get-graphql-url";
+import { getWebsocketDomain } from "../utils/get-websocket-domain";
 
 type Props = {
   appProps: {
@@ -36,11 +36,11 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
     ];
 
     const graphQLUrl = getGraphQLUrl();
-    const backendDomain = getBackendDomain();
+    const websocketDomain = getWebsocketDomain();
 
     if (typeof window !== "undefined") {
       const subscriptionClient = new SubscriptionClient(
-        `ws://${backendDomain}/graphql`,
+        `ws://${websocketDomain}/graphql`,
         {
           reconnect: true,
         }

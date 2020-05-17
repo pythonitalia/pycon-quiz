@@ -1,3 +1,3 @@
-import { getApiUrl } from "./get-api-url";
+import { getBackendUrl } from "./get-backend-url";
 
-export const getGraphQLUrl = () => `${getApiUrl()}graphql`;
+export const getGraphQLUrl = () => `${getBackendUrl()}/graphql`;
