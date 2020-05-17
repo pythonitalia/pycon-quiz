@@ -81,5 +81,5 @@ resource "aws_elastic_beanstalk_environment" "main" {
 }
 
 output "app_domain" {
-  value = "${aws_elastic_beanstalk_environment.main.cname}"
+  value = aws_elastic_beanstalk_environment.main.cname
 }

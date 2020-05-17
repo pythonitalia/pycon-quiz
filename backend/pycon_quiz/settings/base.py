@@ -116,7 +116,8 @@ INTERNAL_IPS = [
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com'
+    'backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com',
+    'd2x84vjkgthxda.cloudfront.net'
 ]
 
 REDIS_URL = env('REDIS_URL')

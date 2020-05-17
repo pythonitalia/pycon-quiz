@@ -8,6 +8,7 @@ COPY poetry.lock pyproject.toml /app/
 WORKDIR /app/
 
 RUN poetry install
+RUN pip install gunicorn
 
 COPY . /app/
 
@@ -15,4 +16,4 @@ ENV DJANGO_SETTINGS_MODULE=pycon_quiz.settings.prod
 
 EXPOSE 8000
 
-CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "pycon_quiz.asgi:application"]
+CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000", "pycon_quiz.asgi:application"]
