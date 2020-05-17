@@ -1,3 +1,3 @@
 export const getApiUrl = () => {
-  return `http://${process.env.BACKEND_DOMAIN}/`;
+  return `http://${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/`;
 };
