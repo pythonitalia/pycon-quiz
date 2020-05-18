@@ -102,6 +102,7 @@ ENV/
 .idea/
 
 backend/media/
+backend/staticfiles/
 
 node_modules/
 .next/

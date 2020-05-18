@@ -23,8 +23,6 @@ if os.path.exists(env_file):
 
 env = environ.Env(REDIS_URL=(str, "redis://localhost"))
 
-ALLOWED_HOSTS = []
-
 INSTALLED_APPS = [
     "admin_interface",
     "colorfield",
