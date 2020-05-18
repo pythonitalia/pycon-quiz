@@ -11,7 +11,10 @@ type RandomPosition = {
 };
 
 const EMPTY_POSITION = {
-  top: 0, left: 0, fontSize: 0, rotation: 0,
+  top: 0,
+  left: 0,
+  fontSize: 0,
+  rotation: 0,
 };
 
 const randomPosition = (): RandomPosition => {
@@ -25,14 +28,15 @@ const randomPosition = (): RandomPosition => {
   const rotation = Math.random() * 260;
 
   return {
-    top, left, fontSize, rotation,
+    top,
+    left,
+    fontSize,
+    rotation,
   };
 };
 
 export const QuestionMark: React.SFC<Props> = () => {
-  const [{
-    top, left, fontSize, rotation,
-  }, setPosition] = useState<
+  const [{ top, left, fontSize, rotation }, setPosition] = useState<
     RandomPosition
   >(EMPTY_POSITION);
 
