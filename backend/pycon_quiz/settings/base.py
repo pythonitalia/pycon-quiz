@@ -114,10 +114,11 @@ INTERNAL_IPS = [
 ]
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com',
-    'd2x84vjkgthxda.cloudfront.net'
+    "127.0.0.1",
+    "localhost",
+    "backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com",
+    "d2x84vjkgthxda.cloudfront.net",
+    "pycon-quiz.now.sh"
 ]
 
-REDIS_URL = env('REDIS_URL')
+REDIS_URL = env("REDIS_URL")

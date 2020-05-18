@@ -107,6 +107,7 @@ node_modules/
 .next/
 .vscode/
 types.tsx
+.now
 
 
 .terraform/

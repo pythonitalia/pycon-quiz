@@ -16,7 +16,6 @@ import {
 import { theme } from "../theme";
 import { QuizSession } from "../types";
 import { getGraphQLUrl } from "../utils/get-graphql-url";
-import { getWebsocketDomain } from "../utils/get-websocket-domain";
 
 type Props = {
   appProps: {
@@ -34,15 +33,14 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
     ];
 
     const graphQLUrl = getGraphQLUrl();
-    const websocketDomain = getWebsocketDomain();
+    const websocketUrl = graphQLUrl
+      .replace("https", "wss")
+      .replace("http", "wss");
 
     if (typeof window !== "undefined") {
-      const subscriptionClient = new SubscriptionClient(
-        `ws://${websocketDomain}/graphql`,
-        {
-          reconnect: true,
-        }
-      );
+      const subscriptionClient = new SubscriptionClient(websocketUrl, {
+        reconnect: true,
+      });
 
       exchanges.push(
         subscriptionExchange({
