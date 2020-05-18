@@ -91,7 +91,7 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
         >
           Pycon Italia
           <br />
-          {quizName || "Quiz Ufficiale"}
+          {quizName}
         </Heading>
         <NameInput
           {...text({
