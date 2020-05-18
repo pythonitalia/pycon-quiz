@@ -486,6 +486,17 @@ python-versions = ">=3.6.1"
 version = "8.1"
 
 [[package]]
+category = "main"
+description = "Radically simplified static file serving for WSGI applications"
+name = "whitenoise"
+optional = false
+python-versions = ">=3.5, <4"
+version = "5.0.1"
+
+[package.extras]
+brotli = ["brotli"]
+
+[[package]]
 category = "dev"
 description = "A tool to programmatically control windows inside X"
 name = "wmctrl"
@@ -494,7 +505,7 @@ python-versions = "*"
 version = "0.3"
 
 [metadata]
-content-hash = "82a891bf40424a8940e784df8b3b5d27b24d2c9e64e8b70e4c13fa6afb0de654"
+content-hash = "713040fc6d2e46163d2e0180ca9d734b140731f117360ee8afb604cb3dc36e78"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -803,6 +814,10 @@ websockets = [
     {file = "websockets-8.1-cp38-cp38-win32.whl", hash = "sha256:e898a0863421650f0bebac8ba40840fc02258ef4714cb7e1fd76b6a6354bda36"},
     {file = "websockets-8.1-cp38-cp38-win_amd64.whl", hash = "sha256:f8a7bff6e8664afc4e6c28b983845c5bc14965030e3fb98789734d416af77c4b"},
     {file = "websockets-8.1.tar.gz", hash = "sha256:5c65d2da8c6bce0fca2528f69f44b2f977e06954c8512a952222cea50dad430f"},
+]
+whitenoise = [
+    {file = "whitenoise-5.0.1-py2.py3-none-any.whl", hash = "sha256:62556265ec1011bd87113fb81b7516f52688887b7a010ee899ff1fd18fd22700"},
+    {file = "whitenoise-5.0.1.tar.gz", hash = "sha256:0f9137f74bd95fa54329ace88d8dc695fbe895369a632e35f7a136e003e41d73"},
 ]
 wmctrl = [
     {file = "wmctrl-0.3.tar.gz", hash = "sha256:d806f65ac1554366b6e31d29d7be2e8893996c0acbb2824bbf2b1f49cf628a13"},

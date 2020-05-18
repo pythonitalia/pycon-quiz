@@ -21,9 +21,7 @@ env_file = root(".env")
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
 
-env = environ.Env(
-    REDIS_URL=(str, "redis://localhost")
-)
+env = environ.Env(REDIS_URL=(str, "redis://localhost"))
 
 ALLOWED_HOSTS = []
 
@@ -49,6 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -101,7 +100,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATIC_ROOT = root("static")
+STATIC_ROOT = root("staticfiles")
 
 AUTH_USER_MODEL = "users.User"
 
@@ -118,7 +117,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com",
     "d2x84vjkgthxda.cloudfront.net",
-    "pycon-quiz.now.sh"
+    "pycon-quiz.now.sh",
 ]
 
 REDIS_URL = env("REDIS_URL")

@@ -21,6 +21,7 @@ strawberry-graphql = "^0.25.1"
 psycopg2 = "^2.8.5"
 django-seal = "^1.2.3"
 isort = "^4.3.21"
+whitenoise = "^5.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
