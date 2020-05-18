@@ -22,7 +22,7 @@ if os.path.exists(env_file):
     environ.Env.read_env(env_file)
 
 env = environ.Env(
-    REDIS_URL=(str, 'redis://localhost')
+    REDIS_URL=(str, "redis://localhost")
 )
 
 ALLOWED_HOSTS = []

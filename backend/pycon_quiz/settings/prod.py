@@ -1,4 +1,4 @@
 from .base import *
 
-DEBUG = True
-SECRET_KEY = "jhello"
+DEBUG = False
+SECRET_KEY = env("SECRET_KEY")
