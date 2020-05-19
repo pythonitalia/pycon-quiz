@@ -1,3 +1,2 @@
-import { getBackendUrl } from "./get-backend-url";
-
-export const getGraphQLUrl = () => `${getBackendUrl()}/graphql`;
+export const getGraphQLUrl = () =>
+  `${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`;

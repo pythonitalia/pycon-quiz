@@ -1,34 +1,46 @@
-class UsernameAlreadyUsedError(Exception):
+class GameError(Exception):
+    pass
+
+
+class UsernameAlreadyUsedError(GameError):
     """Raised when the user tries to join a game with an already used username"""
 
 
-class PartecipantNotFoundError(Exception):
+class PartecipantNotFoundError(GameError):
     pass
 
 
-class SessionNotLiveError(Exception):
+class SessionNotLiveError(GameError):
     pass
 
 
-class UnableToAnswerQuestionError(Exception):
+class UnableToAnswerQuestionError(GameError):
     pass
 
 
-class AnswerNotFoundError(Exception):
+class AnswerNotFoundError(GameError):
     pass
 
 
-class PartecipantNotFoundError(Exception):
+class PartecipantNotFoundError(GameError):
     pass
 
 
-class SessionNotFoundError(Exception):
+class SessionNotFoundError(GameError):
     pass
 
 
-class AnswerOutOfTimeError(Exception):
+class AnswerOutOfTimeError(GameError):
     pass
 
 
-class SessionCompletedError(Exception):
+class SessionCompletedError(GameError):
+    pass
+
+
+class UsernameContainsIllegalCharactersError(GameError):
+    pass
+
+
+class UsernameLengthNotValidError(GameError):
     pass

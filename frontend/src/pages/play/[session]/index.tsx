@@ -22,6 +22,7 @@ const COLORS = [
 ];
 
 const randomColor = () => COLORS[Math.floor(Math.random() * COLORS.length)];
+const USERNAME_REGEX = /^[a-zA-Z0-9]{2,22}$/;
 
 export type NameForm = {
   name: string;
@@ -97,6 +98,20 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
           {...text({
             name: "name",
             onChange: (e) => formState.setField("color", randomColor()),
+            validateOnBlur: true,
+            validate: (value, values, event) => {
+              if (!value.trim()) {
+                return "Insert an username";
+              }
+
+              if (value.length < 2 || value.length > 22) {
+                return "Max length between 2 and 22 characters";
+              }
+
+              if (!USERNAME_REGEX.test(value)) {
+                return "Your username contains invalid characters";
+              }
+            },
           })}
           color={formState.values.color}
           error={formState.errors.name}
