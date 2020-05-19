@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Flex, jsx, Text } from "theme-ui";
 
+import { useHover } from "../../hooks/use-hover";
 import { TwitchLogo } from "../twitch-logo";
 
 type Props = {
@@ -67,6 +68,8 @@ export const TwitchBar: React.SFC<Props> = ({ url }) => {
   const referenceText = useRef<HTMLSpanElement>(null);
   const [textsToRender, setTextsToRender] = useState<null[]>([]);
 
+  const [twitchLogoRef, twitchLogoHover] = useHover();
+
   useEffect(() => {
     const handleResize = () => {
       const textWidth = referenceText.current.clientWidth;
@@ -84,6 +87,7 @@ export const TwitchBar: React.SFC<Props> = ({ url }) => {
   }, [referenceText.current]);
 
   const closed = router.route === "/play/[session]/game";
+  const barIsClosed = closed && !twitchLogoHover;
 
   return (
     <Flex
@@ -110,6 +114,7 @@ export const TwitchBar: React.SFC<Props> = ({ url }) => {
         }}
       >
         <Flex
+          ref={twitchLogoRef}
           sx={{
             alignItems: "center",
             justifyContent: "center",
@@ -131,7 +136,7 @@ export const TwitchBar: React.SFC<Props> = ({ url }) => {
           alignItems: "center",
           overflow: "hidden",
           backgroundColor: "black",
-          transform: `translateX(${closed ? "-100%" : 0})`,
+          transform: `translateX(${barIsClosed ? "-100%" : 0})`,
           transition: "transform .3s cubic-bezier(0.65, 0, 0.35, 1)",
         }}
       >
