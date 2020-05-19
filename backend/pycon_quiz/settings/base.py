@@ -39,11 +39,9 @@ INSTALLED_APPS = [
     "strawberry.django",
     "corsheaders",
     "api",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

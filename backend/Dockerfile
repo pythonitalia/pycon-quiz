@@ -7,7 +7,7 @@ COPY poetry.lock pyproject.toml /app/
 
 WORKDIR /app/
 
-RUN poetry install
+RUN poetry install --no-dev
 RUN pip install gunicorn
 
 COPY . /app/

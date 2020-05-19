@@ -26,9 +26,3 @@ urlpatterns = [
     path("_nested_admin/", include("nested_admin.urls")),
     path("graphql", GraphQLView.as_view(schema=schema)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-if settings.DEBUG:
-    import debug_toolbar
-
-    urlpatterns = [path("__debug__/", include(debug_toolbar.urls)),] + urlpatterns
