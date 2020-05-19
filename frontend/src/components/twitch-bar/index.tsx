@@ -13,17 +13,7 @@ type Props = {
 };
 
 const TEXT_TO_DISPLAY = "Watch live on Twitch /";
-// TODO Finish this
-const animation1 = keyframes`
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-100%, 0);
-  }
-`;
-
-const animation2 = keyframes`
+const animation = keyframes`
   0% {
     transform: translate(0, 0);
   }
@@ -40,9 +30,7 @@ const MarqueeContainer: React.FC<{ position: number }> = ({
     sx={{
       flexShrink: 0,
       willChange: "transform",
-      animation: `${
-        position === 1 ? animation1 : animation2
-      } 20s linear infinite`,
+      animation: `${animation} 20s linear infinite`,
     }}
   >
     {children}
