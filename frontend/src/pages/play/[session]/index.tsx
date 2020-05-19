@@ -8,7 +8,7 @@ import { getSessionInfo } from "../../../api/get-session-info";
 import { GameLayout } from "../../../components/game-layout";
 import { JoinButton } from "../../../components/join-button";
 import { NameInput } from "../../../components/name-input";
-import { usePlayerData } from "../../../hooks/auth";
+import { usePlayerData } from "../../../hooks/use-player-data";
 import { QuizSession, useRegisterForGameMutation } from "../../../types";
 
 const COLORS = [

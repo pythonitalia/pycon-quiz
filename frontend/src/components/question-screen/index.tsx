@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { Flex, Grid, Heading } from "theme-ui";
 
-import { PlayerData } from "../../hooks/auth";
+import { PlayerData } from "../../hooks/use-player-data";
 import { Question, useAnswerQuestionMutation } from "../../types";
 import { GRACE_PERIOD_TO_CHANGE_USER_ANSWER_IN_SECONDS } from "../../utils/constants";
 import { AnswerBox } from "../answer-box";

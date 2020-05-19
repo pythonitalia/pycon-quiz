@@ -9,8 +9,8 @@ import { Leaderboard } from "../../../components/leaderboard";
 import { LoadingUser } from "../../../components/loading-user";
 import { QuestionScreen } from "../../../components/question-screen";
 import { WaitingForTheGameScreen } from "../../../components/waiting-for-the-game-screen";
-import { usePlayerData } from "../../../hooks/auth";
-import { useGameMachine } from "../../../hooks/game-machine";
+import { useGameMachine } from "../../../hooks/use-game-machine";
+import { usePlayerData } from "../../../hooks/use-player-data";
 import { QuizSession } from "../../../types";
 
 type Props = {
