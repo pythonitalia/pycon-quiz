@@ -3,13 +3,11 @@ from typing import TYPE_CHECKING
 
 from django.db import IntegrityError
 
-from game_manager.exceptions import (
-    PartecipantNotFoundError,
-    SessionCompletedError,
-    UsernameAlreadyUsedError,
-    UsernameContainsIllegalCharactersError,
-    UsernameLengthNotValidError,
-)
+from game_manager.exceptions import (PartecipantNotFoundError,
+                                     SessionCompletedError,
+                                     UsernameAlreadyUsedError,
+                                     UsernameContainsIllegalCharactersError,
+                                     UsernameLengthNotValidError)
 
 if TYPE_CHECKING:
     from quizzes.models import Partecipant
@@ -60,10 +58,7 @@ def register_for_game(*, name: str, color: str, session_id: int) -> str:
     if session.is_finished:
         raise SessionCompletedError("The game ended!")
 
-    try:
-        partecipant = Partecipant.objects.create(
-            name=name, color=color, session_id=session_id
-        )
-        return partecipant.token
-    except IntegrityError:
-        raise UsernameAlreadyUsedError("This username is already used by someone else")
+    partecipant = Partecipant.objects.create(
+        name=name, color=color, session_id=session_id
+    )
+    return partecipant.token
