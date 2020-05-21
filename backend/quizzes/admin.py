@@ -74,6 +74,14 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "end_quiz",
         "leaderboard",
     )
+    list_display = (
+        "quiz_name",
+        "name",
+    )
+    list_filter = ("quiz",)
+
+    def quiz_name(self, obj):
+        return obj.quiz.name
 
     def get_queryset(self, request):
         return (
@@ -99,7 +107,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
         return _render_leaderboard(obj.leaderboard)
 
     def start_quiz(self, obj):
-        if obj.is_live:
+        if obj.status != QuizSession.Status.draft:
             return _render_message("The event is already live!")
 
         return _render_button(
@@ -115,6 +123,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
         )
 
     def end_quiz(self, obj):
+        if obj.status == QuizSession.Status.complete:
+            return _render_message(_("Game complete"))
+
         return _render_button(_("End quiz"), url=_get_url_to_action("end_quiz", obj.id))
 
     def start_quiz_view(self, request, object_id: int):

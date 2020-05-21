@@ -92,6 +92,9 @@ class QuizSession(TimeStampedModel, SealableModel):
 
         return next_question
 
+    def __str__(self):
+        return f"{self.name} {self.quiz.name}".strip()
+
     class Meta:
         verbose_name = _("quiz session")
         verbose_name_plural = _("quiz sessions")

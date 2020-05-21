@@ -40,6 +40,7 @@ export const QuestionScreen: React.SFC<Props> = ({
   );
 
   const createdTimestamp = new Date(currentQuestionChanged);
+
   let secondsSinceQuestionVisible = -1;
 
   if (createdTimestamp !== null) {
