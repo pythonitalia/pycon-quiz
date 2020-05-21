@@ -34,7 +34,7 @@ jobs:
             poetry-${{ hashFiles('**/poetry.lock') }}-v2
       - name: Set Poetry config
         run: |
-          poetry config virtualenvs.create false
+          poetry config virtualenvs.create true
           poetry config virtualenvs.path ~/.virtualenvs
       - name: Install python dependencies
         run: poetry install
