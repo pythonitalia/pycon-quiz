@@ -2,7 +2,7 @@ class GameError(Exception):
     pass
 
 
-class UsernameAlreadyUsedError(GameError):
+class UsernameNotAvailableError(GameError):
     """Raised when the user tries to join a game with an already used username"""
 
 

@@ -3,9 +3,9 @@ from pytest import raises
 
 from game_manager.exceptions import (
     SessionCompletedError,
-    UsernameAlreadyUsedError,
     UsernameContainsIllegalCharactersError,
     UsernameLengthNotValidError,
+    UsernameNotAvailableError,
 )
 from game_manager.partecipants import register_for_game
 
@@ -63,10 +63,21 @@ def test_cannot_register_with_already_used_username(
     partecipant_factory(session=live_quiz_session, name="nina")
 
     with raises(
-        UsernameAlreadyUsedError, match="This username is already used by someone else",
+        UsernameNotAvailableError,
+        match="This username is already used by someone else",
     ):
         register_for_game(
             name="nina", color="#000000", session_id=live_quiz_session.id,
+        )
+
+
+@pytest.mark.skip("Implement filter")
+def test_offensive_names_get_blocked(live_quiz_session):
+    with raises(
+        UsernameNotAvailableError, match="This username is not available",
+    ):
+        register_for_game(
+            name="fuckyou", color="#000000", session_id=live_quiz_session.id,
         )
 
 
