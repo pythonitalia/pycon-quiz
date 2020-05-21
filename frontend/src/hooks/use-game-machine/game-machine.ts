@@ -5,6 +5,8 @@ import { GameState, LeaderboardPartecipant, Question } from "../../types";
 type Context = {
   question: Question | null;
   leaderboard: LeaderboardPartecipant[] | null;
+  currentQuestionChanged: string | null;
+  secondsToAnswerQuestion: number;
 };
 
 export const gameMachine = Machine<Context>({
@@ -13,6 +15,8 @@ export const gameMachine = Machine<Context>({
   context: {
     question: null,
     leaderboard: null,
+    currentQuestionChanged: null,
+    secondsToAnswerQuestion: 30,
   },
   states: {
     unknown: {
@@ -22,6 +26,9 @@ export const gameMachine = Machine<Context>({
           target: "live",
           actions: assign({
             question: (_, event) => event.question,
+            currentQuestionChanged: (_, event) => event.currentQuestionChanged,
+            secondsToAnswerQuestion: (_, event) =>
+              event.secondsToAnswerQuestion,
           }),
         },
         COMPLETE: {
@@ -38,6 +45,9 @@ export const gameMachine = Machine<Context>({
           target: "live",
           actions: assign({
             question: (_, event) => event.question,
+            currentQuestionChanged: (_, event) => event.currentQuestionChanged,
+            secondsToAnswerQuestion: (_, event) =>
+              event.secondsToAnswerQuestion,
           }),
         },
         COMPLETE: {
@@ -54,6 +64,9 @@ export const gameMachine = Machine<Context>({
           target: "live",
           actions: assign({
             question: (_, event) => event.question,
+            currentQuestionChanged: (_, event) => event.currentQuestionChanged,
+            secondsToAnswerQuestion: (_, event) =>
+              event.secondsToAnswerQuestion,
           }),
         },
         COMPLETE: {

@@ -3,12 +3,15 @@ from django.db.models import (
     SET_NULL,
     CharField,
     Count,
+    DateTimeField,
     ForeignKey,
+    PositiveIntegerField,
     Q,
     SlugField,
     Sum,
     URLField,
 )
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django_fsm import FSMField, transition
 from djchoices import ChoiceItem, DjangoChoices
@@ -38,6 +41,15 @@ class QuizSession(TimeStampedModel, SealableModel):
         blank=True,
         verbose_name=_("current question"),
     )
+    current_question_changed = DateTimeField(
+        _("current question changed at"),
+        null=True,
+        blank=True,
+        help_text=_("Users have"),
+    )
+    seconds_to_answer_question = PositiveIntegerField(
+        _("seconds to answer question"), default=30,
+    )
 
     stream_link = URLField(
         _("stream link"), help_text=_("Link used for the bottom bar in the quiz")
@@ -51,9 +63,10 @@ class QuizSession(TimeStampedModel, SealableModel):
     def is_finished(self):
         return self.status == QuizSession.Status.complete
 
-    @transition(status, source=Status.draft, target=Status.live)
-    def go_live(self):
-        self.current_question = self.quiz.questions.first()
+    @transition(status, source=[Status.draft, Status.live], target=Status.live)
+    def show_next_question(self):
+        self.current_question = self.next_question
+        self.current_question_changed = timezone.now()
 
     @transition(status, source=Status.live, target=Status.complete)
     def end(self):

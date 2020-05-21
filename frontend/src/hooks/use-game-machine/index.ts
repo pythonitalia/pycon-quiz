@@ -31,7 +31,11 @@ export const useGameMachine = (sessionId: string) => {
         break;
       }
       case "live": {
-        send("LIVE", { question: data.playGame.currentQuestion });
+        send("LIVE", {
+          question: data.playGame.currentQuestion,
+          currentQuestionChanged: data.playGame.currentQuestionChanged,
+          secondsToAnswerQuestion: data.playGame.secondsToAnswerQuestion,
+        });
         break;
       }
       case "complete": {

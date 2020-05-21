@@ -54,23 +54,14 @@ def answer_question(
         raise AnswerNotFoundError("Invalid Answer ID")
 
     current_time = timezone.now()
-    already_existing_answer = (
-        UserAnswer.objects.filter(
-            partecipant=partecipant, question_id=question_id, session=session
+    time_since_question_change = timezone.now() - session.current_question_changed
+
+    if time_since_question_change > timedelta(
+        seconds=session.seconds_to_answer_question
+    ):
+        raise AnswerOutOfTimeError(
+            f"Cannot change answers after {session.seconds_to_answer_question} seconds"
         )
-        .values("created")
-        .first()
-    )
-
-    if already_existing_answer:
-        created_at = already_existing_answer["created"]
-
-        if current_time - created_at > timedelta(
-            seconds=GRACE_PERIOD_FOR_ANSWER_CHANGE_IN_SECONDS
-        ):
-            raise AnswerOutOfTimeError(
-                f"Cannot change answers after {GRACE_PERIOD_FOR_ANSWER_CHANGE_IN_SECONDS} seconds"
-            )
 
     obj, created = UserAnswer.objects.update_or_create(
         partecipant=partecipant,

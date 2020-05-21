@@ -63,4 +63,8 @@ class QuizSession:
 
     @classmethod
     def from_model(cls, data):
-        return cls(id=data.id, name=data.name, stream_link=data.stream_link)
+        return cls(
+            id=data.id,
+            name=data.name,
+            stream_link=data.stream_link,
+        )

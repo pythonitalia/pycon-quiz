@@ -41,6 +41,8 @@ export const Game: React.FC<Props> = ({ quizSession }) => {
         <QuestionScreen
           question={gameState.context.question}
           sessionId={session}
+          currentQuestionChanged={gameState.context.currentQuestionChanged}
+          secondsToAnswerQuestion={gameState.context.secondsToAnswerQuestion}
           playerData={playerData}
         />
       )}

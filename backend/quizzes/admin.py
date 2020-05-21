@@ -6,7 +6,7 @@ from django.utils.html import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django_object_actions import DjangoObjectActions
 
-from game_manager.actions import end, go_live, go_to_next_question, send_generic_update
+from game_manager.actions import end, go_to_next_question, send_generic_update
 from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
 
 
@@ -53,6 +53,8 @@ class QuizSessionAdmin(admin.ModelAdmin):
                     "current_question",
                     "current_question_answer",
                     "next_question",
+                    "current_question_changed",
+                    "seconds_to_answer_question",
                 )
             },
         ),
@@ -117,7 +119,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
 
     def start_quiz_view(self, request, object_id: int):
         session: Optional[QuizSession] = self.get_object(request, object_id)
-        go_live(session)
+        go_to_next_question(session)
         return _redirect_back_to_changeview(object_id)
 
     def next_question_view(self, request, object_id: int):

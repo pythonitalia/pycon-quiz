@@ -2,24 +2,21 @@ import { keyframes } from "@emotion/core";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box } from "theme-ui";
 
-import { GRACE_PERIOD_TO_CHANGE_USER_ANSWER_IN_SECONDS } from "../../utils/constants";
-
 type Props = {
-  secondsSinceAnswerSent: number;
+  countdownFrom: number;
+  totalTime: number;
 };
 
-export const ChangeAnswerCountdown: React.SFC<Props> = ({
-  secondsSinceAnswerSent,
+export const ChangeAnswerCountdown: React.FC<Props> = ({
+  countdownFrom,
+  totalTime,
 }) => {
-  const cachedSecondsLeft = useRef<number>(secondsSinceAnswerSent);
+  const cachedSecondsLeft = useRef<number>(countdownFrom);
   const animation = useMemo(
     () => keyframes`
         0% {
           transform: scaleX(${
-            ((GRACE_PERIOD_TO_CHANGE_USER_ANSWER_IN_SECONDS -
-              secondsSinceAnswerSent) /
-              GRACE_PERIOD_TO_CHANGE_USER_ANSWER_IN_SECONDS) *
-            100
+            ((totalTime - countdownFrom) / totalTime) * 100
           }%);
         }
         100% {
@@ -39,7 +36,7 @@ export const ChangeAnswerCountdown: React.SFC<Props> = ({
         height: "0.8rem",
         backgroundColor: "cornflowerBlue",
         animation: `${animation} ${
-          30 - cachedSecondsLeft.current
+          totalTime - cachedSecondsLeft.current
         }s linear forwards`,
         transformOrigin: "left",
       }}

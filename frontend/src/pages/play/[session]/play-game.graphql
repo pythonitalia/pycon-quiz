@@ -1,6 +1,8 @@
 subscription GameState($sessionId: ID!) {
   playGame(sessionId: $sessionId) {
     status
+    currentQuestionChanged
+    secondsToAnswerQuestion
     currentQuestion {
       id
       text

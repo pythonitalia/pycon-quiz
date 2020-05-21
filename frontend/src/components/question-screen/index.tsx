@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Flex, Grid, Heading } from "theme-ui";
 
 import { PlayerData } from "../../hooks/use-player-data";
-import { Question, useAnswerQuestionMutation } from "../../types";
+import { Question, QuizSession, useAnswerQuestionMutation } from "../../types";
 import { GRACE_PERIOD_TO_CHANGE_USER_ANSWER_IN_SECONDS } from "../../utils/constants";
 import { AnswerBox } from "../answer-box";
 import { ChangeAnswerCountdown } from "../change-answer-countdown";
@@ -11,12 +11,16 @@ type Props = {
   question: Question;
   sessionId: string;
   playerData: PlayerData;
+  currentQuestionChanged: string | null;
+  secondsToAnswerQuestion: number;
 };
 
 export const QuestionScreen: React.SFC<Props> = ({
   question,
   sessionId,
   playerData,
+  currentQuestionChanged,
+  secondsToAnswerQuestion,
 }) => {
   const playerAnswerForQuestion = playerData.answers?.find(
     (a) => a.questionId === question.id
@@ -35,15 +39,17 @@ export const QuestionScreen: React.SFC<Props> = ({
     [question, playerData, sessionId]
   );
 
-  const createdTimestamp = Date.parse(playerAnswerForQuestion?.created);
-  let secondsSinceAnswerSent = -1;
+  const createdTimestamp = new Date(currentQuestionChanged);
+  let secondsSinceQuestionVisible = -1;
 
-  if (!Number.isNaN(createdTimestamp)) {
-    secondsSinceAnswerSent = Math.floor((Date.now() - createdTimestamp) / 1000);
+  if (createdTimestamp !== null) {
+    secondsSinceQuestionVisible = Math.floor(
+      (Date.now() - createdTimestamp.getTime()) / 1000
+    );
   }
 
-  if (secondsSinceAnswerSent > GRACE_PERIOD_TO_CHANGE_USER_ANSWER_IN_SECONDS) {
-    secondsSinceAnswerSent = -1;
+  if (secondsSinceQuestionVisible > secondsToAnswerQuestion) {
+    secondsSinceQuestionVisible = -1;
   }
 
   return (
@@ -59,10 +65,11 @@ export const QuestionScreen: React.SFC<Props> = ({
         flexDirection: "column",
       }}
     >
-      {secondsSinceAnswerSent !== -1 && (
+      {secondsSinceQuestionVisible !== -1 && (
         <ChangeAnswerCountdown
           key={`answer-countdown-for-${question.id}`}
-          secondsSinceAnswerSent={secondsSinceAnswerSent}
+          totalTime={secondsToAnswerQuestion}
+          countdownFrom={secondsSinceQuestionVisible}
         />
       )}
       <Heading

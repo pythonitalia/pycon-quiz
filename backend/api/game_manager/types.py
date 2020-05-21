@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, List, Optional
 
 import strawberry
+from strawberry.types import DateTime
 
 if TYPE_CHECKING:
     from quizzes.models import QuizSession, Question as QuestionModel
@@ -52,6 +53,8 @@ class GameState:
     status: str
     current_question: Optional[Question]
     leaderboard: Optional[List[LeaderboardPartecipant]]
+    current_question_changed: Optional[str]
+    seconds_to_answer_question: int
 
     @classmethod
     def from_data(cls, data):
@@ -65,6 +68,8 @@ class GameState:
                 ]
                 if data["leaderboard"]
                 else None,
+                "current_question_changed": data["current_question_changed"],
+                "seconds_to_answer_question": data["seconds_to_answer_question"],
             }
         )
 
@@ -97,4 +102,8 @@ def _map_session_to_data_dict(session: "QuizSession"):
         ]
         if session.is_finished
         else None,
+        "current_question_changed": session.current_question_changed.isoformat()
+        if session.current_question_changed
+        else None,
+        "seconds_to_answer_question": session.seconds_to_answer_question,
     }
