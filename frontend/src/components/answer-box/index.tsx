@@ -62,7 +62,7 @@ export const AnswerBox: React.SFC<Props> = ({
             border: "primary",
             objectFit: "cover",
             width: "100%",
-            maxHeight: ["20rem", "20rem", "50rem"],
+            height: ["20rem", "20rem", "40rem"],
           }}
           src={answer.image}
           width={answer.imageWidth}
