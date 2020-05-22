@@ -11,10 +11,19 @@ if TYPE_CHECKING:
 class Answer:
     id: strawberry.ID
     text: str
+    image: Optional[str]
+    image_width: Optional[int]
+    image_height: Optional[int]
 
     @classmethod
     def from_data(cls, data):
-        return cls(id=data["id"], text=data["text"])
+        return cls(
+            id=data["id"],
+            text=data["text"],
+            image=data['image'],
+            image_width=data['image_width'],
+            image_height=data['image_height'],
+        )
 
 
 @strawberry.type
@@ -86,7 +95,13 @@ def _map_session_to_data_dict(session: "QuizSession"):
             "text": session.current_question.text,
             "ui": session.current_question.ui_view,
             "answers": [
-                {"text": answer.text, "id": answer.id}
+                {
+                    "text": answer.text,
+                    "id": answer.id,
+                    "image": answer.image.url if answer.image else None,
+                    "image_width": answer.image.width if answer.image else None,
+                    "image_height": answer.image.height if answer.image else None,
+                }
                 for answer in session.current_question.answers.all()
             ],
         }

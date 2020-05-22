@@ -78,6 +78,12 @@ resource "aws_elastic_beanstalk_environment" "main" {
     name      = "REDIS_URL"
     value     = "redis://${aws_elasticache_cluster.redis.cache_nodes.0.address}"
   }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AWS_STORAGE_BUCKET_NAME"
+    value     = aws_s3_bucket.backend_media.id
+  }
 }
 
 output "app_domain" {

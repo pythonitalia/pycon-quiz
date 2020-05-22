@@ -82,6 +82,36 @@ d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
 [[package]]
 category = "main"
+description = "The AWS SDK for Python"
+name = "boto3"
+optional = false
+python-versions = "*"
+version = "1.13.15"
+
+[package.dependencies]
+botocore = ">=1.16.15,<1.17.0"
+jmespath = ">=0.7.1,<1.0.0"
+s3transfer = ">=0.3.0,<0.4.0"
+
+[[package]]
+category = "main"
+description = "Low-level, data-driven core of boto 3."
+name = "botocore"
+optional = false
+python-versions = "*"
+version = "1.16.15"
+
+[package.dependencies]
+docutils = ">=0.10,<0.16"
+jmespath = ">=0.7.1,<1.0.0"
+python-dateutil = ">=2.1,<3.0.0"
+
+[package.dependencies.urllib3]
+python = "<3.4.0 || >=3.5.0"
+version = ">=1.20,<1.26"
+
+[[package]]
+category = "main"
 description = "Composable command line interface toolkit"
 name = "click"
 optional = false
@@ -245,6 +275,33 @@ version = "1.2.3"
 Django = ">=1.11"
 
 [[package]]
+category = "main"
+description = "Support for many storage backends in Django"
+name = "django-storages"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.9.1"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[package.extras]
+azure = ["azure-storage-blob (>=1.3.1,<12.0.0)"]
+boto3 = ["boto3 (>=1.4.4)"]
+dropbox = ["dropbox (>=7.2.1)"]
+google = ["google-cloud-storage (>=1.15.0)"]
+libcloud = ["apache-libcloud"]
+sftp = ["paramiko"]
+
+[[package]]
+category = "main"
+description = "Docutils -- Python Documentation Utilities"
+name = "docutils"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.15.2"
+
+[[package]]
 category = "dev"
 description = "A versatile test fixtures replacement based on thoughtbot's factory_bot for Ruby."
 name = "factory-boy"
@@ -351,6 +408,14 @@ xdg_home = ["appdirs (>=1.4.0)"]
 
 [[package]]
 category = "main"
+description = "JSON Matching Expressions"
+name = "jmespath"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.10.0"
+
+[[package]]
+category = "main"
 description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
 optional = false
@@ -393,6 +458,14 @@ wmctrl = "*"
 [package.extras]
 funcsigs = ["funcsigs"]
 testing = ["funcsigs", "pytest"]
+
+[[package]]
+category = "main"
+description = "Python Imaging Library (Fork)"
+name = "pillow"
+optional = false
+python-versions = ">=3.5"
+version = "7.1.2"
 
 [[package]]
 category = "main"
@@ -520,7 +593,7 @@ inflection = "*"
 pytest = ">=3.3.2"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Extensions to the standard Python datetime module"
 name = "python-dateutil"
 optional = false
@@ -556,6 +629,17 @@ name = "regex"
 optional = false
 python-versions = "*"
 version = "2020.2.20"
+
+[[package]]
+category = "main"
+description = "An Amazon S3 Transfer Manager"
+name = "s3transfer"
+optional = false
+python-versions = "*"
+version = "0.3.3"
+
+[package.dependencies]
+botocore = ">=1.12.36,<2.0a.0"
 
 [[package]]
 category = "main"
@@ -631,6 +715,20 @@ version = "1.4.1"
 
 [[package]]
 category = "main"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+marker = "python_version != \"3.4\""
+name = "urllib3"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+version = "1.25.9"
+
+[package.extras]
+brotli = ["brotlipy (>=0.6.0)"]
+secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "pyOpenSSL (>=0.14)", "ipaddress"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+
+[[package]]
+category = "main"
 description = "The lightning-fast ASGI server."
 name = "uvicorn"
 optional = false
@@ -692,7 +790,7 @@ python-versions = "*"
 version = "0.3"
 
 [metadata]
-content-hash = "f2eb41f6d1da2e4aefaf112d5ab763e95651c56ccc62c5087438bb8502639ab9"
+content-hash = "df7c823dcbe9d6d15dac9a2ffeb2c92d9923b3a2794c73042b0780f8ba3abf12"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -723,6 +821,14 @@ attrs = [
 black = [
     {file = "black-19.10b0-py36-none-any.whl", hash = "sha256:1b30e59be925fafc1ee4565e5e08abef6b03fe455102883820fe5ee2e4734e0b"},
     {file = "black-19.10b0.tar.gz", hash = "sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539"},
+]
+boto3 = [
+    {file = "boto3-1.13.15-py2.py3-none-any.whl", hash = "sha256:397b7abee7af6477798dcebe5a2c5abe2c61e5bf175248adee3156a627ec117c"},
+    {file = "boto3-1.13.15.tar.gz", hash = "sha256:d9958f08b54493d0fe63d56db202a9f1fff55b87c20e86443638890d7a5fd0e5"},
+]
+botocore = [
+    {file = "botocore-1.16.15-py2.py3-none-any.whl", hash = "sha256:0ad0bf4f38948e8dcc9a615ce37e6b170f34992a50ae3d134e7a225fcbdc0cd4"},
+    {file = "botocore-1.16.15.tar.gz", hash = "sha256:97127ad663502ea519870a10688a0a809d7012a621ab0bbc2bc2052ff0a794ea"},
 ]
 click = [
     {file = "click-7.1.1-py2.py3-none-any.whl", hash = "sha256:e345d143d80bf5ee7534056164e5e112ea5e22716bbb1ce727941f4c8b471b9a"},
@@ -815,6 +921,15 @@ django-seal = [
     {file = "django-seal-1.2.3.tar.gz", hash = "sha256:5ac75d16de805d3b04d8bf3b4960eb516f6380058688993e545b60f1d594ca4f"},
     {file = "django_seal-1.2.3-py2.py3-none-any.whl", hash = "sha256:cfda32f1c684cfe38b703ccd5a71cc9887150192c3fe6ae3e271bdaac3a50574"},
 ]
+django-storages = [
+    {file = "django-storages-1.9.1.tar.gz", hash = "sha256:a59e9923cbce7068792f75344ed7727021ee4ac20f227cf17297d0d03d141e91"},
+    {file = "django_storages-1.9.1-py2.py3-none-any.whl", hash = "sha256:3103991c2ee8cef8a2ff096709973ffe7106183d211a79f22cf855f33533d924"},
+]
+docutils = [
+    {file = "docutils-0.15.2-py2-none-any.whl", hash = "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827"},
+    {file = "docutils-0.15.2-py3-none-any.whl", hash = "sha256:6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0"},
+    {file = "docutils-0.15.2.tar.gz", hash = "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"},
+]
 factory-boy = [
     {file = "factory_boy-2.12.0-py2.py3-none-any.whl", hash = "sha256:728df59b372c9588b83153facf26d3d28947fc750e8e3c95cefa9bed0e6394ee"},
     {file = "factory_boy-2.12.0.tar.gz", hash = "sha256:faf48d608a1735f0d0a3c9cbf536d64f9132b547dae7ba452c4d99a79e84a370"},
@@ -903,6 +1018,10 @@ isort = [
     {file = "isort-4.3.21-py2.py3-none-any.whl", hash = "sha256:6e811fcb295968434526407adb8796944f1988c5b65e8139058f2014cbe100fd"},
     {file = "isort-4.3.21.tar.gz", hash = "sha256:54da7e92468955c4fceacd0c86bd0ec997b0e1ee80d97f67c35a78b719dccab1"},
 ]
+jmespath = [
+    {file = "jmespath-0.10.0-py2.py3-none-any.whl", hash = "sha256:cdf6525904cc597730141d61b36f2e4b8ecc257c420fa2f4549bac2c2d0cb72f"},
+    {file = "jmespath-0.10.0.tar.gz", hash = "sha256:b85d0567b8666149a93172712e68920734333c0ce7e89b78b3e987f71e5ed4f9"},
+]
 more-itertools = [
     {file = "more-itertools-8.3.0.tar.gz", hash = "sha256:558bb897a2232f5e4f8e2399089e35aecb746e1f9191b6584a151647e89267be"},
     {file = "more_itertools-8.3.0-py3-none-any.whl", hash = "sha256:7818f596b1e87be009031c7653d01acc46ed422e6656b394b0f765ce66ed4982"},
@@ -917,6 +1036,31 @@ pathspec = [
 ]
 pdbpp = [
     {file = "pdbpp-0.10.2.tar.gz", hash = "sha256:73ff220d5006e0ecdc3e2705d8328d8aa5ac27fef95cc06f6e42cd7d22d55eb8"},
+]
+pillow = [
+    {file = "Pillow-7.1.2-cp35-cp35m-macosx_10_10_intel.whl", hash = "sha256:ae2b270f9a0b8822b98655cb3a59cdb1bd54a34807c6c56b76dd2e786c3b7db3"},
+    {file = "Pillow-7.1.2-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:d23e2aa9b969cf9c26edfb4b56307792b8b374202810bd949effd1c6e11ebd6d"},
+    {file = "Pillow-7.1.2-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:b532bcc2f008e96fd9241177ec580829dee817b090532f43e54074ecffdcd97f"},
+    {file = "Pillow-7.1.2-cp35-cp35m-win32.whl", hash = "sha256:12e4bad6bddd8546a2f9771485c7e3d2b546b458ae8ff79621214119ac244523"},
+    {file = "Pillow-7.1.2-cp35-cp35m-win_amd64.whl", hash = "sha256:9744350687459234867cbebfe9df8f35ef9e1538f3e729adbd8fde0761adb705"},
+    {file = "Pillow-7.1.2-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:f54be399340aa602066adb63a86a6a5d4f395adfdd9da2b9a0162ea808c7b276"},
+    {file = "Pillow-7.1.2-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:1f694e28c169655c50bb89a3fa07f3b854d71eb47f50783621de813979ba87f3"},
+    {file = "Pillow-7.1.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:f784aad988f12c80aacfa5b381ec21fd3f38f851720f652b9f33facc5101cf4d"},
+    {file = "Pillow-7.1.2-cp36-cp36m-win32.whl", hash = "sha256:b37bb3bd35edf53125b0ff257822afa6962649995cbdfde2791ddb62b239f891"},
+    {file = "Pillow-7.1.2-cp36-cp36m-win_amd64.whl", hash = "sha256:b67a6c47ed963c709ed24566daa3f95a18f07d3831334da570c71da53d97d088"},
+    {file = "Pillow-7.1.2-cp37-cp37m-macosx_10_10_x86_64.whl", hash = "sha256:eaa83729eab9c60884f362ada982d3a06beaa6cc8b084cf9f76cae7739481dfa"},
+    {file = "Pillow-7.1.2-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:f46e0e024346e1474083c729d50de909974237c72daca05393ee32389dabe457"},
+    {file = "Pillow-7.1.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:0e2a3bceb0fd4e0cb17192ae506d5f082b309ffe5fc370a5667959c9b2f85fa3"},
+    {file = "Pillow-7.1.2-cp37-cp37m-win32.whl", hash = "sha256:ccc9ad2460eb5bee5642eaf75a0438d7f8887d484490d5117b98edd7f33118b7"},
+    {file = "Pillow-7.1.2-cp37-cp37m-win_amd64.whl", hash = "sha256:b943e71c2065ade6fef223358e56c167fc6ce31c50bc7a02dd5c17ee4338e8ac"},
+    {file = "Pillow-7.1.2-cp38-cp38-macosx_10_10_x86_64.whl", hash = "sha256:04766c4930c174b46fd72d450674612ab44cca977ebbcc2dde722c6933290107"},
+    {file = "Pillow-7.1.2-cp38-cp38-manylinux1_i686.whl", hash = "sha256:f455efb7a98557412dc6f8e463c1faf1f1911ec2432059fa3e582b6000fc90e2"},
+    {file = "Pillow-7.1.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:ee94fce8d003ac9fd206496f2707efe9eadcb278d94c271f129ab36aa7181344"},
+    {file = "Pillow-7.1.2-cp38-cp38-win32.whl", hash = "sha256:4b02b9c27fad2054932e89f39703646d0c543f21d3cc5b8e05434215121c28cd"},
+    {file = "Pillow-7.1.2-cp38-cp38-win_amd64.whl", hash = "sha256:3d25dd8d688f7318dca6d8cd4f962a360ee40346c15893ae3b95c061cdbc4079"},
+    {file = "Pillow-7.1.2-pp373-pypy36_pp73-win32.whl", hash = "sha256:0f01e63c34f0e1e2580cc0b24e86a5ccbbfa8830909a52ee17624c4193224cd9"},
+    {file = "Pillow-7.1.2-py3.8-macosx-10.9-x86_64.egg", hash = "sha256:70e3e0d99a0dcda66283a185f80697a9b08806963c6149c8e6c5f452b2aa59c0"},
+    {file = "Pillow-7.1.2.tar.gz", hash = "sha256:a0b49960110bc6ff5fead46013bcb8825d101026d466f3a4de3476defe0fb0dd"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
@@ -1007,6 +1151,10 @@ regex = [
     {file = "regex-2020.2.20-cp38-cp38-win_amd64.whl", hash = "sha256:7f78f963e62a61e294adb6ff5db901b629ef78cb2a1cfce3cf4eeba80c1c67aa"},
     {file = "regex-2020.2.20.tar.gz", hash = "sha256:9e9624440d754733eddbcd4614378c18713d2d9d0dc647cf9c72f64e39671be5"},
 ]
+s3transfer = [
+    {file = "s3transfer-0.3.3-py2.py3-none-any.whl", hash = "sha256:2482b4259524933a022d59da830f51bd746db62f047d6eb213f2f8855dcb8a13"},
+    {file = "s3transfer-0.3.3.tar.gz", hash = "sha256:921a37e2aefc64145e7b73d50c71bb4f26f46e4c9f414dc648c6245ff92cf7db"},
+]
 six = [
     {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
     {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
@@ -1054,6 +1202,10 @@ typed-ast = [
     {file = "typed_ast-1.4.1-cp38-cp38-win_amd64.whl", hash = "sha256:fc0fea399acb12edbf8a628ba8d2312f583bdbdb3335635db062fa98cf71fca4"},
     {file = "typed_ast-1.4.1-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:d43943ef777f9a1c42bf4e552ba23ac77a6351de620aa9acf64ad54933ad4d34"},
     {file = "typed_ast-1.4.1.tar.gz", hash = "sha256:8c8aaad94455178e3187ab22c8b01a3837f8ee50e09cf31f1ba129eb293ec30b"},
+]
+urllib3 = [
+    {file = "urllib3-1.25.9-py2.py3-none-any.whl", hash = "sha256:88206b0eb87e6d677d424843ac5209e3fb9d0190d0ee169599165ec25e9d9115"},
+    {file = "urllib3-1.25.9.tar.gz", hash = "sha256:3018294ebefce6572a474f0604c2021e33b3fd8006ecd11d62107a5d2a963527"},
 ]
 uvicorn = [
     {file = "uvicorn-0.11.5-py3-none-any.whl", hash = "sha256:50577d599775dac2301bac8bd5b540d19a9560144143c5bdab13cba92783b6e7"},

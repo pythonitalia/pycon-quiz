@@ -3,6 +3,7 @@ from django.db.models import (
     BooleanField,
     CharField,
     ForeignKey,
+    ImageField,
     PositiveIntegerField,
 )
 from django.utils.translation import ugettext_lazy as _
@@ -17,7 +18,15 @@ class Answer(TimeStampedModel):
         related_name="answers",
     )
 
-    text = CharField(_("text"), max_length=1000)
+    text = CharField(_("text"), blank=True, default="", max_length=1000)
+    image = ImageField(
+        _("image"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "If provided, it will be used instead of the text. Please provide a text description for accessibility reasons"
+        ),
+    )
     position = PositiveIntegerField(_("position"), blank=True)
     is_correct = BooleanField(_("is correct"))
 

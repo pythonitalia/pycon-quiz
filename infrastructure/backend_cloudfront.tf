@@ -15,6 +15,11 @@ resource "aws_cloudfront_distribution" "backend" {
     }
   }
 
+  origin {
+    domain_name = aws_s3_bucket.backend_media.bucket_regional_domain_name
+    origin_id   = "media"
+  }
+
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
@@ -34,6 +39,27 @@ resource "aws_cloudfront_distribution" "backend" {
     min_ttl                = 0
     default_ttl            = 604800
     max_ttl                = 31536000
+  }
+
+  ordered_cache_behavior {
+    path_pattern     = "/media/*"
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "media"
+
+    forwarded_values {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
+    }
+
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 604800
+    max_ttl                = 31536000
+    compress               = true
   }
 
   restrictions {

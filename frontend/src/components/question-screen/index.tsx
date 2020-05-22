@@ -56,11 +56,12 @@ export const QuestionScreen: React.SFC<Props> = ({
   return (
     <Flex
       sx={{
-        height: "100vh",
+        height: ["auto", "auto", "auto", "100vh"],
         maxWidth: "100rem",
         width: "100%",
         mx: "auto",
         px: "primary",
+        py: "secondary",
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",

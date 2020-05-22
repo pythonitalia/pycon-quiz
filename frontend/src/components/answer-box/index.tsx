@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Box, Button, Flex } from "theme-ui";
+import { Box, Button, Flex, Image } from "theme-ui";
 
 import { Answer } from "../../types";
 
@@ -56,21 +56,37 @@ export const AnswerBox: React.SFC<Props> = ({
       >
         {LETTTERS[position]}
       </Box>
-      <Button
-        sx={{
-          flexGrow: 1,
-          textTransform: "none",
-          backgroundColor: "transparent",
-          textAlign: "left",
-          border: "primary",
+      {answer.image && (
+        <Image
+          sx={{
+            border: "primary",
+            objectFit: "cover",
+            width: "100%",
+            maxHeight: ["20rem", "20rem", "50rem"],
+          }}
+          src={answer.image}
+          width={answer.imageWidth}
+          height={answer.imageHeight}
+          alt={answer.text}
+        />
+      )}
+      {!answer.image && (
+        <Button
+          sx={{
+            flexGrow: 1,
+            textTransform: "none",
+            backgroundColor: "transparent",
+            textAlign: "left",
+            border: "primary",
 
-          "&:first-letter": {
-            textTransform: "uppercase",
-          },
-        }}
-      >
-        {answer.text}
-      </Button>
+            "&:first-letter": {
+              textTransform: "uppercase",
+            },
+          }}
+        >
+          {answer.text}
+        </Button>
+      )}
     </Flex>
   );
 };

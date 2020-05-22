@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "strawberry.django",
     "corsheaders",
     "api",
+    "storages",
 ]
 
 MIDDLEWARE = [

@@ -109,7 +109,6 @@ export const theme = {
       fontFamily: "body",
       fontWeight: "body",
       fontSize: "primary",
-      overflow: "hidden",
     },
   },
 };

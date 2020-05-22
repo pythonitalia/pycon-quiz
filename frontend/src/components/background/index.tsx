@@ -8,7 +8,16 @@ type Props = {};
 const howManyQuestionMarks = 7;
 
 export const Background: React.SFC<Props> = (props) => (
-  <Box>
+  <Box
+    sx={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      overflow: "hidden",
+    }}
+  >
     {Array(howManyQuestionMarks)
       .fill(null, 0)
       .map((_, i) => (

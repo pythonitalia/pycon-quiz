@@ -10,6 +10,9 @@ subscription GameState($sessionId: ID!) {
       answers {
         id
         text
+        image
+        imageWidth
+        imageHeight
       }
     }
     leaderboard {
