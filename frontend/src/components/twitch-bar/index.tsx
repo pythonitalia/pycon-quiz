@@ -85,7 +85,7 @@ export const TwitchBar: React.SFC<Props> = ({ url }) => {
       rel="noopener noreferrer"
       sx={{
         width: "100%",
-        position: "absolute",
+        position: "fixed",
         bottom: 0,
         left: 0,
         color: "white",
