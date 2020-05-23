@@ -2,6 +2,7 @@ import asyncio
 import dataclasses
 
 from asgiref.sync import sync_to_async
+from django_rq import job
 from websockets.exceptions import ConnectionClosedOK
 
 from api.game_manager.types import GameState
@@ -9,6 +10,7 @@ from game_manager.session import get_redis_channel_name_for_session_id, get_sess
 from pycon_quiz.redis import get_client
 
 
+@job
 def send_update(session):
     game_state = GameState.from_session(session)
     asyncio.run(update_game(session.id, game_state))

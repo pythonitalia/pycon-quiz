@@ -19,6 +19,7 @@
     "src/definitions/next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/definitions/ResizeObserver.d.ts"
+    "src/definitions/resize-observer.d.ts",
+    "src/definitions/custom-window.d.ts"
   ]
 }

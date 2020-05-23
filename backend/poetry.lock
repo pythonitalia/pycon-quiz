@@ -140,6 +140,17 @@ toml = ["toml"]
 
 [[package]]
 category = "main"
+description = "croniter provides iteration for datetime object with cron like format"
+name = "croniter"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "0.3.31"
+
+[package.dependencies]
+python-dateutil = "*"
+
+[[package]]
+category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
 optional = false
@@ -262,6 +273,23 @@ name = "django-object-actions"
 optional = false
 python-versions = "*"
 version = "2.0.0"
+
+[[package]]
+category = "main"
+description = "An app that provides django integration for RQ (Redis Queue)"
+name = "django-rq"
+optional = false
+python-versions = "*"
+version = "2.3.2"
+
+[package.dependencies]
+django = ">=2.0"
+redis = ">=3"
+rq = ">=1.2"
+
+[package.extras]
+sentry = ["raven (>=6.1.0)"]
+testing = ["mock (>=2.0.0)"]
 
 [[package]]
 category = "main"
@@ -623,12 +651,47 @@ python-versions = "*"
 version = "2019.3"
 
 [[package]]
+category = "main"
+description = "Python client for Redis key-value store"
+name = "redis"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "3.5.2"
+
+[package.extras]
+hiredis = ["hiredis (>=0.1.3)"]
+
+[[package]]
 category = "dev"
 description = "Alternative regular expression module, to replace re."
 name = "regex"
 optional = false
 python-versions = "*"
 version = "2020.2.20"
+
+[[package]]
+category = "main"
+description = "RQ is a simple, lightweight, library for creating background jobs, and processing them."
+name = "rq"
+optional = false
+python-versions = ">=3.4"
+version = "1.4.1"
+
+[package.dependencies]
+click = ">=5.0"
+redis = ">=3.0.0"
+
+[[package]]
+category = "main"
+description = "Provides job scheduling capabilities to RQ (Redis Queue)"
+name = "rq-scheduler"
+optional = false
+python-versions = "*"
+version = "0.10.0"
+
+[package.dependencies]
+croniter = ">=0.3.9"
+rq = ">=0.13"
 
 [[package]]
 category = "main"
@@ -790,7 +853,7 @@ python-versions = "*"
 version = "0.3"
 
 [metadata]
-content-hash = "df7c823dcbe9d6d15dac9a2ffeb2c92d9923b3a2794c73042b0780f8ba3abf12"
+content-hash = "562e6a24f9d1e34d3e7fb50f6c183c17093533609cec38505b676c82e67005e9"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -871,6 +934,10 @@ coverage = [
     {file = "coverage-5.1-cp39-cp39-win_amd64.whl", hash = "sha256:bb28a7245de68bf29f6fb199545d072d1036a1917dca17a1e75bbb919e14ee8e"},
     {file = "coverage-5.1.tar.gz", hash = "sha256:f90bfc4ad18450c80b024036eaf91e4a246ae287701aaa88eaebebf150868052"},
 ]
+croniter = [
+    {file = "croniter-0.3.31-py2.py3-none-any.whl", hash = "sha256:cfd0837246845d3f3eb463ae8790bfb7db6ac76743e8f31aacaf37830de7fb52"},
+    {file = "croniter-0.3.31.tar.gz", hash = "sha256:8984b4b27ddfc4b95b2bcec17ee31f827426cf1d717c2af79eff4b4435e23197"},
+]
 django = [
     {file = "Django-3.0.4-py3-none-any.whl", hash = "sha256:89e451bfbb815280b137e33e454ddd56481fdaa6334054e6e031041ee1eda360"},
     {file = "Django-3.0.4.tar.gz", hash = "sha256:50b781f6cbeb98f673aa76ed8e572a019a45e52bdd4ad09001072dfd91ab07c8"},
@@ -916,6 +983,10 @@ django-nested-admin = [
 django-object-actions = [
     {file = "django-object-actions-2.0.0.tar.gz", hash = "sha256:bbf027873c2c5a7b976133630cd8976007b94ef609c09af124683e12f94ad01d"},
     {file = "django_object_actions-2.0.0-py2.py3-none-any.whl", hash = "sha256:69b8c2e4ec57f10fe8f1457e0694b7f81abe486bdb31bd21d7bc39e4c4128538"},
+]
+django-rq = [
+    {file = "django-rq-2.3.2.tar.gz", hash = "sha256:ee9aefba814ae00b6d6a566ed0cd2a0a090e0e42d90bb9c4f1c70d3cacb47a52"},
+    {file = "django_rq-2.3.2-py2.py3-none-any.whl", hash = "sha256:f0bd7ac3b8b4b4abb161646e80a8751c81664beaa810e92fdbcf9fb3e7d72727"},
 ]
 django-seal = [
     {file = "django-seal-1.2.3.tar.gz", hash = "sha256:5ac75d16de805d3b04d8bf3b4960eb516f6380058688993e545b60f1d594ca4f"},
@@ -1128,6 +1199,10 @@ pytz = [
     {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
     {file = "pytz-2019.3.tar.gz", hash = "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"},
 ]
+redis = [
+    {file = "redis-3.5.2-py2.py3-none-any.whl", hash = "sha256:2ef11f489003f151777c064c5dbc6653dfb9f3eade159bcadc524619fddc2242"},
+    {file = "redis-3.5.2.tar.gz", hash = "sha256:6d65e84bc58091140081ee9d9c187aab0480097750fac44239307a3bdf0b1251"},
+]
 regex = [
     {file = "regex-2020.2.20-cp27-cp27m-win32.whl", hash = "sha256:99272d6b6a68c7ae4391908fc15f6b8c9a6c345a46b632d7fdb7ef6c883a2bbb"},
     {file = "regex-2020.2.20-cp27-cp27m-win_amd64.whl", hash = "sha256:974535648f31c2b712a6b2595969f8ab370834080e00ab24e5dbb9d19b8bfb74"},
@@ -1150,6 +1225,14 @@ regex = [
     {file = "regex-2020.2.20-cp38-cp38-win32.whl", hash = "sha256:200539b5124bc4721247a823a47d116a7a23e62cc6695744e3eb5454a8888e6d"},
     {file = "regex-2020.2.20-cp38-cp38-win_amd64.whl", hash = "sha256:7f78f963e62a61e294adb6ff5db901b629ef78cb2a1cfce3cf4eeba80c1c67aa"},
     {file = "regex-2020.2.20.tar.gz", hash = "sha256:9e9624440d754733eddbcd4614378c18713d2d9d0dc647cf9c72f64e39671be5"},
+]
+rq = [
+    {file = "rq-1.4.1-py2.py3-none-any.whl", hash = "sha256:e6d82156eb43a8fffe451099a716114f5f163ec7603b6e8c8dab16a1b31f4547"},
+    {file = "rq-1.4.1.tar.gz", hash = "sha256:318017229145a40d34c20bc21ecdcd8c217a326eb08c9bee249e8c9e09846e36"},
+]
+rq-scheduler = [
+    {file = "rq-scheduler-0.10.0.tar.gz", hash = "sha256:de2e2754a05549dadbe7422d2d1fa5ad0c1d556280515af9c3b9c1eba0db5ddb"},
+    {file = "rq_scheduler-0.10.0-py2.py3-none-any.whl", hash = "sha256:f19486671473eba42095163f2ae829d5dcb046dde01628233871ee830c1c3c2e"},
 ]
 s3transfer = [
     {file = "s3transfer-0.3.3-py2.py3-none-any.whl", hash = "sha256:2482b4259524933a022d59da830f51bd746db62f047d6eb213f2f8855dcb8a13"},

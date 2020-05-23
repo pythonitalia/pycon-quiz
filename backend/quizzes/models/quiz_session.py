@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db.models import (
     CASCADE,
     SET_NULL,
@@ -45,7 +47,9 @@ class QuizSession(TimeStampedModel, SealableModel):
         _("current question changed at"),
         null=True,
         blank=True,
-        help_text=_("Users have"),
+        help_text=_(
+            "Users have 'seconds_to_answer_question' seconds from this datetime to answer the question"
+        ),
     )
     seconds_to_answer_question = PositiveIntegerField(
         _("seconds to answer question"), default=30,
@@ -78,6 +82,15 @@ class QuizSession(TimeStampedModel, SealableModel):
             tot_answers=Count("answers"),
             score=Count("answers", filter=Q(answers__answer__is_correct=True)),
         ).order_by("-score")
+
+    @property
+    def can_answer_question(self):
+        current_time = timezone.now()
+        time_since_question_change = timezone.now() - self.current_question_changed
+
+        return time_since_question_change <= timedelta(
+            seconds=self.seconds_to_answer_question
+        )
 
     @property
     def next_question(self):

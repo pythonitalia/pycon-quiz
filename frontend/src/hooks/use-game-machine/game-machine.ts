@@ -7,6 +7,7 @@ type Context = {
   leaderboard: LeaderboardPartecipant[] | null;
   currentQuestionChanged: string | null;
   secondsToAnswerQuestion: number;
+  canAnswerQuestion: boolean;
 };
 
 export const gameMachine = Machine<Context>({
@@ -17,6 +18,7 @@ export const gameMachine = Machine<Context>({
     leaderboard: null,
     currentQuestionChanged: null,
     secondsToAnswerQuestion: 30,
+    canAnswerQuestion: false,
   },
   states: {
     unknown: {
@@ -29,6 +31,7 @@ export const gameMachine = Machine<Context>({
             currentQuestionChanged: (_, event) => event.currentQuestionChanged,
             secondsToAnswerQuestion: (_, event) =>
               event.secondsToAnswerQuestion,
+            canAnswerQuestion: (_, event) => event.canAnswerQuestion,
           }),
         },
         COMPLETE: {
@@ -48,6 +51,7 @@ export const gameMachine = Machine<Context>({
             currentQuestionChanged: (_, event) => event.currentQuestionChanged,
             secondsToAnswerQuestion: (_, event) =>
               event.secondsToAnswerQuestion,
+            canAnswerQuestion: (_, event) => event.canAnswerQuestion,
           }),
         },
         COMPLETE: {
@@ -67,6 +71,7 @@ export const gameMachine = Machine<Context>({
             currentQuestionChanged: (_, event) => event.currentQuestionChanged,
             secondsToAnswerQuestion: (_, event) =>
               event.secondsToAnswerQuestion,
+            canAnswerQuestion: (_, event) => event.canAnswerQuestion,
           }),
         },
         COMPLETE: {

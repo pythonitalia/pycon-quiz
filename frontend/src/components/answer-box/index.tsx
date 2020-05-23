@@ -6,8 +6,7 @@ import { Answer } from "../../types";
 type Props = {
   answer: Answer;
   position: number;
-  selected: boolean;
-  answerChoosen: boolean;
+  disableAnswer: boolean;
   onClick: (answerId: string) => void;
 };
 
@@ -17,8 +16,7 @@ const COLORS = ["mint", "orange", "red", "azure"];
 export const AnswerBox: React.SFC<Props> = ({
   answer,
   position,
-  selected,
-  answerChoosen,
+  disableAnswer,
   onClick,
 }) => {
   const color = COLORS[position % COLORS.length];
@@ -32,14 +30,16 @@ export const AnswerBox: React.SFC<Props> = ({
       onClick={onClickWrapper}
       sx={{
         alignItems: "flex-start",
-        opacity: !answerChoosen || selected ? 1 : 0.5,
+        opacity: disableAnswer ? 0.5 : 1,
         cursor: "pointer",
-        "&:hover": {
-          opacity: 1,
-          button: {
-            backgroundColor: color,
-          },
-        },
+        "&:hover": disableAnswer
+          ? {}
+          : {
+              opacity: 1,
+              button: {
+                backgroundColor: color,
+              },
+            },
       }}
     >
       <Box

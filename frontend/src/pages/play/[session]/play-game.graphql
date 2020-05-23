@@ -3,6 +3,7 @@ subscription GameState($sessionId: ID!) {
     status
     currentQuestionChanged
     secondsToAnswerQuestion
+    canAnswerQuestion
     currentQuestion {
       id
       text

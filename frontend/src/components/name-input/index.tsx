@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, Flex, Input, Text } from "theme-ui";
 
@@ -16,7 +17,7 @@ const PLACEHOLDERS = [
   "AlexMartelli",
 ];
 
-export const NameInput: React.SFC<Props> = ({
+export const NameInput: React.FC<Props> = ({
   onBlur,
   onChange,
   value = "",
@@ -24,37 +25,21 @@ export const NameInput: React.SFC<Props> = ({
   id,
   color,
 }) => {
-  const [placeholder, setPlaceholder] = useState<string>();
+  const [placeholder] = useState<string>(
+    typeof window !== "undefined"
+      ? window.__NAME_INPUT_PLACEHOLDER
+      : PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)]
+  );
   const textClone = useRef<HTMLSpanElement>();
   const inputBox = useRef<HTMLInputElement>();
-
-  useEffect(() => {
-    setPlaceholder(
-      PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)]
-    );
-  }, []);
 
   useEffect(() => {
     if (!textClone.current) {
       return;
     }
 
-    const ro = new ResizeObserver((entries) => {
-      if (entries.length < 1) {
-        return;
-      }
-
-      inputBox.current.style.width = `${entries[0].contentRect.width + 48}px`;
-    });
-
-    ro.observe(textClone.current);
-
-    return () => {
-      ro.disconnect();
-    };
-  }, [textClone]);
-
-  const currentValueOrPlaceholder = value.length > 0 ? value : placeholder;
+    inputBox.current.style.minWidth = `${textClone.current.clientWidth + 48}px`;
+  }, [textClone.current]);
 
   return (
     <Flex
@@ -64,6 +49,11 @@ export const NameInput: React.SFC<Props> = ({
         flexDirection: "column",
       }}
     >
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `var __NAME_INPUT_PLACEHOLDER="${placeholder}"`,
+        }}
+      />
       <Box
         sx={{
           display: "inline-flex",
@@ -113,7 +103,7 @@ export const NameInput: React.SFC<Props> = ({
           as="span"
           ref={textClone}
         >
-          {currentValueOrPlaceholder}
+          {placeholder}
         </Text>
       </Box>
 

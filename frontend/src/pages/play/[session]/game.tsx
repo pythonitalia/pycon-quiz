@@ -34,20 +34,29 @@ export const Game: React.FC<Props> = ({ quizSession }) => {
     return <LoadingUser />;
   }
 
+  const {
+    currentQuestionChanged,
+    secondsToAnswerQuestion,
+    question,
+    canAnswerQuestion,
+    leaderboard,
+  } = gameState.context;
+
   return (
     <GameLayout quizSession={quizSession}>
       {gameState.value === "before_start" && <WaitingForTheGameScreen />}
       {gameState.value === "live" && (
         <QuestionScreen
-          question={gameState.context.question}
+          question={question}
           sessionId={session}
-          currentQuestionChanged={gameState.context.currentQuestionChanged}
-          secondsToAnswerQuestion={gameState.context.secondsToAnswerQuestion}
+          currentQuestionChanged={currentQuestionChanged}
+          secondsToAnswerQuestion={secondsToAnswerQuestion}
+          canAnswerQuestion={canAnswerQuestion}
           playerData={playerData}
         />
       )}
       {gameState.value === "complete" && (
-        <Leaderboard leaderboard={gameState.context.leaderboard} />
+        <Leaderboard leaderboard={leaderboard} />
       )}
     </GameLayout>
   );

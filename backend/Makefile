@@ -1,6 +1,12 @@
 run-server:
 	poetry run uvicorn pycon_quiz.asgi:application --reload
 
+run-worker:
+	poetry run python manage.py rqworker
+
+run-scheduler:
+	poetry run python manage.py rqscheduler -i 1
+
 load-demodata:
 	poetry run python manage.py loaddata demodata.json
 

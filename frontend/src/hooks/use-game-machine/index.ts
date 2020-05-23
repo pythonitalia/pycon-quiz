@@ -35,6 +35,7 @@ export const useGameMachine = (sessionId: string) => {
           question: data.playGame.currentQuestion,
           currentQuestionChanged: data.playGame.currentQuestionChanged,
           secondsToAnswerQuestion: data.playGame.secondsToAnswerQuestion,
+          canAnswerQuestion: data.playGame.canAnswerQuestion,
         });
         break;
       }

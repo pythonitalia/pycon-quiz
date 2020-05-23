@@ -1,9 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Flex, Grid, Heading } from "theme-ui";
 
 import { PlayerData } from "../../hooks/use-player-data";
-import { Question, QuizSession, useAnswerQuestionMutation } from "../../types";
-import { GRACE_PERIOD_TO_CHANGE_USER_ANSWER_IN_SECONDS } from "../../utils/constants";
+import { Question, useAnswerQuestionMutation } from "../../types";
 import { AnswerBox } from "../answer-box";
 import { ChangeAnswerCountdown } from "../change-answer-countdown";
 
@@ -13,6 +12,7 @@ type Props = {
   playerData: PlayerData;
   currentQuestionChanged: string | null;
   secondsToAnswerQuestion: number;
+  canAnswerQuestion: boolean;
 };
 
 export const QuestionScreen: React.SFC<Props> = ({
@@ -21,6 +21,7 @@ export const QuestionScreen: React.SFC<Props> = ({
   playerData,
   currentQuestionChanged,
   secondsToAnswerQuestion,
+  canAnswerQuestion,
 }) => {
   const playerAnswerForQuestion = playerData.answers?.find(
     (a) => a.questionId === question.id
@@ -98,8 +99,11 @@ export const QuestionScreen: React.SFC<Props> = ({
             key={answer.id}
             position={index}
             answer={answer}
-            answerChoosen={typeof selectedAnswerId !== "undefined"}
-            selected={answer.id === selectedAnswerId}
+            disableAnswer={
+              !canAnswerQuestion ||
+              (typeof selectedAnswerId !== "undefined" &&
+                answer.id !== selectedAnswerId)
+            }
             onClick={onSelectAnswer}
           />
         ))}

@@ -25,4 +25,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("_nested_admin/", include("nested_admin.urls")),
     path("graphql", GraphQLView.as_view(schema=schema)),
+    path("django-rq/", include("django_rq.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

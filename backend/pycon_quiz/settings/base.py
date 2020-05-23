@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "api",
     "storages",
+    "django_rq",
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,7 @@ ALLOWED_HOSTS = [
 ]
 
 REDIS_URL = env("REDIS_URL")
+
+RQ_QUEUES = {
+    "default": {"URL": REDIS_URL, "DEFAULT_TIMEOUT": 500, "DB": 1,},
+}

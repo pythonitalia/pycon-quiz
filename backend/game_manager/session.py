@@ -1,16 +1,10 @@
-from datetime import timedelta
 from typing import TYPE_CHECKING
 
-from django.utils import timezone
-
 from game_manager.constants import GRACE_PERIOD_FOR_ANSWER_CHANGE_IN_SECONDS
-from game_manager.exceptions import (
-    AnswerNotFoundError,
-    AnswerOutOfTimeError,
-    PartecipantNotFoundError,
-    SessionNotLiveError,
-    UnableToAnswerQuestionError,
-)
+from game_manager.exceptions import (AnswerNotFoundError, AnswerOutOfTimeError,
+                                     PartecipantNotFoundError,
+                                     SessionNotLiveError,
+                                     UnableToAnswerQuestionError)
 
 if TYPE_CHECKING:
     from users.models import User
@@ -53,12 +47,7 @@ def answer_question(
     if not session.current_question.answers.filter(id=answer_id).exists():
         raise AnswerNotFoundError("Invalid Answer ID")
 
-    current_time = timezone.now()
-    time_since_question_change = timezone.now() - session.current_question_changed
-
-    if time_since_question_change > timedelta(
-        seconds=session.seconds_to_answer_question
-    ):
+    if not session.can_answer_question:
         raise AnswerOutOfTimeError(
             f"Cannot change answers after {session.seconds_to_answer_question} seconds"
         )
