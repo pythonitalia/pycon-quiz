@@ -98,7 +98,7 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
           {...text({
             name: "name",
             onChange: (e) => formState.setField("color", randomColor()),
-            validateOnBlur: true,
+            validateOnBlur: false,
             validate: (value, values, event) => {
               if (!value.trim()) {
                 return "Insert an username";
