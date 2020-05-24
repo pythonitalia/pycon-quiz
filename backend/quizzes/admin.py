@@ -1,3 +1,5 @@
+import re
+
 import nested_admin
 from django.contrib import admin
 from django.shortcuts import redirect
@@ -9,6 +11,8 @@ from django_object_actions import DjangoObjectActions
 from game_manager.actions import end, go_to_next_question, send_generic_update
 from quizzes.forms import AnswerInlineForm, QuizSessionForm
 from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
+
+QUIZ_SESSION_URL_REGEX = re.compile("\/admin\/quizzes\/quizsession\/([0-9]+)\/")
 
 
 class AnswerInline(nested_admin.NestedStackedInline):
@@ -23,6 +27,28 @@ class QuestionInline(nested_admin.NestedStackedInline):
     inlines = [AnswerInline]
     sortable_field_name = "position"
     extra = 0
+
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    search_fields = ["text"]
+    ordering = [
+        "position",
+    ]
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(
+            request, queryset, search_term
+        )
+
+        referer = request.headers["referer"]
+        result = QUIZ_SESSION_URL_REGEX.search(referer)
+
+        if result:
+            quiz_session_id = result[1]
+            queryset = self.model.objects.filter(quiz__sessions__id=quiz_session_id)
+
+        return queryset, True
 
 
 @admin.register(Quiz)
@@ -67,21 +93,25 @@ class QuizSessionAdmin(admin.ModelAdmin):
         ),
         (_("Leaderboard"), {"fields": ("leaderboard",)}),
     )
-    readonly_fields = (
-        "status",
+    readonly_fields = [
         "quiz",
+        "status",
         "current_question_answer",
         "next_question",
         "start_quiz",
         "go_to_next_question",
         "end_quiz",
         "leaderboard",
-    )
+    ]
     list_display = (
         "quiz_name",
         "name",
     )
     list_filter = ("quiz",)
+    autocomplete_fields = ["current_question"]
+
+    def has_add_permission(self, request):
+        return False
 
     def quiz_name(self, obj):
         return obj.quiz.name

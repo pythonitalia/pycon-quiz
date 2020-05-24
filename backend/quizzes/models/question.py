@@ -24,7 +24,7 @@ class Question(TimeStampedModel, SealableModel):
     )
 
     def __str__(self):
-        return f"#{self.position}: {self.text}"
+        return f"#{self.position}: {self.text} ({self.quiz.name})"
 
     class Meta:
         verbose_name = _("question")
