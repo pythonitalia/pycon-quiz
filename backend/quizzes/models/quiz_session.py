@@ -85,6 +85,9 @@ class QuizSession(TimeStampedModel, SealableModel):
 
     @property
     def can_answer_question(self):
+        if not self.current_question_changed:
+            return False
+
         current_time = timezone.now()
         time_since_question_change = timezone.now() - self.current_question_changed
 
