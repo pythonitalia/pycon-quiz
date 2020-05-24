@@ -60,7 +60,7 @@ export const theme = {
   },
   text: {
     heading: {
-      fontSize: "header",
+      fontSize: ["primary", "header"],
       textAlign: "center",
       textTransform: "uppercase",
     },
@@ -104,7 +104,7 @@ export const theme = {
       py: "primaryVertical",
 
       backgroundColor: "white",
-      fontFamily: "body",
+      fontSize: ["small", "primary"],
       fontWeight: "body",
       borderRadius: "0",
       border: "0",
@@ -114,7 +114,7 @@ export const theme = {
     root: {
       fontFamily: "body",
       fontWeight: "body",
-      fontSize: "primary",
+      fontSize: ["small", "primary"],
     },
   },
 };

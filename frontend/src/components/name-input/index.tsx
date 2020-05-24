@@ -60,7 +60,7 @@ export const NameInput: React.FC<Props> = ({
           border: "primary",
         }}
       >
-        <Box
+        <Flex
           sx={{
             backgroundColor: color,
             textTransform: "uppercase",
@@ -70,10 +70,12 @@ export const NameInput: React.FC<Props> = ({
             py: "primaryVertical",
             borderRight: "primary",
             userSelect: "none",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           Name
-        </Box>
+        </Flex>
         <Input
           id={id}
           value={value}
