@@ -51,7 +51,7 @@ const MarqueeText = React.forwardRef((props, ref) => (
   </Text>
 ));
 
-export const TwitchBar: React.SFC<Props> = ({ url }) => {
+export const TwitchBar: React.FC<Props> = ({ url }) => {
   const router = useRouter();
   const referenceText = useRef<HTMLSpanElement>(null);
   const [textsToRender, setTextsToRender] = useState<null[]>([]);
@@ -79,22 +79,20 @@ export const TwitchBar: React.SFC<Props> = ({ url }) => {
 
   return (
     <Flex
-      as="a"
-      target="_blank"
-      href={url}
-      rel="noopener noreferrer"
       sx={{
         width: "100%",
         position: "fixed",
         bottom: 0,
         left: 0,
-        color: "white",
         textTransform: "uppercase",
         userSelect: "none",
-        textDecoration: "none",
       }}
     >
       <Box
+        as="a"
+        target="_blank"
+        href={url}
+        rel="noopener noreferrer"
         sx={{
           flexShrink: 0,
           backgroundColor: "black",
@@ -120,7 +118,13 @@ export const TwitchBar: React.SFC<Props> = ({ url }) => {
         </Flex>
       </Box>
       <Flex
+        as="a"
+        target="_blank"
+        href={url}
+        rel="noopener noreferrer"
         sx={{
+          color: "white",
+          textDecoration: "none",
           alignItems: "center",
           overflow: "hidden",
           backgroundColor: "black",
