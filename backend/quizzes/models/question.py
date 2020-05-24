@@ -19,7 +19,9 @@ class Question(TimeStampedModel, SealableModel):
 
     text = CharField(_("text"), max_length=1000)
     position = PositiveIntegerField(_("position"), blank=True)
-    ui_view = CharField(_("ui view"), choices=UIView.choices, max_length=10)
+    ui_view = CharField(
+        _("ui view"), choices=UIView.choices, max_length=10, default=UIView.grid
+    )
 
     def __str__(self):
         return f"#{self.position}: {self.text}"
