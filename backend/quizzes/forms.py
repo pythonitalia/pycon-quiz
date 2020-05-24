@@ -4,7 +4,27 @@ from io import BytesIO
 from django.forms import ModelForm
 from PIL import Image
 
-from quizzes.models import Answer
+from game_manager.publisher import send_update
+from quizzes.models import Answer, QuizSession
+
+
+class QuizSessionForm(ModelForm):
+    class Meta:
+        model = QuizSession
+        fields = "__all__"
+
+    def save(self, commit=True):
+        result = super().save(commit=commit)
+
+        send_update_when_changing = (
+            "seconds_to_answer_question",
+            "current_question_changed",
+        )
+
+        if any([event in self.changed_data for event in send_update_when_changing]):
+            send_update.delay(session=self.instance)
+
+        return result
 
 
 class AnswerInlineForm(ModelForm):

@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_object_actions import DjangoObjectActions
 
 from game_manager.actions import end, go_to_next_question, send_generic_update
-from quizzes.forms import AnswerInlineForm
+from quizzes.forms import AnswerInlineForm, QuizSessionForm
 from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
 
 
@@ -46,6 +46,7 @@ class QuizAdmin(DjangoObjectActions, nested_admin.NestedModelAdmin):
 
 @admin.register(QuizSession)
 class QuizSessionAdmin(admin.ModelAdmin):
+    form = QuizSessionForm
     fieldsets = (
         (_("Generic"), {"fields": ("name", "quiz", "status", "stream_link",)}),
         (
