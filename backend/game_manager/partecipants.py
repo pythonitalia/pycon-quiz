@@ -27,10 +27,10 @@ def get_partecipant_by_token(token: str) -> "Partecipant":
         raise PartecipantNotFoundError()
 
 
-def partecipant_with_name_exists(name: str) -> bool:
+def partecipant_with_name_exists(name: str, session_id: str) -> bool:
     from quizzes.models import Partecipant
 
-    return Partecipant.objects.filter(name__iexact=name).exists()
+    return Partecipant.objects.filter(name__iexact=name, session_id=session_id).exists()
 
 
 def register_for_game(*, name: str, color: str, session_id: int) -> str:
@@ -52,7 +52,7 @@ def register_for_game(*, name: str, color: str, session_id: int) -> str:
             "The username contains illegal characters"
         )
 
-    if partecipant_with_name_exists(name):
+    if partecipant_with_name_exists(name, session_id):
         raise UsernameNotAvailableError("This username is already used by someone else")
 
     session = QuizSession.objects.get(id=session_id)

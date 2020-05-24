@@ -57,6 +57,24 @@ def test_cannot_register_for_completed_game(complete_quiz_session):
         )
 
 
+def test_usernames_are_local_for_each_session(
+    quiz_session_factory, partecipant_factory
+):
+    quiz_session_1 = quiz_session_factory()
+    quiz_session_2 = quiz_session_factory()
+
+    partecipant_factory(session=quiz_session_1, name="nina")
+
+    token = register_for_game(
+        name="nina", color="#000000", session_id=quiz_session_2.id,
+    )
+
+    assert token
+
+    partecipant = quiz_session_2.partecipants.filter(token=token).first()
+    assert partecipant.name == "nina"
+
+
 def test_cannot_register_with_already_used_username(
     live_quiz_session, partecipant_factory
 ):
