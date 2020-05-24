@@ -100,9 +100,11 @@ export const QuestionScreen: React.SFC<Props> = ({
             position={index}
             answer={answer}
             disableAnswer={
-              !canAnswerQuestion ||
-              (typeof selectedAnswerId !== "undefined" &&
-                answer.id !== selectedAnswerId)
+              !canAnswerQuestion || typeof selectedAnswerId !== "undefined"
+            }
+            selected={
+              typeof selectedAnswerId !== "undefined" &&
+              answer.id === selectedAnswerId
             }
             onClick={onSelectAnswer}
           />

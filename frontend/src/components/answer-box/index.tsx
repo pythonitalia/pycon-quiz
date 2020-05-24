@@ -7,6 +7,7 @@ type Props = {
   answer: Answer;
   position: number;
   disableAnswer: boolean;
+  selected: boolean;
   onClick: (answerId: string) => void;
 };
 
@@ -17,6 +18,7 @@ export const AnswerBox: React.FC<Props> = ({
   answer,
   position,
   disableAnswer,
+  selected,
   onClick,
 }) => {
   const [imageUrl, setImageUrl] = useState(answer.smallImage);
@@ -43,7 +45,7 @@ export const AnswerBox: React.FC<Props> = ({
       onClick={onClickWrapper}
       sx={{
         alignItems: "flex-start",
-        opacity: disableAnswer ? 0.5 : 1,
+        opacity: disableAnswer && !selected ? 0.5 : 1,
         cursor: "pointer",
         "&:hover": disableAnswer
           ? {}
