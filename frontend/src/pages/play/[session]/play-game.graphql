@@ -14,6 +14,7 @@ subscription GameState($sessionId: ID!) {
         image
         imageWidth
         imageHeight
+        smallImage
       }
     }
     leaderboard {

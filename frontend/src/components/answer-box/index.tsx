@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Button, Flex, Image } from "theme-ui";
 
 import { Answer } from "../../types";
@@ -13,17 +13,26 @@ type Props = {
 const LETTTERS = "abcdefghijklmnopqrstuvwxyz".split("");
 const COLORS = ["mint", "orange", "red", "azure"];
 
-export const AnswerBox: React.SFC<Props> = ({
+export const AnswerBox: React.FC<Props> = ({
   answer,
   position,
   disableAnswer,
   onClick,
 }) => {
+  const [imageUrl, setImageUrl] = useState(answer.smallImage);
   const color = COLORS[position % COLORS.length];
 
   const onClickWrapper = useCallback(() => {
     onClick(answer.id);
   }, [onClick, answer]);
+
+  useEffect(() => {
+    const prefetchImage = new window.Image();
+    prefetchImage.src = answer.image;
+    prefetchImage.onload = () => {
+      setImageUrl(answer.image);
+    };
+  }, [answer.image]);
 
   return (
     <Flex
@@ -57,18 +66,29 @@ export const AnswerBox: React.SFC<Props> = ({
         {LETTTERS[position]}
       </Box>
       {answer.image && (
-        <Image
+        <Box
           sx={{
             border: "primary",
-            objectFit: "cover",
             width: "100%",
             height: ["20rem", "20rem", "40rem"],
+            overflow: "hidden",
           }}
-          src={answer.image}
-          width={answer.imageWidth}
-          height={answer.imageHeight}
-          alt={answer.text}
-        />
+        >
+          <Image
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              filter:
+                imageUrl === answer.smallImage ? "blur(2rem)" : "blur(0rem)",
+              transition: `filter .5s ${position * 100}ms`,
+            }}
+            src={imageUrl}
+            width={answer.imageWidth}
+            height={answer.imageHeight}
+            alt={answer.text}
+          />
+        </Box>
       )}
       {!answer.image && (
         <Button

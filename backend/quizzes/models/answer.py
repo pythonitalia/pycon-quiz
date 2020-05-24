@@ -5,6 +5,7 @@ from django.db.models import (
     ForeignKey,
     ImageField,
     PositiveIntegerField,
+    TextField,
 )
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
@@ -19,6 +20,7 @@ class Answer(TimeStampedModel):
     )
 
     text = CharField(_("text"), blank=True, default="", max_length=1000)
+
     image = ImageField(
         _("image"),
         null=True,
@@ -27,6 +29,11 @@ class Answer(TimeStampedModel):
             "If provided, it will be used instead of the text. Please provide a text description for accessibility reasons"
         ),
     )
+    image_width = PositiveIntegerField(_("image width"), null=True, blank=True)
+    image_height = PositiveIntegerField(_("image height"), null=True, blank=True)
+    image_format = CharField(_("image format"), max_length=10, null=True, blank=True)
+    small_image = TextField(_("small image"), null=True, blank=True)
+
     position = PositiveIntegerField(_("position"), blank=True)
     is_correct = BooleanField(_("is correct"))
 

@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_object_actions import DjangoObjectActions
 
 from game_manager.actions import end, go_to_next_question, send_generic_update
+from quizzes.forms import AnswerInlineForm
 from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
 
 
@@ -14,6 +15,7 @@ class AnswerInline(nested_admin.NestedStackedInline):
     model = Answer
     sortable_field_name = "position"
     extra = 0
+    form = AnswerInlineForm
 
 
 class QuestionInline(nested_admin.NestedStackedInline):

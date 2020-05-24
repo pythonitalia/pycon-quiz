@@ -14,6 +14,7 @@ class Answer:
     image: Optional[str]
     image_width: Optional[int]
     image_height: Optional[int]
+    small_image: Optional[str]
 
     @classmethod
     def from_data(cls, data):
@@ -23,6 +24,7 @@ class Answer:
             image=data["image"],
             image_width=data["image_width"],
             image_height=data["image_height"],
+            small_image=data["small_image"],
         )
 
 
@@ -99,8 +101,9 @@ def _map_session_to_data_dict(session: "QuizSession"):
                     "text": answer.text,
                     "id": answer.id,
                     "image": answer.image.url if answer.image else None,
-                    "image_width": answer.image.width if answer.image else None,
-                    "image_height": answer.image.height if answer.image else None,
+                    "image_width": answer.image_width if answer.image else None,
+                    "image_height": answer.image_height if answer.image else None,
+                    "small_image": answer.small_image if answer.image else None,
                 }
                 for answer in session.current_question.answers.all()
             ],
