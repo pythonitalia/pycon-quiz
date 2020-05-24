@@ -35,7 +35,7 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
 
     if (typeof window !== "undefined") {
       const subscriptionClient = new SubscriptionClient(getWebsocketUrl(), {
-        reconnect: false,
+        reconnect: true,
       });
 
       exchanges.push(
