@@ -110,6 +110,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
         return _render_leaderboard(obj.leaderboard)
 
     def start_quiz(self, obj):
+        if not obj.pk:
+            return
+
         if obj.status != QuizSession.Status.draft:
             return _render_message("The event is already live!")
 
@@ -118,6 +121,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
         )
 
     def go_to_next_question(self, obj):
+        if not obj.pk:
+            return
+
         if not obj.next_question:
             return _render_message(_("No next question"))
 
@@ -126,6 +132,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
         )
 
     def end_quiz(self, obj):
+        if not obj.pk:
+            return
+
         if obj.status == QuizSession.Status.complete:
             return _render_message(_("Game complete"))
 
