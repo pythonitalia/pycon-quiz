@@ -27,6 +27,10 @@ export const AnswerBox: React.FC<Props> = ({
   }, [onClick, answer]);
 
   useEffect(() => {
+    if (answer.image === null) {
+      return;
+    }
+
     const prefetchImage = new window.Image();
     prefetchImage.src = answer.image;
     prefetchImage.onload = () => {
