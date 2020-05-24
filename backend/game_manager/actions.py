@@ -15,7 +15,7 @@ def go_to_next_question(session: QuizSession):
     scheduler.enqueue_in(
         timedelta(seconds=session.seconds_to_answer_question + 1),
         send_update,
-        session_id=session,
+        session_id=session.id,
     )
 
 
