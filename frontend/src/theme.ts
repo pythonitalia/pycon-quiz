@@ -30,12 +30,19 @@ export const theme = {
     intro: "12rem",
   },
   layouts: {
-    center: {
-      height: "100vh",
+    main: {
+      width: "100%",
+      height: "auto",
+      minHeight: "100vh",
 
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      flexDirection: "column",
+
+      mx: "auto",
+      px: "primary",
+      py: "secondary",
     },
   },
   colors: {
@@ -70,7 +77,6 @@ export const theme = {
   },
   letterSpacings: {
     body: "normal",
-    intro: "0.3em",
   },
   buttons: {
     primary: {

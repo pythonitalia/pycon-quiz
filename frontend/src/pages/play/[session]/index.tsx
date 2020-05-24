@@ -75,17 +75,9 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
   const quizName = quizSession.name;
   return (
     <GameLayout quizSession={quizSession}>
-      <Flex
-        sx={{
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          height: "100vh",
-        }}
-      >
+      <Flex variant="layouts.main">
         <Heading
           sx={{
-            letterSpacing: "intro",
             lineHeight: "intro",
             mb: "intro",
           }}

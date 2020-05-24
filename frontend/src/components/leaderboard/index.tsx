@@ -8,24 +8,18 @@ type Props = {
   leaderboard: LeaderboardPartecipant[];
 };
 
-export const Leaderboard: React.SFC<Props> = ({ leaderboard }) => (
+export const Leaderboard: React.FC<Props> = ({ leaderboard }) => (
   <Box
     sx={{
       maxWidth: "52rem",
-      mx: "auto",
-      px: "primary",
-      flexDirection: "column",
-      height: "auto",
-      minHeight: "100vh",
     }}
-    variant="layouts.center"
+    variant="layouts.main"
   >
     <Heading
       sx={{
-        letterSpacing: "0.3em",
         textAlign: "center",
-        mt: "10rem",
-        mb: "6rem",
+        mt: ["3rem", "10rem"],
+        mb: ["3rem", "6rem"],
       }}
     >
       Leaderboard
@@ -35,7 +29,8 @@ export const Leaderboard: React.SFC<Props> = ({ leaderboard }) => (
       sx={{
         gridTemplateColumn: "1fr",
         gridGap: "3rem",
-        justifyItems: ["center", "flex-end"],
+        justifyItems: "flex-end",
+        width: "100%",
       }}
     >
       {leaderboard.map((partecipant, position) => (

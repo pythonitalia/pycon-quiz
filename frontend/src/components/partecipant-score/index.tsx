@@ -15,7 +15,7 @@ export const PartecipantScore: React.SFC<Props> = ({
   <Flex
     sx={{
       border: "primary",
-      width: ["auto", position === 0 ? "46rem" : "42rem"],
+      width: position === 0 ? "100%" : "calc(100% - 5rem)",
     }}
   >
     <Box
