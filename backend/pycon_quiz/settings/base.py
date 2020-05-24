@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 root = environ.Path(__file__) - 3
 
@@ -21,7 +23,7 @@ env_file = root(".env")
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
 
-env = environ.Env(REDIS_URL=(str, "redis://localhost"))
+env = environ.Env(REDIS_URL=(str, "redis://localhost"), SENTRY_DNS=(str, ""))
 
 INSTALLED_APPS = [
     "admin_interface",
@@ -123,3 +125,10 @@ REDIS_URL = env("REDIS_URL")
 RQ_QUEUES = {
     "default": {"URL": REDIS_URL, "DEFAULT_TIMEOUT": 500, "DB": 1,},
 }
+
+SENTRY_DNS = env("SENTRY_DNS")
+
+if SENTRY_DNS:
+    sentry_sdk.init(
+        dsn=SENTRY_DNS, integrations=[DjangoIntegration()], send_default_pii=True
+    )

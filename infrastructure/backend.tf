@@ -84,6 +84,12 @@ resource "aws_elastic_beanstalk_environment" "main" {
     name      = "AWS_STORAGE_BUCKET_NAME"
     value     = aws_s3_bucket.backend_media.id
   }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SENTRY_DNS"
+    value     = var.backend_sentry_dsn
+  }
 }
 
 output "app_domain" {
