@@ -15,6 +15,7 @@ import os
 import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 
 root = environ.Path(__file__) - 3
 
@@ -130,5 +131,7 @@ SENTRY_DNS = env("SENTRY_DNS")
 
 if SENTRY_DNS:
     sentry_sdk.init(
-        dsn=SENTRY_DNS, integrations=[DjangoIntegration()], send_default_pii=True
+        dsn=SENTRY_DNS,
+        integrations=[DjangoIntegration(), RedisIntegration()],
+        send_default_pii=True,
     )
