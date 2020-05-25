@@ -8,7 +8,12 @@ from django.utils.html import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django_object_actions import DjangoObjectActions
 
-from game_manager.actions import end, go_to_next_question, send_generic_update
+from game_manager.actions import (
+    end,
+    go_to_next_question,
+    send_generic_update,
+    show_leaderboard,
+)
 from quizzes.forms import AnswerInlineForm, QuizSessionForm
 from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
 
@@ -89,7 +94,14 @@ class QuizSessionAdmin(admin.ModelAdmin):
         ),
         (
             _("Game Manager"),
-            {"fields": ("start_quiz", "go_to_next_question", "end_quiz")},
+            {
+                "fields": (
+                    "start_quiz",
+                    "go_to_next_question",
+                    "show_leaderboard",
+                    "end_quiz",
+                )
+            },
         ),
         (_("Leaderboard"), {"fields": ("leaderboard",)}),
     )
@@ -102,6 +114,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "go_to_next_question",
         "end_quiz",
         "leaderboard",
+        "show_leaderboard",
     ]
     list_display = (
         "quiz_name",
@@ -170,6 +183,20 @@ class QuizSessionAdmin(admin.ModelAdmin):
 
         return _render_button(_("End quiz"), url=_get_url_to_action("end_quiz", obj.id))
 
+    def show_leaderboard(self, obj):
+        if not obj.pk:
+            return
+
+        if obj.status == QuizSession.Status.show_leaderboard:
+            return _render_message("Leaderboard already displaying")
+
+        if obj.status != QuizSession.Status.live:
+            return _render_message("Session is not live")
+
+        return _render_button(
+            _("Show leaderboard"), url=_get_url_to_action("show_leaderboard", obj.id)
+        )
+
     def start_quiz_view(self, request, object_id: int):
         session: Optional[QuizSession] = self.get_object(request, object_id)
         go_to_next_question(session)
@@ -185,21 +212,32 @@ class QuizSessionAdmin(admin.ModelAdmin):
         end(session)
         return _redirect_back_to_changeview(object_id)
 
+    def show_leaderboard_view(self, request, object_id: int):
+        session: Optional[QuizSession] = self.get_object(request, object_id)
+        show_leaderboard(session)
+        print("www")
+        return _redirect_back_to_changeview(object_id)
+
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
             path(
-                "<int:object_id>/start-quiz/",
+                "<int:object_id>/actions/start-quiz/",
                 self.admin_site.admin_view(self.start_quiz_view),
                 name="start_quiz",
             ),
             path(
-                "<int:object_id>/next-question/",
+                "<int:object_id>/actions/next-question/",
                 self.admin_site.admin_view(self.next_question_view),
                 name="next_question",
             ),
             path(
-                "<int:object_id>/end-quiz/",
+                "<int:object_id>/actions/show-leaderboard/",
+                self.admin_site.admin_view(self.show_leaderboard_view),
+                name="show_leaderboard",
+            ),
+            path(
+                "<int:object_id>/actions/end-quiz/",
                 self.admin_site.admin_view(self.end_quiz_view),
                 name="end_quiz",
             ),

@@ -118,7 +118,7 @@ def _map_session_to_data_dict(session: "QuizSession"):
             }
             for partecipant in session.leaderboard
         ]
-        if session.is_finished
+        if session.is_showing_leaderboard
         else None,
         "current_question_changed": session.current_question_changed.isoformat()
         if session.current_question_changed

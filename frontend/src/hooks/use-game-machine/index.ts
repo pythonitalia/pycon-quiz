@@ -39,6 +39,12 @@ export const useGameMachine = (sessionId: string) => {
         });
         break;
       }
+      case "show-leaderboard": {
+        send("SHOW_LEADERBOARD", {
+          leaderboard: data.playGame.leaderboard,
+        });
+        break;
+      }
       case "complete": {
         send("COMPLETE", { leaderboard: data.playGame.leaderboard });
         break;

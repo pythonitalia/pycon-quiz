@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { Box } from "theme-ui";
 
 import { getSessionInfo } from "../../../api/get-session-info";
 import { GameLayout } from "../../../components/game-layout";
@@ -42,10 +41,14 @@ export const Game: React.FC<Props> = ({ quizSession }) => {
     leaderboard,
   } = gameState.context;
 
+  const currentState = gameState.value as string;
+  const showLeaderboard =
+    ["complete", "show_leaderboard"].indexOf(currentState) !== -1;
+
   return (
     <GameLayout quizSession={quizSession}>
-      {gameState.value === "before_start" && <WaitingForTheGameScreen />}
-      {gameState.value === "live" && (
+      {currentState === "before_start" && <WaitingForTheGameScreen />}
+      {currentState === "live" && (
         <QuestionScreen
           question={question}
           sessionId={session}
@@ -55,9 +58,7 @@ export const Game: React.FC<Props> = ({ quizSession }) => {
           playerData={playerData}
         />
       )}
-      {gameState.value === "complete" && (
-        <Leaderboard leaderboard={leaderboard} />
-      )}
+      {showLeaderboard && <Leaderboard leaderboard={leaderboard} />}
     </GameLayout>
   );
 };

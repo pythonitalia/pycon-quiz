@@ -34,6 +34,12 @@ export const gameMachine = Machine<Context>({
             canAnswerQuestion: (_, event) => event.canAnswerQuestion,
           }),
         },
+        SHOW_LEADERBOARD: {
+          target: "show_leaderboard",
+          actions: assign({
+            leaderboard: (_, event) => event.leaderboard,
+          }),
+        },
         COMPLETE: {
           target: "complete",
           actions: assign({
@@ -63,6 +69,32 @@ export const gameMachine = Machine<Context>({
       },
     },
     live: {
+      on: {
+        LIVE: {
+          target: "live",
+          actions: assign({
+            question: (_, event) => event.question,
+            currentQuestionChanged: (_, event) => event.currentQuestionChanged,
+            secondsToAnswerQuestion: (_, event) =>
+              event.secondsToAnswerQuestion,
+            canAnswerQuestion: (_, event) => event.canAnswerQuestion,
+          }),
+        },
+        SHOW_LEADERBOARD: {
+          target: "show_leaderboard",
+          actions: assign({
+            leaderboard: (_, event) => event.leaderboard,
+          }),
+        },
+        COMPLETE: {
+          target: "complete",
+          actions: assign({
+            leaderboard: (_, event) => event.leaderboard,
+          }),
+        },
+      },
+    },
+    show_leaderboard: {
       on: {
         LIVE: {
           target: "live",

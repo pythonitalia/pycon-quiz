@@ -27,3 +27,9 @@ def end(session: QuizSession):
 
 def send_generic_update(session: QuizSession):
     send_update(session)
+
+
+def show_leaderboard(session: QuizSession):
+    session.show_leaderboard()
+    session.save()
+    send_update(session)

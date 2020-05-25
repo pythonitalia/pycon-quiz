@@ -25,6 +25,7 @@ class QuizSession(TimeStampedModel, SealableModel):
     class Status(DjangoChoices):
         draft = ChoiceItem("draft")
         live = ChoiceItem("live")
+        show_leaderboard = ChoiceItem("show-leaderboard")
         complete = ChoiceItem("complete")
 
     name = CharField(_("name"), max_length=100, blank=True, default="")
@@ -60,6 +61,13 @@ class QuizSession(TimeStampedModel, SealableModel):
     )
 
     @property
+    def is_showing_leaderboard(self):
+        return self.status in (
+            QuizSession.Status.show_leaderboard,
+            QuizSession.Status.complete,
+        )
+
+    @property
     def is_live(self):
         return self.status == QuizSession.Status.live
 
@@ -67,12 +75,20 @@ class QuizSession(TimeStampedModel, SealableModel):
     def is_finished(self):
         return self.status == QuizSession.Status.complete
 
-    @transition(status, source=[Status.draft, Status.live], target=Status.live)
+    @transition(
+        status,
+        source=[Status.draft, Status.live, Status.show_leaderboard],
+        target=Status.live,
+    )
     def show_next_question(self):
         self.current_question = self.next_question
         self.current_question_changed = timezone.now()
 
-    @transition(status, source=Status.live, target=Status.complete)
+    @transition(status, source=Status.live, target=Status.show_leaderboard)
+    def show_leaderboard(self):
+        pass
+
+    @transition(status, source="*", target=Status.complete)
     def end(self):
         pass
 
