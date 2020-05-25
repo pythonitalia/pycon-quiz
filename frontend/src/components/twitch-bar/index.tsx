@@ -137,12 +137,12 @@ export const TwitchBar: React.FC<Props> = ({ url }) => {
           key="main"
           ref={referenceText}
         />
-        <MarqueeContainer position={1}>
+        <MarqueeContainer>
           {textsToRender.map((_, i) => (
             <MarqueeText key={`rep-${textsToRender.length}-${i}`} />
           ))}
         </MarqueeContainer>
-        <MarqueeContainer position={2}>
+        <MarqueeContainer>
           {textsToRender.map((_, i) => (
             <MarqueeText key={`rep-${textsToRender.length}-${i}`} />
           ))}
