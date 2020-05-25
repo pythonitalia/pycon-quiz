@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
+import { keyframes } from "@emotion/core";
 import React from "react";
 import { Box, Flex, Text } from "theme-ui";
 
@@ -10,6 +11,16 @@ type Props = {
   showCurrentPlayerMarker: boolean;
   ref: React.Ref<HTMLDivElement>;
 };
+
+const animation = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateX(-1rem);
+  }
+`;
 
 export const PartecipantScore: React.ForwardRefExoticComponent<Props> = React.forwardRef<
   HTMLDivElement,
@@ -30,6 +41,7 @@ export const PartecipantScore: React.ForwardRefExoticComponent<Props> = React.fo
         fontSize: "header",
         mr: "primary",
         width: ["1.5rem", "3.5rem"],
+        animation: `${animation} 500ms linear alternate infinite`,
       }}
       role="img"
       aria-label="Your name marker"
