@@ -22,15 +22,12 @@ const animation = keyframes`
   }
 `;
 
-const MarqueeContainer: React.FC<{ position: number }> = ({
-  children,
-  position,
-}) => (
+const MarqueeContainer: React.FC = ({ children }) => (
   <Flex
     sx={{
       flexShrink: 0,
       willChange: "transform",
-      animation: `${animation} 20s linear infinite`,
+      animation: `${animation} 20s linear 100ms infinite`,
     }}
   >
     {children}
