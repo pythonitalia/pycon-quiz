@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
+import { keyframes } from "@emotion/core";
 import React, { useEffect, useState } from "react";
 import { Box, Text } from "theme-ui";
 
@@ -7,6 +8,26 @@ type Props = {
 };
 
 type HandDirectionType = "up" | "down" | null;
+
+const handAnimationDown = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-1rem);
+  }
+`;
+
+const handAnimationUp = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(1rem);
+  }
+`;
 
 export const NamePositionScrollHelper: React.FC<Props> = ({
   currentPlayerTag,
@@ -41,12 +62,16 @@ export const NamePositionScrollHelper: React.FC<Props> = ({
     };
   }, [currentPlayerTag]);
 
+  const handAnimation =
+    handDirection === "up" ? handAnimationUp : handAnimationDown;
+
   return (
     <Box
       sx={{
         position: "fixed",
-        bottom: "3rem",
+        bottom: "2rem",
         right: ["10%", "8%", "10%", "20%"],
+        animation: `${handAnimation} 500ms linear alternate infinite`,
       }}
     >
       <Text

@@ -1,5 +1,5 @@
 import { keyframes } from "@emotion/core";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef } from "react";
 import { Box } from "theme-ui";
 
 type Props = {
