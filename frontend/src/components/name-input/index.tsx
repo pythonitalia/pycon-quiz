@@ -33,14 +33,6 @@ export const NameInput: React.FC<Props> = ({
   const textClone = useRef<HTMLSpanElement>();
   const inputBox = useRef<HTMLInputElement>();
 
-  useEffect(() => {
-    if (!textClone.current) {
-      return;
-    }
-
-    inputBox.current.style.minWidth = `${textClone.current.clientWidth + 48}px`;
-  }, [textClone.current]);
-
   return (
     <Flex
       sx={{
@@ -54,61 +46,64 @@ export const NameInput: React.FC<Props> = ({
           __html: `var __NAME_INPUT_PLACEHOLDER="${placeholder}"`,
         }}
       />
-      <Box
-        sx={{
-          display: "inline-flex",
-          border: "primary",
-        }}
-      >
-        <Flex
+      {textClone.current && (
+        <Box
           sx={{
-            backgroundColor: color,
-            textTransform: "uppercase",
-            fontWeight: "bold",
-            flex: "1 0 auto",
-            px: "primaryHorizontal",
-            py: "primaryVertical",
-            borderRight: "primary",
-            userSelect: "none",
-            alignItems: "center",
-            justifyContent: "center",
+            display: "inline-flex",
+            border: "primary",
           }}
         >
-          Name
-        </Flex>
-        <Input
-          id={id}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          onBlur={onBlur}
-          ref={inputBox}
-          sx={{
-            width: 0,
-            textTransform: "uppercase",
-            fontSize: "primary",
-            flex: "0 0 auto",
-          }}
-          required
-          maxLength={22}
-        />
-        <Text
-          sx={{
-            textTransform: "uppercase",
-            fontSize: "primary",
-            py: "primaryVertical",
-            position: "absolute",
-            bottom: 0,
-            opacity: 0,
-            userSelect: "none",
-          }}
-          as="span"
-          ref={textClone}
-        >
-          {placeholder}
-        </Text>
-      </Box>
+          <Flex
+            sx={{
+              backgroundColor: color,
+              textTransform: "uppercase",
+              fontWeight: "bold",
+              flex: "1 0 auto",
+              px: "primaryHorizontal",
+              py: "primaryVertical",
+              borderRight: "primary",
+              userSelect: "none",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Name
+          </Flex>
+          <Input
+            id={id}
+            value={value}
+            placeholder={placeholder}
+            onChange={onChange}
+            onBlur={onBlur}
+            ref={inputBox}
+            sx={{
+              minWidth: `${textClone.current.clientWidth}px`,
+              width: 0,
+              textTransform: "uppercase",
+              fontSize: "primary",
+              flex: "0 0 auto",
+            }}
+            required
+            maxLength={22}
+          />
+        </Box>
+      )}
 
+      <Text
+        sx={{
+          textTransform: "uppercase",
+          fontSize: "primary",
+          px: "primaryHorizontal",
+          position: "absolute",
+          bottom: 0,
+          opacity: 0,
+          userSelect: "none",
+        }}
+        as="span"
+        ref={textClone}
+      >
+        {placeholder}
+      </Text>
       <Text
         sx={{
           fontSize: "small",
