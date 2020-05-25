@@ -44,6 +44,11 @@ export const theme = {
       px: "primary",
       py: "secondary",
     },
+    center: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
   },
   colors: {
     text: "#000",

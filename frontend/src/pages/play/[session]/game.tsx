@@ -58,7 +58,9 @@ export const Game: React.FC<Props> = ({ quizSession }) => {
           playerData={playerData}
         />
       )}
-      {showLeaderboard && <Leaderboard leaderboard={leaderboard} />}
+      {showLeaderboard && (
+        <Leaderboard playerName={playerData.name} leaderboard={leaderboard} />
+      )}
     </GameLayout>
   );
 };
