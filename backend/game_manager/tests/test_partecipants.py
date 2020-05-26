@@ -7,7 +7,7 @@ from game_manager.exceptions import (
     UsernameLengthNotValidError,
     UsernameNotAvailableError,
 )
-from game_manager.partecipants import register_for_game
+from game_manager.partecipants import get_partecipant_by_token, register_for_game
 
 pytestmark = pytest.mark.django_db
 
@@ -109,3 +109,11 @@ def test_register_for_game(live_quiz_session):
 
     assert partecipant.name == "nina"
     assert partecipant.color == "#000000"
+
+
+def test_get_partecipant_by_token(partecipant_factory):
+    partecipant = partecipant_factory()
+
+    partecipant_found = get_partecipant_by_token(partecipant.token)
+
+    assert partecipant_found.id == partecipant.id

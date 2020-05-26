@@ -3,7 +3,7 @@ from factory.django import DjangoModelFactory
 from faker import Factory as FakerFactory
 from pytest_factoryboy import register
 
-from quizzes.models import Partecipant, Question, Quiz, QuizSession
+from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession
 
 faker = FakerFactory.create()
 
@@ -26,6 +26,17 @@ class QuestionFactory(DjangoModelFactory):
 
     class Meta:
         model = Question
+
+
+@register
+class AnswerFactory(DjangoModelFactory):
+    question = factory.SubFactory(QuestionFactory)
+    text = factory.LazyAttribute(lambda x: faker.text())
+    position = 0
+    is_correct = False
+
+    class Meta:
+        model = Answer
 
 
 @register

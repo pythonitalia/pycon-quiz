@@ -1,10 +1,13 @@
 from typing import TYPE_CHECKING
 
 from game_manager.constants import GRACE_PERIOD_FOR_ANSWER_CHANGE_IN_SECONDS
-from game_manager.exceptions import (AnswerNotFoundError, AnswerOutOfTimeError,
-                                     PartecipantNotFoundError,
-                                     SessionNotLiveError,
-                                     UnableToAnswerQuestionError)
+from game_manager.exceptions import (
+    AnswerNotFoundError,
+    AnswerOutOfTimeError,
+    PartecipantNotFoundError,
+    SessionNotLiveError,
+    UnableToAnswerQuestionError,
+)
 
 if TYPE_CHECKING:
     from users.models import User

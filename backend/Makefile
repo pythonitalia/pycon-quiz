@@ -21,3 +21,6 @@ docker-build:
 
 docker-publish:
 	docker push 193264398822.dkr.ecr.eu-west-1.amazonaws.com/pyconquiz:latest
+
+tests:
+	poetry run pytest --cov-report xml --cov=.
