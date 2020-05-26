@@ -12,7 +12,7 @@ RUN pip install gunicorn
 
 COPY . /app/
 
-RUN DATABASE_URL='' python manage.py collectstatic --noinput
+RUN DATABASE_URL='' SECRET_KEY='test' python manage.py collectstatic --noinput
 
 ENV DJANGO_SETTINGS_MODULE=pycon_quiz.settings.prod
 
