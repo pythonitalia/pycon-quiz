@@ -11,11 +11,10 @@ from pycon_quiz.redis import get_client
 
 
 @job
-def send_update(session=None, session_id=None):
+def send_update(session_id):
     from quizzes.models import QuizSession
 
-    if not session:
-        session = QuizSession.objects.get(id=session_id)
+    session = QuizSession.objects.get(id=session_id)
 
     game_state = GameState.from_session(session)
     asyncio.run(update_game(session.id, game_state))

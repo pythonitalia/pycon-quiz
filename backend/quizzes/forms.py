@@ -22,7 +22,7 @@ class QuizSessionForm(ModelForm):
         )
 
         if any([event in self.changed_data for event in send_update_when_changing]):
-            send_update.delay(session_id=self.instance.pk)
+            send_update.delay(self.instance.pk)
 
         return result
 
