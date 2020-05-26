@@ -4,8 +4,10 @@ from djchoices import ChoiceItem, DjangoChoices
 from model_utils.models import TimeStampedModel
 from seal.models import SealableModel
 
+from django_hashids.models import HashidModel
 
-class Question(TimeStampedModel, SealableModel):
+
+class Question(TimeStampedModel, SealableModel, HashidModel):
     class UIView(DjangoChoices):
         grid = ChoiceItem("grid")
         list = ChoiceItem("list")

@@ -449,6 +449,14 @@ version = "0.9.0"
 
 [[package]]
 category = "main"
+description = "Python implementation of hashids (http://www.hashids.org).Compatible with python 2.6-3."
+name = "hashids"
+optional = false
+python-versions = "*"
+version = "1.2.0"
+
+[[package]]
+category = "main"
 description = "Python wrapper for hiredis"
 name = "hiredis"
 optional = false
@@ -971,7 +979,7 @@ python-versions = "*"
 version = "0.3"
 
 [metadata]
-content-hash = "96eb662353c17fbb47a1cba950bf4982ed1b2b221d6dba126c573b72462b685b"
+content-hash = "1c300f93737974215764a207369b24916d6425bdb6d3bf24d8ecf3b0ebfcdb0e"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1183,6 +1191,9 @@ greenlet = [
 h11 = [
     {file = "h11-0.9.0-py2.py3-none-any.whl", hash = "sha256:4bc6d6a1238b7615b266ada57e0618568066f57dd6fa967d1290ec9309b2f2f1"},
     {file = "h11-0.9.0.tar.gz", hash = "sha256:33d4bca7be0fa039f4e84d50ab00531047e53d6ee8ffbc83501ea602c169cae1"},
+]
+hashids = [
+    {file = "hashids-1.2.0.tar.gz", hash = "sha256:6539b892a426e75747a9c0ad69409e9566f9c21b79310fc3424b5b6726f28da6"},
 ]
 hiredis = [
     {file = "hiredis-1.0.1-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:38437a681f17c975fd22349e72c29bc643f8e7eb2d6dc5df419eac59afa4d7ce"},

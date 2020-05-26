@@ -3,6 +3,8 @@ from typing import List, Optional
 import strawberry
 from strawberry.types import DateTime
 
+from django_hashids.hashids import encode_hashid
+
 
 @strawberry.type
 class Error:
@@ -29,9 +31,9 @@ class PartecipantAnswer:
     @classmethod
     def from_model(cls, data):
         return cls(
-            question_id=data.question_id,
-            id=data.id,
-            answer_id=data.answer_id,
+            question_id=encode_hashid(data.question_id),
+            id=data.hashid,
+            answer_id=encode_hashid(data.answer_id),
             created=data.created,
         )
 
@@ -46,12 +48,12 @@ class Partecipant:
     @classmethod
     def from_model(cls, data):
         return cls(
-            id=data.id,
+            id=data.hashid,
             name=data.name,
             answers=[
                 PartecipantAnswer.from_model(answer) for answer in data.answers.all()
             ],
-            session_id=data.session_id,
+            session_id=encode_hashid(data.session_id),
         )
 
 
@@ -63,8 +65,4 @@ class QuizSession:
 
     @classmethod
     def from_model(cls, data):
-        return cls(
-            id=data.id,
-            name=data.name,
-            stream_link=data.stream_link,
-        )
+        return cls(id=data.hashid, name=data.name, stream_link=data.stream_link,)

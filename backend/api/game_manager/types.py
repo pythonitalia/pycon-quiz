@@ -93,13 +93,13 @@ def _map_session_to_data_dict(session: "QuizSession"):
     return {
         "status": session.status,
         "current_question": {
-            "id": session.current_question.id,
+            "id": session.current_question.hashid,
             "text": session.current_question.text,
             "ui": session.current_question.ui_view,
             "answers": [
                 {
                     "text": answer.text,
-                    "id": answer.id,
+                    "id": answer.hashid,
                     "image": answer.image.url if answer.image else None,
                     "image_width": answer.image_width if answer.image else None,
                     "image_height": answer.image_height if answer.image else None,

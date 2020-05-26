@@ -9,9 +9,12 @@ from django.db.models import (
 )
 from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
+from seal.models import SealableModel
+
+from django_hashids.models import HashidModel
 
 
-class Answer(TimeStampedModel):
+class Answer(TimeStampedModel, SealableModel, HashidModel):
     question = ForeignKey(
         "quizzes.Question",
         on_delete=CASCADE,

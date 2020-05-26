@@ -4,8 +4,10 @@ from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from seal.models import SealableModel
 
+from django_hashids.models import HashidModel
 
-class UserAnswer(TimeStampedModel, SealableModel):
+
+class UserAnswer(TimeStampedModel, SealableModel, HashidModel):
     session = ForeignKey(
         "quizzes.QuizSession", on_delete=CASCADE, related_name="users_answers"
     )

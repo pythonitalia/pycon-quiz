@@ -7,6 +7,7 @@ from api.quizzes.types import Error, OperationResult, Partecipant, Token
 from game_manager.exceptions import GameError
 from game_manager.partecipants import register_for_game
 from game_manager.session import answer_question, get_session
+from django_hashids.hashids import decode_hashid
 
 
 @strawberry.type
@@ -17,7 +18,7 @@ class QuizzesMutation:
     ) -> Union[Error, Token]:
         try:
             token = register_for_game(
-                name=name, color=color, session_id=int(session_id)
+                name=name, color=color, session_id=decode_hashid(session_id)
             )
             return Token(token=token)
         except GameError as exc:
@@ -34,9 +35,9 @@ class QuizzesMutation:
     ) -> Union[Error, Partecipant]:
         try:
             answer = answer_question(
-                session_id=int(session_id),
-                question_id=int(question_id),
-                answer_id=int(answer_id),
+                session_id=decode_hashid(session_id),
+                question_id=decode_hashid(question_id),
+                answer_id=decode_hashid(answer_id),
                 partecipant_token=token,
             )
         except ValueError as exc:

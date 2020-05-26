@@ -107,6 +107,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
     )
     readonly_fields = [
         "quiz",
+        "hashid",
         "status",
         "current_question_answer",
         "next_question",

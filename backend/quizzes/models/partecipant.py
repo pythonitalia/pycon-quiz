@@ -6,12 +6,14 @@ from django.utils.translation import ugettext_lazy as _
 from model_utils.models import TimeStampedModel
 from seal.models import SealableModel
 
+from django_hashids.models import HashidModel
+
 
 def generate_key():
     return binascii.hexlify(os.urandom(20)).decode()
 
 
-class Partecipant(TimeStampedModel, SealableModel):
+class Partecipant(TimeStampedModel, SealableModel, HashidModel):
     name = CharField(_("name"), max_length=50)
     session = ForeignKey(
         "quizzes.QuizSession", on_delete=CASCADE, related_name="partecipants"
