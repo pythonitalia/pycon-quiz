@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import django_rq
 
@@ -10,13 +10,7 @@ def go_to_next_question(session: QuizSession):
     session.show_next_question()
     session.save()
     send_update(session)
-
-    scheduler = django_rq.get_scheduler("default")
-    scheduler.enqueue_in(
-        timedelta(seconds=session.seconds_to_answer_question + 1),
-        send_update,
-        session_id=session.id,
-    )
+    _schedule_delayed_update(session)
 
 
 def end(session: QuizSession):
@@ -33,3 +27,19 @@ def show_leaderboard(session: QuizSession):
     session.show_leaderboard()
     session.save()
     send_update(session)
+
+
+def set_question_changed_time_to(session: QuizSession, time: datetime):
+    session.current_question_changed = time
+    session.save()
+    send_update(session)
+    _schedule_delayed_update(session)
+
+
+def _schedule_delayed_update(session: QuizSession):
+    scheduler = django_rq.get_scheduler("default")
+    scheduler.enqueue_in(
+        timedelta(seconds=session.seconds_to_answer_question + 1),
+        send_update,
+        session_id=session.id,
+    )

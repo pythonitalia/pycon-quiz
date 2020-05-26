@@ -4,6 +4,7 @@ import nested_admin
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, reverse
+from django.utils import timezone
 from django.utils.html import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django_object_actions import DjangoObjectActions
@@ -12,6 +13,7 @@ from game_manager.actions import (
     end,
     go_to_next_question,
     send_generic_update,
+    set_question_changed_time_to,
     show_leaderboard,
 )
 from quizzes.forms import AnswerInlineForm, QuizSessionForm
@@ -79,7 +81,10 @@ class QuizAdmin(DjangoObjectActions, nested_admin.NestedModelAdmin):
 class QuizSessionAdmin(admin.ModelAdmin):
     form = QuizSessionForm
     fieldsets = (
-        (_("Generic"), {"fields": ("name", "quiz", "status", "stream_link",)}),
+        (
+            _("Generic"),
+            {"fields": ("name", "hashid", "quiz", "status", "stream_link",)},
+        ),
         (
             _("Progress"),
             {
@@ -88,6 +93,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
                     "current_question_answer",
                     "next_question",
                     "current_question_changed",
+                    "set_question_changed_time_to_now",
                     "seconds_to_answer_question",
                 )
             },
@@ -110,6 +116,8 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "hashid",
         "status",
         "current_question_answer",
+        "set_question_changed_time_to_now",
+        "current_question_changed",
         "next_question",
         "start_quiz",
         "go_to_next_question",
@@ -184,6 +192,12 @@ class QuizSessionAdmin(admin.ModelAdmin):
 
         return _render_button(_("End quiz"), url=_get_url_to_action("end_quiz", obj.id))
 
+    def set_question_changed_time_to_now(self, obj):
+        return _render_button(
+            _("Set question time to now"),
+            url=_get_url_to_action("set_question_changed_time_to_now", obj.id),
+        )
+
     def show_leaderboard(self, obj):
         if not obj.pk:
             return
@@ -213,10 +227,14 @@ class QuizSessionAdmin(admin.ModelAdmin):
         end(session)
         return _redirect_back_to_changeview(object_id)
 
+    def set_question_changed_time_to_now_view(self, request, object_id: int):
+        session: Optional[QuizSession] = self.get_object(request, object_id)
+        set_question_changed_time_to(session, timezone.now())
+        return _redirect_back_to_changeview(object_id)
+
     def show_leaderboard_view(self, request, object_id: int):
         session: Optional[QuizSession] = self.get_object(request, object_id)
         show_leaderboard(session)
-        print("www")
         return _redirect_back_to_changeview(object_id)
 
     def get_urls(self):
@@ -241,6 +259,11 @@ class QuizSessionAdmin(admin.ModelAdmin):
                 "<int:object_id>/actions/end-quiz/",
                 self.admin_site.admin_view(self.end_quiz_view),
                 name="end_quiz",
+            ),
+            path(
+                "<int:object_id>/actions/set-question-changed-time-to-now/",
+                self.admin_site.admin_view(self.set_question_changed_time_to_now_view),
+                name="set_question_changed_time_to_now",
             ),
         ]
         return custom_urls + urls
