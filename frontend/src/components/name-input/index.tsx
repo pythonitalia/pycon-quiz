@@ -108,6 +108,7 @@ export const NameInput: React.FC<Props> = ({
         sx={{
           fontSize: "small",
           mt: "primary",
+          textAlign: "center",
         }}
       >
         {error}
