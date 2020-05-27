@@ -136,5 +136,3 @@ if SENTRY_DNS:
         integrations=[DjangoIntegration(), RedisIntegration()],
         send_default_pii=True,
     )
-
-SECRET_KEY = env("SECRET_KEY")
