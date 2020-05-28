@@ -92,6 +92,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
                 "fields": (
                     "current_question",
                     "current_question_answer",
+                    "current_question_points_worth",
                     "next_question",
                     "current_question_changed",
                     "set_question_changed_time_to_now",
@@ -125,6 +126,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "end_quiz",
         "leaderboard",
         "show_leaderboard",
+        "current_question_points_worth",
     ]
     list_display = (
         "quiz_name",
@@ -158,6 +160,14 @@ class QuizSessionAdmin(admin.ModelAdmin):
             return None
 
         return current_question.answers.filter(is_correct=True).first().text
+
+    def current_question_points_worth(self, obj: QuizSession):
+        current_question = obj.current_question
+
+        if not current_question:
+            return None
+
+        return current_question.points_to_give
 
     def leaderboard(self, obj):
         return _render_leaderboard(generate_leaderboard(obj))

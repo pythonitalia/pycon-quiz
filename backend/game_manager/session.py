@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
+from django.db.models.functions import Coalesce
 
 from game_manager.exceptions import (
     AnswerNotFoundError,
@@ -68,5 +69,11 @@ def answer_question(
 def generate_leaderboard(quiz_session: "QuizSession"):
     return quiz_session.partecipants.annotate(
         tot_answers=Count("answers"),
-        score=Count("answers", filter=Q(answers__answer__is_correct=True)),
+        score=Coalesce(
+            Sum(
+                "answers__answer__question__points_to_give",
+                filter=Q(answers__answer__is_correct=True),
+            ),
+            0,
+        ),
     ).order_by("-score", "-tot_answers")

@@ -220,3 +220,54 @@ def test_generate_leaderboard(
         {"name": partecipant_4.name, "tot_answers": 1, "score": 0,},
         {"name": partecipant_3.name, "tot_answers": 0, "score": 0,},
     ]
+
+
+def test_leaderboard_with_questions_worth_more_than_1_point(
+    live_session_with_questions,
+    live_session_with_questions_partecipant,
+    partecipant_factory,
+    user_answer_factory,
+):
+    question_1 = live_session_with_questions.quiz.questions.all()[0]
+    correct_answer_1 = question_1.answers.filter(is_correct=True).first()
+    incorrect_answer_1 = question_1.answers.filter(is_correct=False).first()
+
+    question_2 = live_session_with_questions.quiz.questions.all()[1]
+    question_2.points_to_give = 3
+    question_2.save()
+    correct_answer_2 = question_2.answers.filter(is_correct=True).first()
+    incorrect_answer_2 = question_2.answers.filter(is_correct=False).first()
+
+    user_answer_factory(
+        partecipant=live_session_with_questions_partecipant,
+        session=live_session_with_questions,
+        question=question_2,
+        answer=correct_answer_2,
+    )
+
+    partecipant_2 = partecipant_factory(session=live_session_with_questions)
+
+    user_answer_factory(
+        partecipant=partecipant_2,
+        session=live_session_with_questions,
+        question=question_1,
+        answer=correct_answer_1,
+    )
+
+    user_answer_factory(
+        partecipant=partecipant_2,
+        session=live_session_with_questions,
+        question=question_2,
+        answer=incorrect_answer_2,
+    )
+
+    leaderboard = generate_leaderboard(live_session_with_questions)
+
+    assert list(leaderboard.values("name", "tot_answers", "score")) == [
+        {
+            "name": live_session_with_questions_partecipant.name,
+            "tot_answers": 1,
+            "score": 3,
+        },
+        {"name": partecipant_2.name, "tot_answers": 2, "score": 1,},
+    ]
