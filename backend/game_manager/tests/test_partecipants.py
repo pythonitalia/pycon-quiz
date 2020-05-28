@@ -2,6 +2,7 @@ import pytest
 from pytest import raises
 
 from game_manager.exceptions import (
+    PartecipantNotFoundError,
     SessionCompletedError,
     UsernameContainsIllegalCharactersError,
     UsernameLengthNotValidError,
@@ -117,3 +118,10 @@ def test_get_partecipant_by_token(partecipant_factory):
     partecipant_found = get_partecipant_by_token(partecipant.token)
 
     assert partecipant_found.id == partecipant.id
+
+
+def test_get_partecipant_by_non_existent_token(partecipant_factory):
+    partecipant = partecipant_factory()
+
+    with raises(PartecipantNotFoundError):
+        get_partecipant_by_token("adsijfavofsd-sdfsdfs-dfsd-fsdfsdfds")

@@ -16,6 +16,7 @@ from game_manager.actions import (
     set_question_changed_time_to,
     show_leaderboard,
 )
+from game_manager.session import generate_leaderboard
 from quizzes.forms import AnswerInlineForm, QuizSessionForm
 from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
 
@@ -159,7 +160,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
         return current_question.answers.filter(is_correct=True).first().text
 
     def leaderboard(self, obj):
-        return _render_leaderboard(obj.leaderboard)
+        return _render_leaderboard(generate_leaderboard(obj))
 
     def start_quiz(self, obj):
         if not obj.pk:

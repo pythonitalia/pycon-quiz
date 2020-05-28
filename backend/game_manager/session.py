@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from django.db.models import Count, Q
+
 from game_manager.exceptions import (
     AnswerNotFoundError,
     AnswerOutOfTimeError,
@@ -61,3 +63,10 @@ def answer_question(
         defaults={"answer_id": answer_id},
     )
     return obj
+
+
+def generate_leaderboard(quiz_session: "QuizSession"):
+    return quiz_session.partecipants.annotate(
+        tot_answers=Count("answers"),
+        score=Count("answers", filter=Q(answers__answer__is_correct=True)),
+    ).order_by("-score", "-tot_answers")

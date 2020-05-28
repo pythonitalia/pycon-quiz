@@ -9,7 +9,7 @@ from quizzes.models import QuizSession
 def question_with_answers(question_factory, answer_factory):
     def _inner(session):
         question = question_factory(quiz=session.quiz)
-        answer_factory(question=question)
+        answer_factory(question=question, is_correct=True)
         answer_factory(question=question)
         return question
 

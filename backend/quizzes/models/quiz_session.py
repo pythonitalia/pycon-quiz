@@ -4,11 +4,9 @@ from django.db.models import (
     CASCADE,
     SET_NULL,
     CharField,
-    Count,
     DateTimeField,
     ForeignKey,
     PositiveIntegerField,
-    Q,
     SlugField,
     Sum,
     URLField,
@@ -93,13 +91,6 @@ class QuizSession(TimeStampedModel, SealableModel, HashidModel):
     @transition(status, source="*", target=Status.complete)
     def end(self):
         pass
-
-    @property
-    def leaderboard(self):
-        return self.partecipants.annotate(
-            tot_answers=Count("answers"),
-            score=Count("answers", filter=Q(answers__answer__is_correct=True)),
-        ).order_by("-score")
 
     @property
     def can_answer_question(self):

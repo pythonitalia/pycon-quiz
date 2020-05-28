@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING, List, Optional
 import strawberry
 from strawberry.types import DateTime
 
+from game_manager.session import generate_leaderboard
+
 if TYPE_CHECKING:
     from quizzes.models import QuizSession, Question as QuestionModel
 
@@ -116,7 +118,7 @@ def _map_session_to_data_dict(session: "QuizSession"):
                 "score": partecipant.score,
                 "color": partecipant.color,
             }
-            for partecipant in session.leaderboard
+            for partecipant in generate_leaderboard(session)
         ]
         if session.is_showing_leaderboard
         else None,
