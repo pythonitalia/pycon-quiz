@@ -3,6 +3,7 @@ from django.utils import timezone
 from freezegun import freeze_time
 from pytest import raises
 
+from game_manager.channels import get_redis_channel_name_for_session_id
 from game_manager.exceptions import (
     AnswerNotFoundError,
     AnswerOutOfTimeError,
@@ -10,12 +11,7 @@ from game_manager.exceptions import (
     SessionNotLiveError,
     UnableToAnswerQuestionError,
 )
-from game_manager.session import (
-    answer_question,
-    generate_leaderboard,
-    get_redis_channel_name_for_session_id,
-    get_session,
-)
+from game_manager.session import answer_question, generate_leaderboard, get_session
 
 pytestmark = pytest.mark.django_db
 

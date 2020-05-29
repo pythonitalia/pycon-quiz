@@ -109,6 +109,7 @@ node_modules/
 .vscode/
 types.tsx
 .now
-
-
 .terraform/
+demodatapyconquiz.json
+
+

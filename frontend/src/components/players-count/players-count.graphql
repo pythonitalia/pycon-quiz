@@ -1,0 +1,3 @@
+subscription PlayersCount($sessionId: ID!) {
+  playersCount(sessionId: $sessionId)
+}

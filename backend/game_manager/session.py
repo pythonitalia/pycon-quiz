@@ -3,13 +3,11 @@ from typing import TYPE_CHECKING
 from django.db.models import Count, Q, Sum
 from django.db.models.functions import Coalesce
 
-from game_manager.exceptions import (
-    AnswerNotFoundError,
-    AnswerOutOfTimeError,
-    PartecipantNotFoundError,
-    SessionNotLiveError,
-    UnableToAnswerQuestionError,
-)
+from game_manager.channels import get_redis_channel_name_for_session_id
+from game_manager.exceptions import (AnswerNotFoundError, AnswerOutOfTimeError,
+                                     PartecipantNotFoundError,
+                                     SessionNotLiveError,
+                                     UnableToAnswerQuestionError)
 
 if TYPE_CHECKING:
     from users.models import User
@@ -22,8 +20,11 @@ def get_session(id: int) -> "QuizSession":
     return QuizSession.objects.get(id=id)
 
 
-def get_redis_channel_name_for_session_id(id: int):
-    return f"gamesession:{id}"
+async def get_players_count(client, session_id: int):
+    game_main_channel = get_redis_channel_name_for_session_id(session_id)
+    players = await client.pubsub_numsub(game_main_channel)
+    print("get_players_count CALLED", players)
+    return players[game_main_channel.encode()]
 
 
 def answer_question(
