@@ -76,7 +76,7 @@ export const AnswerBox: React.FC<Props> = ({
           sx={{
             border: "primary",
             width: "100%",
-            height: ["20rem", "20rem", "40rem"],
+            height: ["20rem", "20rem", "35rem"],
             overflow: "hidden",
           }}
         >
