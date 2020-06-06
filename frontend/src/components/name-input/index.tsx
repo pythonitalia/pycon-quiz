@@ -27,7 +27,7 @@ export const NameInput: React.FC<Props> = ({
 }) => {
   const [placeholder] = useState<string>(
     typeof window !== "undefined"
-      ? window.__NAME_INPUT_PLACEHOLDER
+      ? window.__NAME_INPUT_PLACEHOLDER || PLACEHOLDERS[0]
       : PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)]
   );
   const textClone = useRef<HTMLSpanElement>();
