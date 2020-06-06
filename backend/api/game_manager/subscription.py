@@ -7,12 +7,9 @@ from api.game_manager.types import GameState
 from django_hashids.hashids import decode_hashid
 from game_manager.channels import (
     get_redis_channel_name_for_session_id,
-    get_redis_channel_name_for_session_id_player_counts,
-)
-from game_manager.publisher import (
-    get_game_state_from_session_id,
-    send_players_count_update,
-)
+    get_redis_channel_name_for_session_id_player_counts)
+from game_manager.publisher import (get_game_state_from_session_id,
+                                    send_players_count_update)
 from game_manager.session import get_players_count
 from pycon_quiz.redis import get_client
 
@@ -23,19 +20,18 @@ class GameManagerSubscription:
     async def players_count(
         self, session_id: strawberry.ID
     ) -> typing.AsyncGenerator[int, None]:
-        print("PLAYERS COUNT SUBSCRIPTION")
-        client = await get_client()
         session_id = decode_hashid(session_id)
 
         players_count_channel = get_redis_channel_name_for_session_id_player_counts(
             session_id
         )
 
-        players = await get_players_count(client, session_id)
-        print("players::", players)
-        yield players
+        client = await get_client()
 
         try:
+            players = await get_players_count(client, session_id)
+            yield players
+
             connection = await client.subscribe(players_count_channel)
             channel = connection[0]
 
@@ -43,6 +39,8 @@ class GameManagerSubscription:
                 message = await channel.get_json()
                 yield message["players_count"]
         finally:
+            print("PLAYERS COUNT FINALLY")
+
             await client.unsubscribe(players_count_channel)
             client.close()
 
@@ -50,14 +48,16 @@ class GameManagerSubscription:
     async def play_game(
         self, info, session_id: strawberry.ID
     ) -> typing.AsyncGenerator[GameState, None]:
-        client = await get_client()
         session_id = decode_hashid(session_id)
 
-        send_players_count_update.delay(session_id=session_id)
-        game_main_channel = get_redis_channel_name_for_session_id(session_id)
+        # breakpoint()
+
+        client = await get_client()
+
+        main_game_channel_name = get_redis_channel_name_for_session_id(session_id)
 
         try:
-            connection = await client.subscribe(game_main_channel)
+            connection = await client.subscribe(main_game_channel_name)
             channel = connection[0]
 
             game_state = await get_game_state_from_session_id(session_id)
@@ -67,7 +67,7 @@ class GameManagerSubscription:
                 message = await channel.get_json()
                 yield GameState.from_data(message)
         finally:
-            await client.unsubscribe(game_main_channel)
-
-            send_players_count_update.delay(session_id=session_id)
+            print("PLAY GAME FINALLY")
+            # breakpoint()
+            await client.unsubscribe(main_game_channel_name)
             client.close()

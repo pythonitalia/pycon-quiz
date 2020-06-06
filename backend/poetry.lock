@@ -872,25 +872,28 @@ full = ["aiofiles", "graphene", "itsdangerous", "jinja2", "python-multipart", "p
 
 [[package]]
 category = "main"
-description = "A library for creating GraphQL APIs"
+description = ""
 name = "strawberry-graphql"
 optional = false
-python-versions = ">=3.7,<4.0"
-version = "0.25.1"
+python-versions = "^3.7"
+version = "0.26.1"
 
 [package.dependencies]
-asgiref = ">=3.2,<4.0"
-click = ">=7.0,<8.0"
-graphql-core = ">=3.0.0,<4.0.0"
-hupper = ">=1.5,<2.0"
-pygments = ">=2.3,<3.0"
-starlette = "0.13.4"
-uvicorn = "0.11.5"
+click = "^7.0"
+graphql-core = "^3.0.0"
+hupper = "^1.5"
+pygments = "^2.3"
+starlette = "=0.13.4"
+uvicorn = "=0.11.5"
 
 [package.extras]
 django = ["django (>=2,<4)"]
-flask = ["flask (>=1.1,<2.0)"]
+flask = ["flask (^1.1)"]
 
+[package.source]
+reference = "24e909cbf1fd96aeb74da5949adc42aa7b34742c"
+type = "git"
+url = "https://github.com/strawberry-graphql/strawberry"
 [[package]]
 category = "dev"
 description = "The most basic Text::Unidecode port"
@@ -991,7 +994,7 @@ python-versions = "*"
 version = "0.3"
 
 [metadata]
-content-hash = "bfad8b154a1220dfa818fd2894892634e7aca9c079894f0ab7235c891e28dfbc"
+content-hash = "452387ca6dae734eb4661abbc4ff3ef9e733b700209c2e9ab9c1906c14af736b"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1452,10 +1455,7 @@ starlette = [
     {file = "starlette-0.13.4-py3-none-any.whl", hash = "sha256:0fb4b38d22945b46acb880fedee7ee143fd6c0542992501be8c45c0ed737dd1a"},
     {file = "starlette-0.13.4.tar.gz", hash = "sha256:04fe51d86fd9a594d9b71356ed322ccde5c9b448fc716ac74155e5821a922f8d"},
 ]
-strawberry-graphql = [
-    {file = "strawberry-graphql-0.25.1.tar.gz", hash = "sha256:fd554d8d17e1b7b23114e836bd1b9af71464af55dec1981fca1408fd3305e565"},
-    {file = "strawberry_graphql-0.25.1-py3-none-any.whl", hash = "sha256:e17e94da24e54cc84ba4599c6f469fb3d1c9e51cc3b638c23a5b6733e8766d42"},
-]
+strawberry-graphql = []
 text-unidecode = [
     {file = "text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93"},
     {file = "text_unidecode-1.3-py2.py3-none-any.whl", hash = "sha256:1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8"},

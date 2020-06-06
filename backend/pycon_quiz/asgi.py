@@ -7,6 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
+import logging
 import os
 
 from django.core.asgi import get_asgi_application
@@ -19,6 +20,7 @@ from api.schema import schema
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pycon_quiz.settings.dev")
 
 django_application = get_asgi_application()
+logging.basicConfig(level=logging.DEBUG)
 
 
 async def application(scope, receive, send):
@@ -30,7 +32,10 @@ async def application(scope, receive, send):
             app = Starlette(debug=True)
             app.add_websocket_route("/graphql", graphql_app)
             await app(scope, receive, send)
-        except WebSocketDisconnect:
-            pass
+        except Exception as e:
+            if e == 1001:
+                return
+        # except WebSocketDisconnect:
+        #     pass
     else:
         raise NotImplementedError(f"Unknown scope type {scope['type']}")
