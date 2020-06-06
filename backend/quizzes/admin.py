@@ -129,6 +129,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "current_question_points_worth",
     ]
     list_display = (
+        "hashid",
         "quiz_name",
         "name",
     )
