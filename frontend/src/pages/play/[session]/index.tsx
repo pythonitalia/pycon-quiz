@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFormState } from "react-use-form-state";
 import { Flex, Heading } from "theme-ui";
 
@@ -39,6 +39,9 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
   const [formState, { text }] = useFormState<NameForm>({
     color: COLORS[0],
   });
+  const [customErrorMessage, setCustomErrorMessage] = useState<string | null>(
+    null
+  );
   const { playerData, setLocalData } = usePlayerData(session);
   const [registerForGameResult, registerForGame] = useRegisterForGameMutation();
   const canJoinGame =
@@ -63,8 +66,14 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
       color,
     });
 
+    console.log("response", response);
+    if (response.error) {
+      setCustomErrorMessage(response.error.message);
+      return;
+    }
+
     if (response.data.registerForGame.__typename === "Error") {
-      formState.setFieldError("name", response.data.registerForGame.message);
+      setCustomErrorMessage(response.data.registerForGame.message);
       return;
     }
 
@@ -89,7 +98,10 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
         <NameInput
           {...text({
             name: "name",
-            onChange: (e) => formState.setField("color", randomColor()),
+            onChange: (e) => {
+              formState.setField("color", randomColor());
+              setCustomErrorMessage(null);
+            },
             validateOnBlur: false,
             validate: (value, values, event) => {
               if (!value.trim()) {
@@ -106,7 +118,7 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
             },
           })}
           color={formState.values.color}
-          error={formState.errors.name}
+          error={formState.errors.name || customErrorMessage}
         />
         <JoinButton onClick={onEnter} disableJoin={!canJoinGame} />
       </Flex>
