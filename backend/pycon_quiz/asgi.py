@@ -27,7 +27,7 @@ async def application(scope, receive, send):
     elif scope["type"] == "websocket":
         try:
             graphql_app = GraphQL(
-                schema, debug=True, keep_alive=True, keep_alive_interval=30
+                schema, debug=True, keep_alive=True, keep_alive_interval=5
             )
             app = Starlette(debug=True)
             app.add_websocket_route("/graphql", graphql_app)
