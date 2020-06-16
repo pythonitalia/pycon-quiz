@@ -90,7 +90,7 @@ export const theme = {
       backgroundColor: "orange",
       textTransform: "uppercase",
       fontWeight: "bold",
-      fontSize: "primary",
+      fontSize: ["small", "primary"],
       fontFamily: "body",
       cursor: "pointer",
       border: "primary",
