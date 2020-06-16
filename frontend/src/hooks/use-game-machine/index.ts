@@ -45,6 +45,15 @@ export const useGameMachine = (sessionId: string) => {
         });
         break;
       }
+      case "show-correct-answer": {
+        send("LIVE", {
+          question: data.playGame.currentQuestion,
+          currentQuestionChanged: data.playGame.currentQuestionChanged,
+          secondsToAnswerQuestion: data.playGame.secondsToAnswerQuestion,
+          canAnswerQuestion: data.playGame.canAnswerQuestion,
+        });
+        break;
+      }
       case "complete": {
         send("COMPLETE", { leaderboard: data.playGame.leaderboard });
         break;

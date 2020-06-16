@@ -14,6 +14,7 @@ from game_manager.actions import (
     go_to_next_question,
     send_generic_update,
     set_question_changed_time_to,
+    show_correct_answer,
     show_leaderboard,
 )
 from game_manager.session import generate_leaderboard
@@ -106,6 +107,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
                 "fields": (
                     "start_quiz",
                     "go_to_next_question",
+                    "show_correct_answer",
                     "show_leaderboard",
                     "end_quiz",
                 )
@@ -120,6 +122,7 @@ class QuizSessionAdmin(admin.ModelAdmin):
         "current_question_answer",
         "set_question_changed_time_to_now",
         "current_question_changed",
+        "show_correct_answer",
         "next_question",
         "start_quiz",
         "go_to_next_question",
@@ -195,6 +198,15 @@ class QuizSessionAdmin(admin.ModelAdmin):
             _("Go to next question"), url=_get_url_to_action("next_question", obj.id)
         )
 
+    def show_correct_answer(self, obj):
+        if not obj.pk:
+            return
+
+        return _render_button(
+            _("Show correct answer"),
+            url=_get_url_to_action("show_correct_answer", obj.id),
+        )
+
     def end_quiz(self, obj):
         if not obj.pk:
             return
@@ -217,7 +229,10 @@ class QuizSessionAdmin(admin.ModelAdmin):
         if obj.status == QuizSession.Status.show_leaderboard:
             return _render_message("Leaderboard already displaying")
 
-        if obj.status != QuizSession.Status.live:
+        if obj.status not in (
+            QuizSession.Status.live,
+            QuizSession.Status.show_correct_answer,
+        ):
             return _render_message("Session is not live")
 
         return _render_button(
@@ -249,6 +264,11 @@ class QuizSessionAdmin(admin.ModelAdmin):
         show_leaderboard(session)
         return _redirect_back_to_changeview(object_id)
 
+    def show_correct_answer_view(self, request, object_id: int):
+        session: Optional[QuizSession] = self.get_object(request, object_id)
+        show_correct_answer(session)
+        return _redirect_back_to_changeview(object_id)
+
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
@@ -276,6 +296,11 @@ class QuizSessionAdmin(admin.ModelAdmin):
                 "<int:object_id>/actions/set-question-changed-time-to-now/",
                 self.admin_site.admin_view(self.set_question_changed_time_to_now_view),
                 name="set_question_changed_time_to_now",
+            ),
+            path(
+                "<int:object_id>/actions/show-correct-answer/",
+                self.admin_site.admin_view(self.show_correct_answer_view),
+                name="show_correct_answer",
             ),
         ]
         return custom_urls + urls

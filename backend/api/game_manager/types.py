@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING, List, Optional
 
 import strawberry
-from strawberry.types import DateTime
-
 from game_manager.session import generate_leaderboard
+from strawberry.types import DateTime
 
 if TYPE_CHECKING:
     from quizzes.models import QuizSession, Question as QuestionModel
@@ -17,6 +16,7 @@ class Answer:
     image_width: Optional[int]
     image_height: Optional[int]
     small_image: Optional[str]
+    is_correct: Optional[bool]
 
     @classmethod
     def from_data(cls, data):
@@ -27,6 +27,7 @@ class Answer:
             image_width=data["image_width"],
             image_height=data["image_height"],
             small_image=data["small_image"],
+            is_correct=data["is_correct"],
         )
 
 
@@ -106,6 +107,9 @@ def _map_session_to_data_dict(session: "QuizSession"):
                     "image_width": answer.image_width if answer.image else None,
                     "image_height": answer.image_height if answer.image else None,
                     "small_image": answer.small_image if answer.image else None,
+                    "is_correct": answer.is_correct
+                    if session.is_showing_correct_answer
+                    else None,
                 }
                 for answer in session.current_question.answers.all()
             ],

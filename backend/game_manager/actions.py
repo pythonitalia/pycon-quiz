@@ -29,6 +29,12 @@ def show_leaderboard(session: QuizSession):
     send_update(session.id)
 
 
+def show_correct_answer(session: QuizSession):
+    session.show_correct_answer()
+    session.save()
+    send_update(session.id)
+
+
 def set_question_changed_time_to(session: QuizSession, time: datetime):
     session.current_question_changed = time
     session.save()

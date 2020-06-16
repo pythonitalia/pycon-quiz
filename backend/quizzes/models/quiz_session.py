@@ -26,6 +26,7 @@ class QuizSession(TimeStampedModel, SealableModel, HashidModel):
         draft = ChoiceItem("draft")
         live = ChoiceItem("live")
         show_leaderboard = ChoiceItem("show-leaderboard")
+        show_correct_answer = ChoiceItem("show-correct-answer")
         complete = ChoiceItem("complete")
 
     name = CharField(_("name"), max_length=100, blank=True, default="")
@@ -77,15 +78,32 @@ class QuizSession(TimeStampedModel, SealableModel, HashidModel):
 
     @transition(
         status,
-        source=[Status.draft, Status.live, Status.show_leaderboard],
+        source=[
+            Status.draft,
+            Status.live,
+            Status.show_leaderboard,
+            Status.show_correct_answer,
+        ],
         target=Status.live,
     )
     def show_next_question(self):
         self.current_question = self.next_question
         self.current_question_changed = timezone.now()
 
-    @transition(status, source=Status.live, target=Status.show_leaderboard)
+    @transition(
+        status,
+        source=[Status.live, Status.show_correct_answer],
+        target=Status.show_leaderboard,
+    )
     def show_leaderboard(self):
+        pass
+
+    @transition(
+        status,
+        source=[Status.live, Status.show_leaderboard],
+        target=Status.show_correct_answer,
+    )
+    def show_correct_answer(self):
         pass
 
     @transition(status, source="*", target=Status.complete)
@@ -116,6 +134,10 @@ class QuizSession(TimeStampedModel, SealableModel, HashidModel):
         ).first()
 
         return next_question
+
+    @property
+    def is_showing_correct_answer(self):
+        return self.status == QuizSession.Status.show_correct_answer
 
     def __str__(self):
         return f"{self.name} {self.quiz.name}".strip()
