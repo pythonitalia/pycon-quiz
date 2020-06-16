@@ -39,6 +39,7 @@ export const NameInput: React.FC<Props> = ({
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
+        width: ["100%", "auto"],
       }}
     >
       <script
@@ -51,6 +52,7 @@ export const NameInput: React.FC<Props> = ({
           sx={{
             display: "inline-flex",
             border: "primary",
+            width: ["100%", "auto"],
           }}
         >
           <Flex
@@ -58,7 +60,7 @@ export const NameInput: React.FC<Props> = ({
               backgroundColor: color,
               textTransform: "uppercase",
               fontWeight: "bold",
-              flex: "1 0 auto",
+              flex: ["0 0 auto", "1 0 auto"],
               px: "primaryHorizontal",
               py: "primaryVertical",
               borderRight: "primary",
@@ -77,11 +79,11 @@ export const NameInput: React.FC<Props> = ({
             onBlur={onBlur}
             ref={inputBox}
             sx={{
-              minWidth: `${textClone.current.clientWidth}px`,
+              minWidth: [null, `${textClone.current.clientWidth}px`],
               width: 0,
               textTransform: "uppercase",
               fontSize: "primary",
-              flex: "0 0 auto",
+              flex: ["1 1 auto", "0 0 auto"],
             }}
             required
             maxLength={22}
