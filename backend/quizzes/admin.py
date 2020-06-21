@@ -202,6 +202,9 @@ class QuizSessionAdmin(admin.ModelAdmin):
         if not obj.pk:
             return
 
+        if obj.status == QuizSession.Status.show_correct_answer:
+            return _render_message("Correct answer already displaying")
+
         return _render_button(
             _("Show correct answer"),
             url=_get_url_to_action("show_correct_answer", obj.id),
