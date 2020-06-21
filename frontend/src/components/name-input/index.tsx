@@ -111,6 +111,7 @@ export const NameInput: React.FC<Props> = ({
           fontSize: "small",
           mt: "primary",
           textAlign: "center",
+          minHeight: "2.7rem",
         }}
       >
         {error}
