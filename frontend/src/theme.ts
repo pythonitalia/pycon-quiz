@@ -55,6 +55,8 @@ export const theme = {
     background: "#fff",
     white: "#fff",
     grey: "#F5F5F5",
+    grey2: "#E5E5E5",
+    grey3: "#CCCCCC",
     black: "#000",
     purple: "#8E76AC",
     orange: "#EEB255",
@@ -98,7 +100,9 @@ export const theme = {
       borderRadius: "0",
 
       "&:disabled": {
-        opacity: "0.5",
+        borderColor: "grey2",
+        backgroundColor: "grey2",
+        color: "grey3",
       },
     },
   },
