@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
+import { keyframes } from "@emotion/core";
 import React, { useCallback, useEffect, useState } from "react";
-import { Box, Button, Flex, Image } from "theme-ui";
+import { Box, Button, Flex, Image, Text } from "theme-ui";
 
 import { Answer } from "../../types";
 
@@ -9,10 +11,27 @@ type Props = {
   disableAnswer: boolean;
   selected: boolean;
   onClick: (answerId: string) => void;
+  correct: boolean | null;
 };
 
 const LETTTERS = "abcdefghijklmnopqrstuvwxyz".split("");
 const COLORS = ["mint", "orange", "red", "azure"];
+
+const correctAnswerAnim = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(180deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(0deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+`;
 
 export const AnswerBox: React.FC<Props> = ({
   answer,
@@ -20,6 +39,7 @@ export const AnswerBox: React.FC<Props> = ({
   disableAnswer,
   selected,
   onClick,
+  correct,
 }) => {
   const [imageUrl, setImageUrl] = useState(answer.smallImage);
   const color = COLORS[position % COLORS.length];
@@ -40,13 +60,17 @@ export const AnswerBox: React.FC<Props> = ({
     };
   }, [answer.image]);
 
+  const isShowingCorrectAnswers = correct !== null;
+
   return (
     <Flex
       onClick={onClickWrapper}
       sx={{
+        position: "relative",
         alignItems: "flex-start",
-        opacity: disableAnswer && !selected ? 0.5 : 1,
+        opacity: disableAnswer && !correct && !selected ? 0.5 : 1,
         cursor: "pointer",
+        filter: isShowingCorrectAnswers && !correct ? "grayscale(1)" : null,
         "&:hover": disableAnswer
           ? {}
           : {
@@ -101,10 +125,12 @@ export const AnswerBox: React.FC<Props> = ({
           sx={{
             flexGrow: 1,
             textTransform: "none",
-            backgroundColor: "transparent",
             textAlign: "left",
             border: "primary",
-
+            backgroundColor:
+              isShowingCorrectAnswers && (selected || correct)
+                ? color
+                : "transparent",
             "&:first-letter": {
               textTransform: "uppercase",
             },
@@ -112,6 +138,22 @@ export const AnswerBox: React.FC<Props> = ({
         >
           {answer.text}
         </Button>
+      )}
+      {correct && (
+        <Text
+          role="img"
+          aria-label="Correct answer"
+          sx={{
+            position: "absolute",
+            bottom: "-1.8rem",
+            right: "-1.8rem",
+            fontSize: "4.1rem",
+            animation: `${correctAnswerAnim} 500ms forwards`,
+            userSelect: "none",
+          }}
+        >
+          👍
+        </Text>
       )}
     </Flex>
   );

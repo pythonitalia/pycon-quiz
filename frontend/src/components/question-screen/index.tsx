@@ -86,8 +86,10 @@ export const QuestionScreen: React.SFC<Props> = ({
             key={answer.id}
             position={index}
             answer={answer}
+            correct={answer.isCorrect}
             disableAnswer={
-              !canAnswerQuestion || typeof selectedAnswerId !== "undefined"
+              (!answer.isCorrect && !canAnswerQuestion) ||
+              typeof selectedAnswerId !== "undefined"
             }
             selected={
               typeof selectedAnswerId !== "undefined" &&
