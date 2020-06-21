@@ -2,7 +2,7 @@ import { Global } from "@emotion/core";
 import { devtoolsExchange } from "@urql/devtools";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import { AppProps } from "next/app";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { ThemeProvider } from "theme-ui";
 import {
@@ -13,6 +13,7 @@ import {
   subscriptionExchange,
 } from "urql";
 
+import { ConnectionPopup } from "../components/connection-popup";
 import { theme } from "../theme";
 import { QuizSession } from "../types";
 import { getGraphQLUrl } from "../utils/get-graphql-url";
@@ -25,6 +26,7 @@ type Props = {
 };
 
 const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
+  const [connectionPopupVisible, showConnectionPopup] = useState(false);
   const client = useRef(() => {
     const exchanges = [
       devtoolsExchange,
@@ -36,7 +38,17 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
     if (typeof window !== "undefined") {
       const subscriptionClient = new SubscriptionClient(getWebsocketUrl(), {
         reconnect: true,
+        connectionCallback: () => {
+          showConnectionPopup(false);
+        },
       });
+
+      subscriptionClient.client.onerror = (e) => {
+        showConnectionPopup(true);
+      };
+      subscriptionClient.client.onclose = (e) => {
+        showConnectionPopup(true);
+      };
 
       exchanges.push(
         subscriptionExchange({
@@ -68,6 +80,7 @@ const App: React.FC<AppProps<Props>> = ({ Component, pageProps }) => {
           })}
         />
         <Component {...pageProps} />
+        <ConnectionPopup visible={connectionPopupVisible} />
       </Provider>
     </ThemeProvider>
   );
