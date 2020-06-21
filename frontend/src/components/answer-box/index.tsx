@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Box, Button, Flex, Image, Text } from "theme-ui";
 
 import { Answer } from "../../types";
+import { EmojiLoading, EmojiSet } from "../emoji-loading";
 
 type Props = {
   answer: Answer;
@@ -70,7 +71,6 @@ export const AnswerBox: React.FC<Props> = ({
         alignItems: "flex-start",
         opacity: disableAnswer && !correct && !selected ? 0.5 : 1,
         cursor: "pointer",
-        filter: isShowingCorrectAnswers && !correct ? "grayscale(1)" : null,
         "&:hover": disableAnswer
           ? {}
           : {
@@ -91,6 +91,7 @@ export const AnswerBox: React.FC<Props> = ({
           userSelect: "none",
           border: "primary",
           borderRight: 0,
+          filter: isShowingCorrectAnswers && !correct ? "grayscale(1)" : null,
         }}
       >
         {LETTTERS[position]}
@@ -102,6 +103,7 @@ export const AnswerBox: React.FC<Props> = ({
             width: "100%",
             height: ["20rem", "20rem", "35rem"],
             overflow: "hidden",
+            filter: isShowingCorrectAnswers && !correct ? "grayscale(1)" : null,
           }}
         >
           <Image
@@ -131,6 +133,7 @@ export const AnswerBox: React.FC<Props> = ({
               isShowingCorrectAnswers && (selected || correct)
                 ? color
                 : "transparent",
+            filter: isShowingCorrectAnswers && !correct ? "grayscale(1)" : null,
             "&:first-letter": {
               textTransform: "uppercase",
             },
@@ -139,7 +142,7 @@ export const AnswerBox: React.FC<Props> = ({
           {answer.text}
         </Button>
       )}
-      {correct && (
+      {isShowingCorrectAnswers && (
         <Text
           role="img"
           aria-label="Correct answer"
@@ -152,7 +155,9 @@ export const AnswerBox: React.FC<Props> = ({
             userSelect: "none",
           }}
         >
-          👍
+          {correct && selected && "👏"}
+          {correct && !selected && "👈"}
+          {!correct && selected && "❌"}
         </Text>
       )}
     </Flex>

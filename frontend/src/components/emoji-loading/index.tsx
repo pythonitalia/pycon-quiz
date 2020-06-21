@@ -1,47 +1,19 @@
-/** @jsx jsx */
-
-import { keyframes } from "@emotion/core";
 import React from "react";
-import { jsx } from "theme-ui";
 
-type Props = {};
+import { EmojiText as LoadingEmojiText } from "./loading-set";
 
-const EMOJIS = ["🐍", "✨", "🍕", "👩‍💻", "🎱", "🎉"];
+export enum EmojiSet {
+  Loading,
+}
 
-const ANIMATION = keyframes`
-  0% {
-    transform: scale(1);
-  }
+type Props = {
+  set?: EmojiSet;
+};
 
-  ${EMOJIS.map(
-    (_, index) => `
-      ${((index + 1) * 100) / EMOJIS.length}% {
-        content: attr(data-emoji-${index});
-      }
-    `
-  )}
-`;
+const SETS = {
+  [EmojiSet.Loading]: LoadingEmojiText,
+};
 
-const EmojiText = jsx(
-  "span",
-  EMOJIS.reduce(
-    (props, emoji, index) => {
-      // eslint-disable-next-line no-param-reassign
-      props[`data-emoji-${index}`] = emoji;
-      return props;
-    },
-    {
-      sx: {
-        "&:after": {
-          content: "attr(data-emoji-0)",
-          display: "inline-block",
-          animation: `${ANIMATION} 3s infinite forwards`,
-        },
-      },
-    }
-  )
-);
-
-export const EmojiLoading: React.FC<Props> = (props) => {
-  return EmojiText;
+export const EmojiLoading: React.FC<Props> = ({ set }) => {
+  return SETS[set || EmojiSet.Loading];
 };
