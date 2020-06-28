@@ -30,6 +30,7 @@ export const useGameMachine = (sessionId: string) => {
         send("BEFORE_START");
         break;
       }
+      case "show-correct-answer":
       case "live": {
         send("LIVE", {
           question: data.playGame.currentQuestion,
@@ -42,15 +43,6 @@ export const useGameMachine = (sessionId: string) => {
       case "show-leaderboard": {
         send("SHOW_LEADERBOARD", {
           leaderboard: data.playGame.leaderboard,
-        });
-        break;
-      }
-      case "show-correct-answer": {
-        send("LIVE", {
-          question: data.playGame.currentQuestion,
-          currentQuestionChanged: data.playGame.currentQuestionChanged,
-          secondsToAnswerQuestion: data.playGame.secondsToAnswerQuestion,
-          canAnswerQuestion: data.playGame.canAnswerQuestion,
         });
         break;
       }
