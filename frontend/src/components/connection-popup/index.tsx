@@ -12,6 +12,7 @@ const AnimatedBox = animated(Box);
 
 export const ConnectionPopup: React.SFC<Props> = ({ visible }) => {
   const props = useSpring({
+    display: visible ? "block" : "none",
     opacity: visible ? 1 : 0,
     transform: visible ? "translateY(0)" : "translateY(100%)",
   });
