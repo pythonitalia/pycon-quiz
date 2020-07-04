@@ -441,7 +441,7 @@ description = "GraphQL implementation for Python, a port of GraphQL.js, the Java
 name = "graphql-core"
 optional = false
 python-versions = ">=3.6,<4"
-version = "3.1.0"
+version = "3.1.1"
 
 [[package]]
 category = "dev"
@@ -1180,8 +1180,8 @@ freezegun = [
     {file = "freezegun-0.3.15.tar.gz", hash = "sha256:e2062f2c7f95cc276a834c22f1a17179467176b624cc6f936e8bc3be5535ad1b"},
 ]
 graphql-core = [
-    {file = "graphql-core-3.1.0.tar.gz", hash = "sha256:d43cf1f149772c7014656d4bc4c512278a16722e80e4be2daf99894ffef871db"},
-    {file = "graphql_core-3.1.0-py3-none-any.whl", hash = "sha256:b654666330c46d6a98405a542e9fde0a499916428cbc11da51eb82be37ef1e05"},
+    {file = "graphql-core-3.1.1.tar.gz", hash = "sha256:1fdc57d08f4492f06b21f3d487311e88fa8c33e0ac1e2d74ec79fb411ceba64a"},
+    {file = "graphql_core-3.1.1-py3-none-any.whl", hash = "sha256:25c2f537b430abc380de8765577938c78b5993584af627b7eb56b061b4ae234d"},
 ]
 greenlet = [
     {file = "greenlet-0.4.15-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:99a26afdb82ea83a265137a398f570402aa1f2b5dfb4ac3300c026931817b163"},
