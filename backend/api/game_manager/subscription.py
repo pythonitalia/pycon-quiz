@@ -2,10 +2,8 @@ import asyncio
 import typing
 
 import strawberry
-
 from api.game_manager.types import GameState
 from django_hashids.hashids import decode_hashid
-from game_manager.publisher import get_game_state_from_session_id, update_game
 from game_manager.session import get_redis_channel_name_for_session_id
 from pycon_quiz.redis import get_client
 
@@ -16,6 +14,8 @@ class GameManagerSubscription:
     async def play_game(
         self, info, session_id: strawberry.ID
     ) -> typing.AsyncGenerator[GameState, None]:
+        from game_manager.publisher import get_game_state_from_session_id
+
         client = await get_client()
         session_id = decode_hashid(session_id)
 
