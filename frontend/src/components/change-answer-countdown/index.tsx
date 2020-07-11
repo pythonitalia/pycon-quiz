@@ -8,6 +8,9 @@ type Props = {
   totalTime: number;
 };
 
+const BEEP_WHEN_TIME_LEFT_IN_SECONDS = 5;
+const BEEP_WHEN_TIME_LEFT_IN_MS = BEEP_WHEN_TIME_LEFT_IN_SECONDS * 1000;
+
 export const ChangeAnswerCountdown: React.FC<Props> = ({
   countdownFrom,
   totalTime,
@@ -50,10 +53,19 @@ export const ChangeAnswerCountdown: React.FC<Props> = ({
       interval = setInterval(() => {
         playCountdown();
       }, 1000);
+
+      setTimeout(() => {
+        stop();
+        clearInterval(interval);
+        interval = null;
+      }, BEEP_WHEN_TIME_LEFT_IN_MS + 1000);
     };
 
-    if (timeLeft > 5) {
-      timer = setTimeout(countdownTimer, (timeLeft - 5) * 1000);
+    if (timeLeft > BEEP_WHEN_TIME_LEFT_IN_SECONDS) {
+      timer = setTimeout(
+        countdownTimer,
+        (timeLeft - BEEP_WHEN_TIME_LEFT_IN_SECONDS) * 1000
+      );
     } else {
       countdownTimer();
     }
