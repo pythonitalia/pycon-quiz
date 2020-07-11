@@ -25,7 +25,17 @@ export const ChangeAnswerCountdown: React.FC<Props> = ({
         0% {
           transform: scaleX(${(timeLeft / totalTime) * 100}%);
         }
+
+        70% {
+          background-color: cornflowerBlue;
+        }
+
+        75% {
+          background-color: #E86C6C;
+        }
+
         100% {
+          background-color: #E86C6C;
           transform: scaleX(0);
         }
     `,
