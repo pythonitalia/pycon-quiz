@@ -7,13 +7,14 @@
     "dev": "next",
     "build": "yarn run codegen && next build",
     "start": "next start",
-    "codegen": "graphql-codegen"
+    "codegen": "DOTENV_CONFIG_PATH=../.env graphql-codegen -r dotenv/config"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@urql/devtools": "^2.0.2",
     "@urql/exchange-graphcache": "^2.4.2",
     "@xstate/react": "^0.8.1",
+    "dotenv": "^9.0.2",
     "graphql": "^15.0.0",
     "next": "^9.3.5",
     "react": "^16.13.1",

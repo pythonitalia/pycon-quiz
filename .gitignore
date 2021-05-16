@@ -112,3 +112,5 @@ types.tsx
 
 
 .terraform/
+
+.vercel

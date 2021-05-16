@@ -1,4 +1,4 @@
-schema: https://d2x84vjkgthxda.cloudfront.net/graphql
+schema: ${API_URL}
 documents: ./src/**/*.graphql
 generates:
   ./src/types.tsx:

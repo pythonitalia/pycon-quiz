@@ -1,5 +1,5 @@
 run-server:
-	poetry run uvicorn pycon_quiz.asgi:application --reload
+	poetry run uvicorn pycon_quiz.asgi:application --port 8100 --reload
 
 run-worker:
 	poetry run python manage.py rqworker
