@@ -51,7 +51,7 @@ class Question:
 
 
 @strawberry.type
-class LeaderboardPartecipant:
+class LeaderboardParticipant:
     name: str
     score: int
     color: str
@@ -65,7 +65,7 @@ class LeaderboardPartecipant:
 class GameState:
     status: str
     current_question: Optional[Question]
-    leaderboard: Optional[List[LeaderboardPartecipant]]
+    leaderboard: Optional[List[LeaderboardParticipant]]
 
     current_question_changed: Optional[str]
     seconds_to_answer_question: int
@@ -78,8 +78,8 @@ class GameState:
                 **data,
                 "current_question": Question.from_data(data["current_question"]),
                 "leaderboard": [
-                    LeaderboardPartecipant.from_data(partecipant)
-                    for partecipant in data["leaderboard"]
+                    LeaderboardParticipant.from_data(participant)
+                    for participant in data["leaderboard"]
                 ]
                 if data["leaderboard"]
                 else None,
@@ -117,11 +117,11 @@ def _map_session_to_data_dict(session: "QuizSession"):
         else None,
         "leaderboard": [
             {
-                "name": partecipant.name,
-                "score": partecipant.score,
-                "color": partecipant.color,
+                "name": participant.name,
+                "score": participant.score,
+                "color": participant.color,
             }
-            for partecipant in generate_leaderboard(session)
+            for participant in generate_leaderboard(session)
         ]
         if session.is_showing_leaderboard
         else None,

@@ -22,7 +22,7 @@ class Token:
 
 
 @strawberry.type
-class PartecipantAnswer:
+class ParticipantAnswer:
     id: strawberry.ID
     question_id: strawberry.ID
     answer_id: strawberry.ID
@@ -39,10 +39,10 @@ class PartecipantAnswer:
 
 
 @strawberry.type
-class Partecipant:
+class Participant:
     id: strawberry.ID
     name: str
-    answers: List[PartecipantAnswer]
+    answers: List[ParticipantAnswer]
     session_id: strawberry.ID
 
     @classmethod
@@ -51,7 +51,7 @@ class Partecipant:
             id=data.hashid,
             name=data.name,
             answers=[
-                PartecipantAnswer.from_model(answer) for answer in data.answers.all()
+                ParticipantAnswer.from_model(answer) for answer in data.answers.all()
             ],
             session_id=encode_hashid(data.session_id),
         )

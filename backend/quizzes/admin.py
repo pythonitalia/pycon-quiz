@@ -19,7 +19,7 @@ from game_manager.actions import (
 )
 from game_manager.session import generate_leaderboard
 from quizzes.forms import AnswerInlineForm, QuizSessionForm
-from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
+from quizzes.models import Answer, Participant, Question, Quiz, QuizSession, UserAnswer
 
 QUIZ_SESSION_URL_REGEX = re.compile("\/admin\/quizzes\/quizsession\/([0-9]+)\/")
 
@@ -332,8 +332,8 @@ def _render_message(message):
 def _render_leaderboard(leaderboard):
     items = "".join(
         [
-            f"<li>{partecipant.name}: {partecipant.score} (total answers: {partecipant.tot_answers})</li>"
-            for partecipant in leaderboard
+            f"<li>{participant.name}: {participant.score} (total answers: {participant.tot_answers})</li>"
+            for participant in leaderboard
         ]
     )
 
@@ -348,13 +348,13 @@ def _render_leaderboard(leaderboard):
 
 @admin.register(UserAnswer)
 class UserAnswerAdmin(admin.ModelAdmin):
-    fields = ("session", "partecipant", "question", "answer", "is_correct")
+    fields = ("session", "participant", "question", "answer", "is_correct")
     readonly_fields = ("is_correct",)
 
     def is_correct(self, obj):
         return obj.answer.is_correct
 
 
-@admin.register(Partecipant)
-class PartecipantAdmin(admin.ModelAdmin):
+@admin.register(Participant)
+class ParticipantAdmin(admin.ModelAdmin):
     pass

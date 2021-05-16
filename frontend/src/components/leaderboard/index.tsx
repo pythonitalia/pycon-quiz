@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Box, Grid, Heading, Text } from "theme-ui";
 
-import { LeaderboardPartecipant } from "../../types";
+import { LeaderboardParticipant } from "../../types";
 import { NamePositionScrollHelper } from "../name-position-scroll-helper";
-import { PartecipantScore } from "../partecipant-score";
+import { ParticipantScore } from "../participant-score";
 
 type Props = {
-  leaderboard: LeaderboardPartecipant[];
+  leaderboard: LeaderboardParticipant[];
   playerName: string;
 };
 
@@ -34,7 +34,7 @@ const leaderboardPositionToEmoji = (position) => {
     return "👌";
   }
 
-  return "💩";
+  return "😢";
 };
 
 const formatOrdinalNumber = (number) =>
@@ -82,12 +82,12 @@ export const Leaderboard: React.FC<Props> = ({ leaderboard, playerName }) => {
           width: "100%",
         }}
       >
-        {leaderboard.map((partecipant, position) => (
-          <PartecipantScore
-            ref={playerName === partecipant.name ? setCurrentPlayerTag : null}
-            showCurrentPlayerMarker={playerName === partecipant.name}
-            key={partecipant.name}
-            partecipant={partecipant}
+        {leaderboard.map((participant, position) => (
+          <ParticipantScore
+            ref={playerName === participant.name ? setCurrentPlayerTag : null}
+            showCurrentPlayerMarker={playerName === participant.name}
+            key={participant.name}
+            participant={participant}
             position={position}
           />
         ))}

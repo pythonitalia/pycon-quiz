@@ -1,10 +1,8 @@
 import re
 from typing import TYPE_CHECKING
 
-from django.db import IntegrityError
-
 from game_manager.exceptions import (
-    PartecipantNotFoundError,
+    ParticipantNotFoundError,
     SessionCompletedError,
     UsernameContainsIllegalCharactersError,
     UsernameLengthNotValidError,
@@ -12,25 +10,25 @@ from game_manager.exceptions import (
 )
 
 if TYPE_CHECKING:
-    from quizzes.models import Partecipant
+    from quizzes.models import Participant
 
 
 USERNAME_REGEX = re.compile(r"^[a-zA-Z0-9]{2,22}$")
 
 
-def get_partecipant_by_token(token: str) -> "Partecipant":
-    from quizzes.models import Partecipant
+def get_participant_by_token(token: str) -> "Participant":
+    from quizzes.models import Participant
 
     try:
-        return Partecipant.objects.prefetch_related("answers").get(token=token)
-    except Partecipant.DoesNotExist:
-        raise PartecipantNotFoundError()
+        return Participant.objects.prefetch_related("answers").get(token=token)
+    except Participant.DoesNotExist:
+        raise ParticipantNotFoundError()
 
 
-def partecipant_with_name_exists(name: str, session_id: str) -> bool:
-    from quizzes.models import Partecipant
+def participant_with_name_exists(name: str, session_id: str) -> bool:
+    from quizzes.models import Participant
 
-    return Partecipant.objects.filter(name__iexact=name, session_id=session_id).exists()
+    return Participant.objects.filter(name__iexact=name, session_id=session_id).exists()
 
 
 def register_for_game(*, name: str, color: str, session_id: int) -> str:
@@ -40,7 +38,7 @@ def register_for_game(*, name: str, color: str, session_id: int) -> str:
 
     Raises UsernameNotAvailableError if the username is already used
     """
-    from quizzes.models import Partecipant, QuizSession
+    from quizzes.models import Participant, QuizSession
 
     if not (2 <= len(name) <= 22):
         raise UsernameLengthNotValidError(
@@ -52,7 +50,7 @@ def register_for_game(*, name: str, color: str, session_id: int) -> str:
             "The username contains illegal characters"
         )
 
-    if partecipant_with_name_exists(name, session_id):
+    if participant_with_name_exists(name, session_id):
         raise UsernameNotAvailableError("This username is already used by someone else")
 
     session = QuizSession.objects.get(id=session_id)
@@ -60,7 +58,7 @@ def register_for_game(*, name: str, color: str, session_id: int) -> str:
     if session.is_finished:
         raise SessionCompletedError("The game ended!")
 
-    partecipant = Partecipant.objects.create(
+    participant = Participant.objects.create(
         name=name, color=color, session_id=session_id
     )
-    return partecipant.token
+    return participant.token

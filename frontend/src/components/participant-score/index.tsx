@@ -3,10 +3,10 @@ import { keyframes } from "@emotion/core";
 import React from "react";
 import { Box, Flex, Text } from "theme-ui";
 
-import { LeaderboardPartecipant } from "../../types";
+import { LeaderboardParticipant } from "../../types";
 
 type Props = {
-  partecipant: LeaderboardPartecipant;
+  participant: LeaderboardParticipant;
   position: number;
   showCurrentPlayerMarker: boolean;
   ref: React.Ref<HTMLDivElement>;
@@ -22,10 +22,10 @@ const animation = keyframes`
   }
 `;
 
-export const PartecipantScore: React.ForwardRefExoticComponent<Props> = React.forwardRef<
+export const ParticipantScore: React.ForwardRefExoticComponent<Props> = React.forwardRef<
   HTMLDivElement,
   Props
->(({ partecipant, position, showCurrentPlayerMarker }, ref) => (
+>(({ participant, position, showCurrentPlayerMarker }, ref) => (
   <Flex
     ref={ref}
     sx={{
@@ -63,13 +63,13 @@ export const PartecipantScore: React.ForwardRefExoticComponent<Props> = React.fo
           px: "primaryHorizontal",
           py: "primaryVertical",
           textTransform: "uppercase",
-          backgroundColor: partecipant.color,
+          backgroundColor: participant.color,
           display: "flex",
           alignItems: "center",
           wordBreak: "break-all",
         }}
       >
-        {partecipant.name}
+        {participant.name}
       </Box>
       <Box
         sx={{
@@ -81,7 +81,7 @@ export const PartecipantScore: React.ForwardRefExoticComponent<Props> = React.fo
           alignItems: "center",
         }}
       >
-        {partecipant.score}
+        {participant.score}
       </Box>
     </Flex>
   </Flex>

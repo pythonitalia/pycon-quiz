@@ -6,10 +6,6 @@ class UsernameNotAvailableError(GameError):
     """Raised when the user tries to join a game with an already used username"""
 
 
-class PartecipantNotFoundError(GameError):
-    pass
-
-
 class SessionNotLiveError(GameError):
     pass
 
@@ -22,7 +18,7 @@ class AnswerNotFoundError(GameError):
     pass
 
 
-class PartecipantNotFoundError(GameError):
+class ParticipantNotFoundError(GameError):
     pass
 
 

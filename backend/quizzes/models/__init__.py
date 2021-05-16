@@ -1,5 +1,5 @@
 from .answer import Answer
-from .partecipant import Partecipant
+from .participant import Participant
 from .question import Question
 from .quiz import Quiz
 from .quiz_session import QuizSession

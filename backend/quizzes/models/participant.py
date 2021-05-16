@@ -13,10 +13,10 @@ def generate_key():
     return binascii.hexlify(os.urandom(20)).decode()
 
 
-class Partecipant(TimeStampedModel, SealableModel, HashidModel):
+class Participant(TimeStampedModel, SealableModel, HashidModel):
     name = CharField(_("name"), max_length=50)
     session = ForeignKey(
-        "quizzes.QuizSession", on_delete=CASCADE, related_name="partecipants"
+        "quizzes.QuizSession", on_delete=CASCADE, related_name="participants"
     )
     token = CharField(_("token"), max_length=50, default=generate_key)
     color = CharField(_("color"), max_length=8)
@@ -25,6 +25,6 @@ class Partecipant(TimeStampedModel, SealableModel, HashidModel):
         return self.name
 
     class Meta:
-        verbose_name = _("Partecipant")
-        verbose_name_plural = _("Partecipants")
+        verbose_name = _("Participant")
+        verbose_name_plural = _("Participants")
         unique_together = ("name", "session")
