@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-python@v1
         with:
-          python-version: "3.8.3"
+          python-version: "3.8.10"
       - run: pip install poetry
       - name: Cache Poetry
         uses: actions/cache@v1
