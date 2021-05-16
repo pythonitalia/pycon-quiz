@@ -50,7 +50,7 @@ class QuizSessionFactory(DjangoModelFactory):
 
 
 @register
-class Participant(DjangoModelFactory):
+class ParticipantFactory(DjangoModelFactory):
     name = factory.LazyAttribute(lambda x: faker.name())
     session = factory.SubFactory(QuizSessionFactory)
     color = "#000000"
