@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, List, Optional
 
 import strawberry
 from game_manager.session import generate_leaderboard
-from strawberry.types import DateTime
 
 if TYPE_CHECKING:
     from quizzes.models import QuizSession, Question as QuestionModel

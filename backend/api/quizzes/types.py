@@ -1,7 +1,7 @@
+from datetime import datetime
 from typing import List, Optional
 
 import strawberry
-from strawberry.types import DateTime
 
 from django_hashids.hashids import encode_hashid
 
@@ -26,7 +26,7 @@ class PartecipantAnswer:
     id: strawberry.ID
     question_id: strawberry.ID
     answer_id: strawberry.ID
-    created: DateTime
+    created: datetime
 
     @classmethod
     def from_model(cls, data):
