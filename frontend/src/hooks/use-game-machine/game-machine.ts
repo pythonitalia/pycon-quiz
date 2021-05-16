@@ -1,10 +1,10 @@
 import { assign, Machine } from "xstate";
 
-import { GameState, LeaderboardPartecipant, Question } from "../../types";
+import { LeaderboardParticipant, Question } from "../../types";
 
 type Context = {
   question: Question | null;
-  leaderboard: LeaderboardPartecipant[] | null;
+  leaderboard: LeaderboardParticipant[] | null;
   currentQuestionChanged: string | null;
   secondsToAnswerQuestion: number;
   canAnswerQuestion: boolean;

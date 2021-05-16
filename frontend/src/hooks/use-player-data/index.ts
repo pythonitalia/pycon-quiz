@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { PartecipantAnswer, useGetUserQuery } from "../../types";
+import { ParticipantAnswer, useGetUserQuery } from "../../types";
 
 export type LocalData = {
   name?: string;
@@ -9,7 +9,7 @@ export type LocalData = {
 
 export type PlayerData = LocalData & {
   loaded: boolean;
-  answers?: PartecipantAnswer[];
+  answers?: ParticipantAnswer[];
 };
 
 const getLocalStorageKey = (sessionId: string) => `gameState:${sessionId}`;

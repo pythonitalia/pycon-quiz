@@ -6,7 +6,7 @@ from django.db.models.functions import Coalesce
 from game_manager.exceptions import (
     AnswerNotFoundError,
     AnswerOutOfTimeError,
-    PartecipantNotFoundError,
+    ParticipantNotFoundError,
     SessionNotLiveError,
     UnableToAnswerQuestionError,
 )
@@ -27,21 +27,21 @@ def get_redis_channel_name_for_session_id(id: int):
 
 
 def answer_question(
-    *, session_id: int, question_id: int, answer_id: int, partecipant_token: str
+    *, session_id: int, question_id: int, answer_id: int, participant_token: str
 ):
     """
-    Records the partecipant answer in the session
+    Records the participant answer in the session
     """
-    from quizzes.models import UserAnswer, QuizSession, Partecipant
+    from quizzes.models import UserAnswer, QuizSession, Participant
 
     session = QuizSession.objects.get(id=session_id)
 
     try:
-        partecipant = Partecipant.objects.get(
-            token=partecipant_token, session_id=session_id
+        participant = Participant.objects.get(
+            token=participant_token, session_id=session_id
         )
-    except Partecipant.DoesNotExist:
-        raise PartecipantNotFoundError("Token not valid")
+    except Participant.DoesNotExist:
+        raise ParticipantNotFoundError("Token not valid")
 
     if not session.is_live:
         raise SessionNotLiveError("Session is not live")
@@ -57,8 +57,8 @@ def answer_question(
             f"Cannot change answers after {session.seconds_to_answer_question} seconds"
         )
 
-    obj, created = UserAnswer.objects.update_or_create(
-        partecipant=partecipant,
+    obj, _ = UserAnswer.objects.update_or_create(
+        participant=participant,
         question_id=question_id,
         session=session,
         defaults={"answer_id": answer_id},
@@ -67,7 +67,7 @@ def answer_question(
 
 
 def generate_leaderboard(quiz_session: "QuizSession"):
-    return quiz_session.partecipants.annotate(
+    return quiz_session.participants.annotate(
         tot_answers=Count("answers"),
         score=Coalesce(
             Sum(

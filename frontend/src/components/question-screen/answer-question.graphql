@@ -16,7 +16,7 @@ mutation AnswerQuestion(
       message
     }
 
-    ... on Partecipant {
+    ... on Participant {
       id
       name
       sessionId

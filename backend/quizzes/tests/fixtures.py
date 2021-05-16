@@ -28,10 +28,10 @@ def draft_quiz_session(quiz_session_factory, question_with_answers):
 
 
 @fixture
-def draft_quiz_session_partecipant(draft_quiz_session, partecipant_factory):
-    partecipant = partecipant_factory()
-    draft_quiz_session.partecipants.add(partecipant)
-    return partecipant
+def draft_quiz_session_participant(draft_quiz_session, participant_factory):
+    participant = participant_factory()
+    draft_quiz_session.participants.add(participant)
+    return participant
 
 
 @fixture
@@ -58,9 +58,9 @@ def live_session_with_questions(live_quiz_session, question_with_answers):
 
 
 @fixture
-def live_session_with_questions_partecipant(
-    live_session_with_questions, partecipant_factory
+def live_session_with_questions_participant(
+    live_session_with_questions, participant_factory
 ):
-    partecipant = partecipant_factory()
-    live_session_with_questions.partecipants.add(partecipant)
-    return partecipant
+    participant = participant_factory()
+    live_session_with_questions.participants.add(participant)
+    return participant

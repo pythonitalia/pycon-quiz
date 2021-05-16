@@ -6,7 +6,7 @@ from pytest import raises
 from game_manager.exceptions import (
     AnswerNotFoundError,
     AnswerOutOfTimeError,
-    PartecipantNotFoundError,
+    ParticipantNotFoundError,
     SessionNotLiveError,
     UnableToAnswerQuestionError,
 )
@@ -22,59 +22,59 @@ pytestmark = pytest.mark.django_db
 
 @freeze_time("2020-05-05 10:10:00")
 def test_answer_question(
-    live_session_with_questions, live_session_with_questions_partecipant
+    live_session_with_questions, live_session_with_questions_participant
 ):
     question = live_session_with_questions.quiz.questions.first()
     answer = question.answers.first()
 
-    partecipant_answer = answer_question(
+    participant_answer = answer_question(
         session_id=live_session_with_questions.id,
         question_id=question.id,
         answer_id=answer.id,
-        partecipant_token=live_session_with_questions_partecipant.token,
+        participant_token=live_session_with_questions_participant.token,
     )
 
-    assert partecipant_answer.answer.question == question
-    assert partecipant_answer.partecipant == live_session_with_questions_partecipant
+    assert participant_answer.answer.question == question
+    assert participant_answer.participant == live_session_with_questions_participant
 
 
 @freeze_time("2020-05-05 10:10:00")
-def test_cannot_answer_with_invalid_partecipant_token(
-    live_session_with_questions, live_session_with_questions_partecipant
+def test_cannot_answer_with_invalid_participant_token(
+    live_session_with_questions, live_session_with_questions_participant
 ):
     question = live_session_with_questions.quiz.questions.first()
     answer = question.answers.first()
 
-    with raises(PartecipantNotFoundError, match="Token not valid"):
+    with raises(ParticipantNotFoundError, match="Token not valid"):
         answer_question(
             session_id=live_session_with_questions.id,
             question_id=question.id,
             answer_id=answer.id,
-            partecipant_token="aaaaaaaaaaaaa",
+            participant_token="aaaaaaaaaaaaa",
         )
 
 
 @freeze_time("2020-05-05 10:10:00")
-def test_cannot_answer_with_partecipant_token_of_another_session(
+def test_cannot_answer_with_participant_token_of_another_session(
     live_session_with_questions,
-    live_session_with_questions_partecipant,
-    draft_quiz_session_partecipant,
+    live_session_with_questions_participant,
+    draft_quiz_session_participant,
 ):
     question = live_session_with_questions.quiz.questions.first()
     answer = question.answers.first()
 
-    with raises(PartecipantNotFoundError, match="Token not valid"):
+    with raises(ParticipantNotFoundError, match="Token not valid"):
         answer_question(
             session_id=live_session_with_questions.id,
             question_id=question.id,
             answer_id=answer.id,
-            partecipant_token=draft_quiz_session_partecipant.token,
+            participant_token=draft_quiz_session_participant.token,
         )
 
 
 @freeze_time("2020-05-05 10:10:00")
 def test_cannot_answer_question_with_invalid_answer_id(
-    live_session_with_questions, live_session_with_questions_partecipant
+    live_session_with_questions, live_session_with_questions_participant
 ):
     question = live_session_with_questions.quiz.questions.first()
     answer = question.answers.first()
@@ -84,13 +84,13 @@ def test_cannot_answer_question_with_invalid_answer_id(
             session_id=live_session_with_questions.id,
             question_id=question.id,
             answer_id=300,
-            partecipant_token=live_session_with_questions_partecipant.token,
+            participant_token=live_session_with_questions_participant.token,
         )
 
 
 @freeze_time("2020-05-05 10:10:00")
 def test_cannot_answer_not_current_question_of_the_session(
-    live_session_with_questions, live_session_with_questions_partecipant
+    live_session_with_questions, live_session_with_questions_participant
 ):
     question = live_session_with_questions.quiz.questions.all()[1]
     answer = question.answers.first()
@@ -100,12 +100,12 @@ def test_cannot_answer_not_current_question_of_the_session(
             session_id=live_session_with_questions.id,
             question_id=question.id,
             answer_id=answer.id,
-            partecipant_token=live_session_with_questions_partecipant.token,
+            participant_token=live_session_with_questions_participant.token,
         )
 
 
 def test_cannot_answer_session_not_live(
-    draft_quiz_session, draft_quiz_session_partecipant
+    draft_quiz_session, draft_quiz_session_participant
 ):
     question = draft_quiz_session.quiz.questions.first()
     answer = question.answers.first()
@@ -115,12 +115,12 @@ def test_cannot_answer_session_not_live(
             session_id=draft_quiz_session.id,
             question_id=question.id,
             answer_id=answer.id,
-            partecipant_token=draft_quiz_session_partecipant.token,
+            participant_token=draft_quiz_session_participant.token,
         )
 
 
 def test_cannot_answer_question_after_timeout(
-    live_session_with_questions, live_session_with_questions_partecipant
+    live_session_with_questions, live_session_with_questions_participant
 ):
     with freeze_time("2020-05-05 10:10:00"):
         live_session_with_questions.current_question_changed = timezone.now()
@@ -138,7 +138,7 @@ def test_cannot_answer_question_after_timeout(
             session_id=live_session_with_questions.id,
             question_id=question.id,
             answer_id=answer.id,
-            partecipant_token=live_session_with_questions_partecipant.token,
+            participant_token=live_session_with_questions_participant.token,
         )
 
 
@@ -155,8 +155,8 @@ def test_get_session(live_quiz_session):
 
 def test_generate_leaderboard(
     live_session_with_questions,
-    live_session_with_questions_partecipant,
-    partecipant_factory,
+    live_session_with_questions_participant,
+    participant_factory,
     user_answer_factory,
 ):
     question_1 = live_session_with_questions.quiz.questions.all()[0]
@@ -168,41 +168,41 @@ def test_generate_leaderboard(
     incorrect_answer_2 = question_2.answers.filter(is_correct=False).first()
 
     user_answer_factory(
-        partecipant=live_session_with_questions_partecipant,
+        participant=live_session_with_questions_participant,
         session=live_session_with_questions,
         question=question_1,
         answer=correct_answer_1,
     )
 
     user_answer_factory(
-        partecipant=live_session_with_questions_partecipant,
+        participant=live_session_with_questions_participant,
         session=live_session_with_questions,
         question=question_2,
         answer=correct_answer_2,
     )
 
-    partecipant_2 = partecipant_factory(session=live_session_with_questions)
+    participant_2 = participant_factory(session=live_session_with_questions)
 
     user_answer_factory(
-        partecipant=partecipant_2,
+        participant=participant_2,
         session=live_session_with_questions,
         question=question_2,
         answer=incorrect_answer_2,
     )
 
     user_answer_factory(
-        partecipant=partecipant_2,
+        participant=participant_2,
         session=live_session_with_questions,
         question=question_1,
         answer=correct_answer_1,
     )
 
-    partecipant_3 = partecipant_factory(session=live_session_with_questions)
+    participant_3 = participant_factory(session=live_session_with_questions)
 
-    partecipant_4 = partecipant_factory(session=live_session_with_questions)
+    participant_4 = participant_factory(session=live_session_with_questions)
 
     user_answer_factory(
-        partecipant=partecipant_4,
+        participant=participant_4,
         session=live_session_with_questions,
         question=question_1,
         answer=incorrect_answer_1,
@@ -212,20 +212,20 @@ def test_generate_leaderboard(
 
     assert list(leaderboard.values("name", "tot_answers", "score")) == [
         {
-            "name": live_session_with_questions_partecipant.name,
+            "name": live_session_with_questions_participant.name,
             "tot_answers": 2,
             "score": 2,
         },
-        {"name": partecipant_2.name, "tot_answers": 2, "score": 1,},
-        {"name": partecipant_4.name, "tot_answers": 1, "score": 0,},
-        {"name": partecipant_3.name, "tot_answers": 0, "score": 0,},
+        {"name": participant_2.name, "tot_answers": 2, "score": 1,},
+        {"name": participant_4.name, "tot_answers": 1, "score": 0,},
+        {"name": participant_3.name, "tot_answers": 0, "score": 0,},
     ]
 
 
 def test_leaderboard_with_questions_worth_more_than_1_point(
     live_session_with_questions,
-    live_session_with_questions_partecipant,
-    partecipant_factory,
+    live_session_with_questions_participant,
+    participant_factory,
     user_answer_factory,
 ):
     question_1 = live_session_with_questions.quiz.questions.all()[0]
@@ -239,23 +239,23 @@ def test_leaderboard_with_questions_worth_more_than_1_point(
     incorrect_answer_2 = question_2.answers.filter(is_correct=False).first()
 
     user_answer_factory(
-        partecipant=live_session_with_questions_partecipant,
+        participant=live_session_with_questions_participant,
         session=live_session_with_questions,
         question=question_2,
         answer=correct_answer_2,
     )
 
-    partecipant_2 = partecipant_factory(session=live_session_with_questions)
+    participant_2 = participant_factory(session=live_session_with_questions)
 
     user_answer_factory(
-        partecipant=partecipant_2,
+        participant=participant_2,
         session=live_session_with_questions,
         question=question_1,
         answer=correct_answer_1,
     )
 
     user_answer_factory(
-        partecipant=partecipant_2,
+        participant=participant_2,
         session=live_session_with_questions,
         question=question_2,
         answer=incorrect_answer_2,
@@ -265,9 +265,9 @@ def test_leaderboard_with_questions_worth_more_than_1_point(
 
     assert list(leaderboard.values("name", "tot_answers", "score")) == [
         {
-            "name": live_session_with_questions_partecipant.name,
+            "name": live_session_with_questions_participant.name,
             "tot_answers": 1,
             "score": 3,
         },
-        {"name": partecipant_2.name, "tot_answers": 2, "score": 1,},
+        {"name": participant_2.name, "tot_answers": 2, "score": 1,},
     ]

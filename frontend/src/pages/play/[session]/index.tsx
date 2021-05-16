@@ -91,7 +91,7 @@ export const JoinGameScreen: React.FC<Props> = ({ quizSession }) => {
             mb: "intro",
           }}
         >
-          Pycon Italia
+          Python Italia
           <br />
           {quizName}
         </Heading>

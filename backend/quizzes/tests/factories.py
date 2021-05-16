@@ -3,7 +3,7 @@ from factory.django import DjangoModelFactory
 from faker import Factory as FakerFactory
 from pytest_factoryboy import register
 
-from quizzes.models import Answer, Partecipant, Question, Quiz, QuizSession, UserAnswer
+from quizzes.models import Answer, Participant, Question, Quiz, QuizSession, UserAnswer
 
 faker = FakerFactory.create()
 
@@ -50,13 +50,13 @@ class QuizSessionFactory(DjangoModelFactory):
 
 
 @register
-class PartecipantFactory(DjangoModelFactory):
+class ParticipantFactory(DjangoModelFactory):
     name = factory.LazyAttribute(lambda x: faker.name())
     session = factory.SubFactory(QuizSessionFactory)
     color = "#000000"
 
     class Meta:
-        model = Partecipant
+        model = Participant
 
 
 @register
