@@ -117,9 +117,8 @@ INTERNAL_IPS = [
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "backend.eba-usbdm4zp.eu-west-1.elasticbeanstalk.com",
-    "d2x84vjkgthxda.cloudfront.net",
-    "pycon-quiz.now.sh",
+    "d4v30sgvhcss3.cloudfront.net",
+    "quiz.pyfest.online",
 ]
 
 REDIS_URL = env("REDIS_URL")

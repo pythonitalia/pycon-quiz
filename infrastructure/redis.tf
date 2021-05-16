@@ -1,6 +1,22 @@
+data "aws_vpc" "default" {
+  filter {
+    name   = "tag:Name"
+    values = ["pythonit-vpc"]
+  }
+}
+
+data "aws_subnet_ids" "private" {
+  vpc_id = data.aws_vpc.default.id
+
+  tags = {
+    Type = "private"
+  }
+}
+
 resource "aws_elasticache_subnet_group" "default" {
-  name       = "pyconquiz-subnet-group"
-  subnet_ids = [aws_subnet.primary.id, aws_subnet.secondary.id]
+  name        = "pyconquiz-ec-subnet-group"
+  description = "pycon quiz"
+  subnet_ids  = [for subnet in data.aws_subnet_ids.private.ids : subnet]
 }
 
 resource "aws_elasticache_cluster" "redis" {

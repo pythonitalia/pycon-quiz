@@ -1,5 +1,5 @@
 resource "aws_security_group" "backend" {
-  vpc_id      = aws_vpc.default.id
+  vpc_id      = data.aws_vpc.default.id
   name        = "pyconquiz_backend"
   description = "pycon quiz"
 }

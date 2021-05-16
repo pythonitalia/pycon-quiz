@@ -20,8 +20,10 @@ class UserAdmin(BaseUserAdmin):
                     "username",
                     "first_name",
                     "last_name",
+                    "password",
                     "is_active",
                     "is_staff",
+                    "is_superuser",
                 )
             },
         ),

@@ -1,13 +1,18 @@
 terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "3.29.0"
+    }
+  }
+
   backend "s3" {
-    bucket  = "pyconquiz-terraform"
-    key     = "terraform.tfstate"
-    region  = "eu-west-1"
-    profile = "default"
+    bucket = "pythonit-pyconquiz-terraform"
+    key    = "terraform.tfstate"
+    region = "eu-central-1"
   }
 }
 
 provider "aws" {
-  region  = "eu-west-1"
-  profile = "default"
+  region = "eu-central-1"
 }

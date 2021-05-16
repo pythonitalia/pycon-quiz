@@ -3,15 +3,24 @@ resource "aws_elastic_beanstalk_application" "app" {
   description = "pyconquiz"
 }
 
+data "aws_db_instance" "database" {
+  db_instance_identifier = "pythonit-production"
+}
+
+data "aws_subnet_ids" "public" {
+  vpc_id = data.aws_vpc.default.id
+
+  tags = {
+    Type = "public"
+  }
+}
+
+
 resource "aws_elastic_beanstalk_environment" "main" {
   name                = "backend"
   application         = aws_elastic_beanstalk_application.app.name
-  solution_stack_name = "64bit Amazon Linux 2018.03 v2.20.2 running Multi-container Docker 19.03.6-ce (Generic)"
+  solution_stack_name = "64bit Amazon Linux 2018.03 v2.26.0 running Multi-container Docker 19.03.13-ce (Generic)"
   tier                = "WebServer"
-
-  depends_on = [
-    aws_internet_gateway.default
-  ]
 
   setting {
     namespace = "aws:elasticbeanstalk:environment"
@@ -28,19 +37,19 @@ resource "aws_elastic_beanstalk_environment" "main" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "VPCId"
-    value     = aws_vpc.default.id
+    value     = data.aws_vpc.default.id
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBSubnets"
-    value     = aws_subnet.primary.id
+    value     = tolist(data.aws_subnet_ids.public.ids)[0]
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = aws_subnet.primary.id
+    value     = tolist(data.aws_subnet_ids.public.ids)[0]
   }
 
   setting {
@@ -70,7 +79,7 @@ resource "aws_elastic_beanstalk_environment" "main" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DATABASE_URL"
-    value     = "psql://postgres:1gOzLfJDxy4btDzZBo19@test-database.cmakkcpvxi7i.eu-west-1.rds.amazonaws.com/testdatabase"
+    value     = "postgresql://${data.aws_db_instance.database.master_username}:${var.database_password}@${data.aws_db_instance.database.address}:${data.aws_db_instance.database.port}/quiz"
   }
 
   setting {

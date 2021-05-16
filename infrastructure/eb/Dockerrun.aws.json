@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "backend",
-      "image": "193264398822.dkr.ecr.eu-west-1.amazonaws.com/pyconquiz:latest",
+      "image": "820213653150.dkr.ecr.eu-central-1.amazonaws.com/pycon-quiz:latest",
       "essential": true,
       "memoryReservation": 850,
       "portMappings": [
@@ -15,14 +15,14 @@
     },
     {
       "name": "worker",
-      "image": "193264398822.dkr.ecr.eu-west-1.amazonaws.com/pyconquiz:latest",
+      "image": "820213653150.dkr.ecr.eu-central-1.amazonaws.com/pycon-quiz:latest",
       "essential": true,
       "memoryReservation": 50,
       "command": ["python", "manage.py", "rqworker"]
     },
     {
       "name": "scheduler",
-      "image": "193264398822.dkr.ecr.eu-west-1.amazonaws.com/pyconquiz:latest",
+      "image": "820213653150.dkr.ecr.eu-central-1.amazonaws.com/pycon-quiz:latest",
       "essential": true,
       "memoryReservation": 50,
       "command": ["python", "manage.py", "rqscheduler", "-i", "1"]
