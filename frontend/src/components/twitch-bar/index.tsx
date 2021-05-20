@@ -12,7 +12,7 @@ type Props = {
   url: string;
 };
 
-const TEXT_TO_DISPLAY = "Watch live on Twitch /";
+const TEXT_TO_DISPLAY = "Watch live /";
 const animation = keyframes`
   0% {
     transform: translate(0, 0);
