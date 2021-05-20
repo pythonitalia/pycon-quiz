@@ -32,6 +32,13 @@ export const NameInput: React.FC<Props> = ({
   );
   const textClone = useRef<HTMLSpanElement>();
   const inputBox = useRef<HTMLInputElement>();
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    if (firstRender) {
+      setFirstRender(false);
+    }
+  }, []);
 
   return (
     <Flex
