@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { Flex, Grid, Heading } from "theme-ui";
+import ReactMarkdown from 'react-markdown'
 
 import { PlayerData } from "../../hooks/use-player-data";
 import { Question, useAnswerQuestionMutation } from "../../types";
@@ -69,7 +70,7 @@ export const QuestionScreen: React.SFC<Props> = ({
           mb: "secondary",
         }}
       >
-        {question.text}
+        <ReactMarkdown>{question.text}</ReactMarkdown>
       </Heading>
       <Grid
         sx={{
