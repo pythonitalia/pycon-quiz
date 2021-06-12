@@ -7,6 +7,9 @@ run-worker:
 run-scheduler:
 	poetry run python manage.py rqscheduler -i 1
 
+run-redis:
+	docker run --name pyconquiz-redis  -p 6379:6379 -d redis
+
 load-demodata:
 	poetry run python manage.py loaddata demodata.json
 
