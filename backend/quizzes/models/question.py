@@ -1,5 +1,5 @@
 from django.db.models import (CASCADE, CharField, ForeignKey,
-                              PositiveIntegerField)
+                              PositiveIntegerField, TextField,)
 from django.utils.translation import ugettext_lazy as _
 from djchoices import ChoiceItem, DjangoChoices
 from model_utils.models import TimeStampedModel
@@ -20,7 +20,7 @@ class Question(TimeStampedModel, SealableModel, HashidModel):
         related_name="questions",
     )
 
-    text = CharField(_("text"), max_length=1000)
+    text = TextField(_("text"), max_length=2000)
     position = PositiveIntegerField(_("position"), blank=True)
     ui_view = CharField(
         _("ui view"), choices=UIView.choices, max_length=10, default=UIView.grid
