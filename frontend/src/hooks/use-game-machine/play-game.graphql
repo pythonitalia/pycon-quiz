@@ -7,6 +7,7 @@ subscription GameState($sessionId: ID!) {
     currentQuestion {
       id
       text
+      note
       ui
       answers {
         id

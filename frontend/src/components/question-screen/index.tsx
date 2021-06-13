@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Flex, Grid, Heading } from "theme-ui";
+import { Flex, Grid, Text, Box } from "theme-ui";
 import ReactMarkdown from "react-markdown";
 
 import { PlayerData } from "../../hooks/use-player-data";
@@ -14,6 +14,7 @@ type Props = {
   currentQuestionChanged: string | null;
   secondsToAnswerQuestion: number;
   canAnswerQuestion: boolean;
+  showNotes?: boolean;
 };
 
 export const QuestionScreen: React.SFC<Props> = ({
@@ -23,6 +24,7 @@ export const QuestionScreen: React.SFC<Props> = ({
   currentQuestionChanged,
   secondsToAnswerQuestion,
   canAnswerQuestion,
+  showNotes = false,
 }) => {
   const playerAnswerForQuestion = playerData.answers?.find(
     (a) => a.questionId === question.id
@@ -93,6 +95,41 @@ export const QuestionScreen: React.SFC<Props> = ({
           />
         ))}
       </Grid>
+      {showNotes && (
+        <Box
+          sx={{
+            mt: "primary",
+            flexShrink: 0,
+            maxWidth: "70rem",
+            width: "100%",
+            px: "primaryHorizontal",
+            py: "primaryVertical",
+            userSelect: "none",
+            border: "4px dashed #E5E5E5",
+            fontSize: "small",
+
+            filter: "grayscale(1)",
+          }}
+        >
+          <Text
+            sx={{
+              fontSize: "small",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+          >
+            Question's notes for the Game Manager
+          </Text>
+          <Text
+            sx={{
+              fontWeight: "normal",
+              fontSize: "smaller",
+            }}
+          >
+            <ReactMarkdown>{question.note}</ReactMarkdown>
+          </Text>
+        </Box>
+      )}
     </Flex>
   );
 };
