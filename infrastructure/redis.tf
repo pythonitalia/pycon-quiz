@@ -22,7 +22,7 @@ resource "aws_elasticache_subnet_group" "default" {
 resource "aws_elasticache_cluster" "redis" {
   cluster_id           = "backend"
   engine               = "redis"
-  node_type            = "cache.t3.micro"
+  node_type            = "cache.m6g.large"
   num_cache_nodes      = 1
   parameter_group_name = "default.redis5.0"
   engine_version       = "5.0.6"

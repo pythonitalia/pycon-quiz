@@ -3,9 +3,6 @@ resource "aws_elastic_beanstalk_application" "app" {
   description = "pyconquiz"
 }
 
-data "aws_db_instance" "database" {
-  db_instance_identifier = "pythonit-production"
-}
 
 data "aws_subnet_ids" "public" {
   vpc_id = data.aws_vpc.default.id
@@ -61,13 +58,13 @@ resource "aws_elastic_beanstalk_environment" "main" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t2.micro"
+    value     = "m5.xlarge"
   }
 
   setting {
     namespace = "aws:ec2:instances"
     name      = "InstanceTypes"
-    value     = "t2.micro"
+    value     = "m5.xlarge"
   }
 
   setting {
@@ -79,7 +76,7 @@ resource "aws_elastic_beanstalk_environment" "main" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "DATABASE_URL"
-    value     = "postgresql://${data.aws_db_instance.database.master_username}:${var.database_password}@${data.aws_db_instance.database.address}:${data.aws_db_instance.database.port}/quiz"
+    value     = "postgresql://${aws_db_instance.database.username}:${random_password.db_password.result}@${aws_db_instance.database.address}:${aws_db_instance.database.port}/pyconquiz"
   }
 
   setting {
