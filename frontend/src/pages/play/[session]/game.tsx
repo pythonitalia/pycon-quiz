@@ -6,6 +6,7 @@ import { getSessionInfo } from "../../../api/get-session-info";
 import { GameLayout } from "../../../components/game-layout";
 import { Leaderboard } from "../../../components/leaderboard";
 import { LoadingUser } from "../../../components/loading-user";
+import { NotesScreen } from "../../../components/notes-screen";
 import { QuestionScreen } from "../../../components/question-screen";
 import { WaitingForTheGameScreen } from "../../../components/waiting-for-the-game-screen";
 import { useGameMachine } from "../../../hooks/use-game-machine";
@@ -18,7 +19,8 @@ type Props = {
 
 export const Game: React.FC<Props> = ({ quizSession }) => {
   const router = useRouter();
-  const { session } = router.query as { session: string };
+  const { session, notes } = router.query as { session: string, notes: string };
+  const showNotes = notes === "true";
   const { playerData } = usePlayerData(session);
 
   const gameState = useGameMachine(session);
@@ -56,6 +58,7 @@ export const Game: React.FC<Props> = ({ quizSession }) => {
           secondsToAnswerQuestion={secondsToAnswerQuestion}
           canAnswerQuestion={canAnswerQuestion}
           playerData={playerData}
+          showNotes={showNotes}
         />
       )}
       {showLeaderboard && (

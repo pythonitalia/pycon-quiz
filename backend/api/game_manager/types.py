@@ -36,6 +36,7 @@ class Question:
     text: str
     answers: List[Answer]
     ui: str
+    note: str
 
     @classmethod
     def from_data(cls, data):
@@ -97,6 +98,7 @@ def _map_session_to_data_dict(session: "QuizSession"):
         "current_question": {
             "id": session.current_question.hashid,
             "text": session.current_question.text,
+            "note": session.current_question.note,
             "ui": session.current_question.ui_view,
             "answers": [
                 {

@@ -30,6 +30,8 @@ class Question(TimeStampedModel, SealableModel, HashidModel):
         default=1,
     )
 
+    note = TextField(_("note"), blank=True, max_length=2000)
+    
     def __str__(self):
         return f"#{self.position}: {self.text} ({self.quiz.name})"
 
