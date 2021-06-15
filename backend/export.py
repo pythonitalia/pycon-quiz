@@ -9,8 +9,12 @@ questions = Question.objects.all()
 rows = []
 for q in questions:
     row = [q.text]
+    correct = None
     for a in q.answers.all():
         row.append(a.text)
+        if a.is_correct: 
+            correct = a.text
+    row.append(correct)
     rows.append(row)
 
 
