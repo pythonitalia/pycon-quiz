@@ -110,7 +110,7 @@ export const AnswerBox: React.FC<Props> = ({
             sx={{
               width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "contain",
               filter:
                 imageUrl === answer.smallImage ? "blur(2rem)" : "blur(0rem)",
               transition: `filter .5s ${position * 100}ms`,
