@@ -25,6 +25,7 @@ export const Game: React.FC<Props> = ({ quizSession }) => {
   const gameState = useGameMachine(session);
 
   useEffect(() => {
+    console.log('useeffect playerData', playerData)
     if (playerData.token === null) {
       router.push("/play/[session]", `/play/${session}`);
     }

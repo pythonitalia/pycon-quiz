@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { ParticipantAnswer, useGetUserQuery } from "../../types";
@@ -24,11 +25,14 @@ export const usePlayerData = (
   playerData: PlayerData | null;
   setLocalData: (name: string, token: string) => void;
 } => {
+  const router = useRouter();
+  const { token } = router.query as { token: string };
+
   const localStorageKey = getLocalStorageKey(sessionId);
   const [localData, setData] = useState<LocalData>(
     typeof window === "undefined"
       ? {}
-      : JSON.parse(window.localStorage.getItem(localStorageKey))
+      : token ? { name: 'OBS', token } : JSON.parse(window.localStorage.getItem(localStorageKey))
   );
   const hasLocalData = localData && localData.token;
 
