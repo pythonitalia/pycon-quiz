@@ -82,15 +82,17 @@ export const Leaderboard: React.FC<Props> = ({ leaderboard, playerName }) => {
           width: "100%",
         }}
       >
-        {leaderboard.map((participant, position) => (
-          <ParticipantScore
-            ref={playerName === participant.name ? setCurrentPlayerTag : null}
-            showCurrentPlayerMarker={playerName === participant.name}
-            key={participant.name}
-            participant={participant}
-            position={position}
-          />
-        ))}
+        {leaderboard
+          .filter((participant) => participant.name !== "OBS")
+          .map((participant, position) => (
+            <ParticipantScore
+              ref={playerName === participant.name ? setCurrentPlayerTag : null}
+              showCurrentPlayerMarker={playerName === participant.name}
+              key={participant.name}
+              participant={participant}
+              position={position}
+            />
+          ))}
       </Grid>
 
       <NamePositionScrollHelper currentPlayerTag={currentPlayerTag} />
