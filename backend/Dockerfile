@@ -18,4 +18,4 @@ ENV DJANGO_SETTINGS_MODULE=pycon_quiz.settings.prod
 
 EXPOSE 8000
 
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000", "pycon_quiz.asgi:application"]
+CMD ["gunicorn", "-w", "9", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000", "pycon_quiz.asgi:application"]
