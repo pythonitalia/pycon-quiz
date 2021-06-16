@@ -5,7 +5,7 @@
       "name": "backend",
       "image": "820213653150.dkr.ecr.eu-central-1.amazonaws.com/pycon-quiz:latest",
       "essential": true,
-      "memoryReservation": 9000,
+      "memoryReservation": 11000,
       "portMappings": [
         {
           "hostPort": "80",
@@ -17,14 +17,14 @@
       "name": "worker",
       "image": "820213653150.dkr.ecr.eu-central-1.amazonaws.com/pycon-quiz:latest",
       "essential": true,
-      "memoryReservation": 3000,
+      "memoryReservation": 2000,
       "command": ["python", "manage.py", "rqworker"]
     },
     {
       "name": "scheduler",
       "image": "820213653150.dkr.ecr.eu-central-1.amazonaws.com/pycon-quiz:latest",
       "essential": true,
-      "memoryReservation": 3000,
+      "memoryReservation": 2000,
       "command": ["python", "manage.py", "rqscheduler", "-i", "1"]
     }
   ]
