@@ -2,7 +2,7 @@ from quizzes.models import *
 import csv
 
 FILE_NAME = "export.csv"
-COLUMNS = ("Question", "Answer 1", "Answer 2", "Answer 3", "Answer 4", "Correct Answer")
+COLUMNS = ("Question", "Answer 1", "Answer 2", "Answer 3", "Answer 4", "Correct Answer", "Position")
 questions = Question.objects.all()
 
 
@@ -13,8 +13,10 @@ for q in questions:
     for a in q.answers.all():
         row.append(a.text)
         if a.is_correct: 
-            correct = a.text
-    row.append(correct)
+            correct = a
+    if correct:
+        row.append(correct.text)
+        row.append(correct.position+1)
     rows.append(row)
 
 
